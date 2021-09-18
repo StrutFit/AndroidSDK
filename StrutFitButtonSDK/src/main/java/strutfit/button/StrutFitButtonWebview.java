@@ -18,6 +18,10 @@ public class StrutFitButtonWebview {
         // Set settings
         WebSettings webSettings = _webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setAllowContentAccess(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setDomStorageEnabled(true);
 
         // Combine javascript interface
         _webView.addJavascriptInterface(javascriptInterFace, "Android");
@@ -29,7 +33,7 @@ public class StrutFitButtonWebview {
     }
 
     public void OpenWebView() {
-        _webView.setVisibility(View.GONE);
+        _webView.setVisibility(View.VISIBLE);
         _webView.bringToFront();
     }
 

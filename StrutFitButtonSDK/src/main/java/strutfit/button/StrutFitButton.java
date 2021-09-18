@@ -37,7 +37,7 @@ public class StrutFitButton {
         }
     }
 
-    public void setInitialButtonUI() {
+    public void SetInitialButtonUI() {
         _button.setMinimumWidth(_minWidth);
         _button.setMaxWidth(_maxWidth);
         _button.setMinimumHeight(_minHeight);
@@ -59,5 +59,10 @@ public class StrutFitButton {
 
     public void ShowButton() {
         _button.setVisibility(View.VISIBLE);
+    }
+
+    public void GetSizeAndVisibility(String MeasurementCode) throws Exception {
+        _buttonHelper.GetSizeAndVisibility(MeasurementCode, false);
+        _button.setText(_buttonHelper.buttonText);
     }
 }

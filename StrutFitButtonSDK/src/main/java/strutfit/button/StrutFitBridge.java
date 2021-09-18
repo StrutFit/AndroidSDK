@@ -7,6 +7,9 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Button;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class StrutFitBridge {
 
     // Activity properties
@@ -22,6 +25,7 @@ public class StrutFitBridge {
     public int _organizationId;
     public String _backGroundColor;
     public String _shoeID;
+    private boolean _hasInitialized = false;
 
     // SF Properties
     private StrutFitButton _sfButton;
@@ -62,7 +66,7 @@ public class StrutFitBridge {
                     @Override
                     public void run() {
                         // StrutFit library will render the text / size
-                        _sfButton.setInitialButtonUI();
+                        _sfButton.SetInitialButtonUI();
 
                         // Initialize webView
                         _sfWebView = new StrutFitButtonWebview(_webView, _sfButton._webviewUrl);
@@ -71,8 +75,14 @@ public class StrutFitBridge {
                         // Initialize button on-click function
                         _button.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
-                                _sfWebView.OpenAndInitializeWebView();
+
+                                if(!_hasInitialized) {
+                                    _sfWebView.OpenAndInitializeWebView();
+                                } else {
+                                    _sfWebView.OpenWebView();
+                                }
                                 _sfButton.HideButton();
+                                _hasInitialized = true;
                             }
                         });
                     }
@@ -97,7 +107,35 @@ class StrutFitJavaScriptInterface {
     }
 
     @JavascriptInterface
-    public void receiveMessage(String message){
+    public void receiveMessage(String message) {
+
+        try {
+            JSONObject json = new JSONObject(message);
+            int result = json.getInt("messageType");
+
+            switch (result)
+            {
+                case 0:
+                case 1:
+                    // update m-code
+                    try {
+                        updateMeasurementCode(json.getString("mcode").toString());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 2:
+                    closeModal();
+                    break;
+                default:
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void closeModal() {
         ((Activity) _context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -105,5 +143,9 @@ class StrutFitJavaScriptInterface {
                 _sfButton.ShowButton();
             }
         });
+    }
+
+    private void updateMeasurementCode(String measurementCode) throws Exception {
+        _sfButton.GetSizeAndVisibility(measurementCode);
     }
 }

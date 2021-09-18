@@ -29,7 +29,7 @@ public class StrutFitButtonHelper {
     private String  _shoeID;
     private String _baseAPIUrl;
     private String _baseWebViewUrl;
-    private String _measurementCode = getMeasurementCodeLocally();
+    private String _measurementCode;
 
     private Context _context;
     private static final String SHARED_PREFS = "sharedPrefs";
@@ -42,11 +42,11 @@ public class StrutFitButtonHelper {
         _baseAPIUrl = isDev ? "https://api-dev.strut.fit/api/" : "https://api-prod.strut.fit/api/";
         _baseWebViewUrl = isDev ? "https://consumer-portal-dev.strut.fit/" : "https://scan.strut.fit/";
         _context = context;
-
-        GetSizeAndVisibility(_measurementCode);
+        String measurementCode = getMeasurementCodeLocally();
+        GetSizeAndVisibility(measurementCode, true);
     }
 
-    private void GetSizeAndVisibility(String measurementCode) throws Exception  {
+    public void GetSizeAndVisibility(String measurementCode, Boolean isInitializing) throws Exception  {
 
         if(measurementCode.isEmpty())
         {
@@ -103,18 +103,25 @@ public class StrutFitButtonHelper {
                     // Set initial rendering parameters
                     buttonIsVisible = _visibilityData.getBoolean("show");
 
-                    String _buttonText = "Size unavailable";
+                    String _buttonText = "Unavaliable in your roccomended size";
                     if(!_size.isEmpty() && _size != "null") {
                         _buttonText = _isKids ? String.format("Your child's size in this style is %s %s %s", _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width) : "";
                     }
                     buttonText = _buttonText;
 
-                    Random rand = new Random();
-                    int int_random = rand.nextInt(99999);
-                    webViewURL = String.format(_baseWebViewUrl + "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true", _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
+                    // When initializing we need to set the web view URL
+                    if (isInitializing) {
+                        Random rand = new Random();
+                        int int_random = rand.nextInt(99999);
+                        webViewURL = String.format(_baseWebViewUrl + "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true", _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
+                    }
+
+                    // When a post message comes back from the modal with a new measurement code
+                    if (!isInitializing) {
+                        this.SetMeasurementCodeLocally(measurementCode);
+                        this.SetStrutFitInUseLocally(true);
+                    }
                 }
-
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
