@@ -1,7 +1,7 @@
 # StrutFit Button Android SDK
 SDK for StrutFit Android integration
 
-This code should be exicuted when a user visits the product display page.
+This code should be executed when a user visits the product display page.
 
 
 1. Add it in your root build.gradle at the end of repositories:
@@ -36,8 +36,8 @@ This code should be exicuted when a user visits the product display page.
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
 ```
 
-4. Initialiozing StrutFit button  
-	OrganizationID - an intiger given to you by your StrutFit account manager.  
+4. Initializing StrutFit button  
+	OrganizationID - an integer given to you by your StrutFit account manager.  
 	ProductIdentifer  - string value of the unique identifer of the shoe that is being viewed.  
 
 	If testing you can use  
