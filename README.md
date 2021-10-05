@@ -14,7 +14,7 @@ This code should be exicuted when a user visits the product display page.
 	}
 ```
   
-2. Add the dependency: replace x.x.x with the desired version
+2. Add the dependency: replace x.x.x with the desired version. Please check the release tab to see the latest production release version
 ```ruby
 	dependencies {
 		implementation 'com.github.StrutFit:AndroidSDK:x.x.x'
