@@ -36,22 +36,22 @@ This code should be exicuted when a user visits the product display page.
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
 ```
 
-4. Initialiozing StrutFit button
-OrganizationID - an intiger given to you by your StrutFit account manager.
-ProductIdentifer  - string value of the unique identifer of the shoe that is being viewed.
+4. Initialiozing StrutFit button  
+OrganizationID - an intiger given to you by your StrutFit account manager.  
+ProductIdentifer  - string value of the unique identifer of the shoe that is being viewed.  
 
-If testing you can use 
-OrganizationID = 5
-ProductIdentifer = "TestProduct"
+If testing you can use  
+OrganizationID = 5  
+ProductIdentifer = "TestProduct"  
 
-for a quick test instead of going to the scanning process you may login using the following test account
-Email: test@test.com
-Password: thisisatest
-ActivityContext: is the activity context
-800, 800, 100, 100 = Dimensions of the button
-"#f2f2f2" = Background color of the button
+for a quick test instead of going to the scanning process you may login using the following test account  
+Email: test@test.com  
+Password: thisisatest  
+ActivityContext: is the activity context  
+800, 800, 100, 100 = Dimensions of the button  
+"#f2f2f2" = Background color of the button  
 
-please feel free to modify the button further yourself if needed.
+please feel free to modify the button further yourself if needed.  
 
 ```ruby
 	// Create your button and hide it
