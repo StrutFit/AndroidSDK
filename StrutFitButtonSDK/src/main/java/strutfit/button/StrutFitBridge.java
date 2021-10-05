@@ -46,7 +46,7 @@ public class StrutFitBridge {
         _shoeID = shoeID;
     }
 
-    public void execute () {
+    public void InitializeStrutFit () {
         // SF Button library will initialize the button
         // We start a new thread so the main thread does not get disturbed
         new Thread(new Runnable() {
@@ -69,7 +69,7 @@ public class StrutFitBridge {
                         _sfButton.SetInitialButtonUI();
 
                         // Initialize webView
-                        _sfWebView = new StrutFitButtonWebview(_webView, _sfButton._webviewUrl);
+                        _sfWebView = new StrutFitButtonWebview(_webView, _sfButton._webviewUrl, _context);
                         _sfWebView.SetJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context));
 
                         // Initialize button on-click function
