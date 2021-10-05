@@ -1,10 +1,12 @@
 # StrutFit Button Android SDK
 SDK for StrutFit Android integration
 
+This code should be exicuted when a user visits the product display page.
+
 
 1. Add it in your root build.gradle at the end of repositories:
 ```ruby
-allprojects {
+	allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
@@ -14,7 +16,7 @@ allprojects {
   
 2. Add the dependency: replace x.x.x with the desired version
 ```ruby
-  dependencies {
+	dependencies {
 		implementation 'com.github.StrutFit:AndroidSDK:x.x.x'
 	}
 ```
@@ -26,12 +28,36 @@ allprojects {
 	**Camera & Audio:** For the in app camera view to allow users to take photos.  
 			Although we dont actually record audio we still need the permission.
 ```ruby
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+	<uses-permission android:name="android.permission.RECORD_AUDIO" />
 ```
 
-4.
+4. Initialiozing StrutFit button
+OrganizationID - an intiger given to you by your StrutFit account manager.
+ProductIdentifer  - string value of the unique identifer of the shoe that is being viewed.
+
+If testing you can use 
+OrganizationID = 5
+ProductIdentifer = "TestProduct"
+
+for a quick test instead of going to the scanning process you may login using the following test account
+Email: test@test.com
+Password: thisisatest
+
+```ruby
+	// Create your button and hide it
+	Button button = (Button) findViewById(R.id.StruftFitButton);
+	button.setVisibility(View.GONE);
+
+	// Create your web view
+	WebView webView = (WebView) findViewById(R.id.StruftFitWebview);
+	webView.setVisibility(View.GONE);
+
+	// Pass the the two components into the StrutFit bridge
+	StrutFitBridge bridge = new StrutFitBridge(button, webView, this, 800, 800, 100, 100, "#f2f2f2", OrganizationID, ProductIdentifier);
+	bridge.InitializeStrutFit();
+```
