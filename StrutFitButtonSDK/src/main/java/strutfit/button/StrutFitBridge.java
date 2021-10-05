@@ -54,7 +54,7 @@ public class StrutFitBridge {
             public void run() {
                 while (true) {
                     // Construct the SF Button and its properties
-                    _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backGroundColor, _context, _organizationId, _shoeID,true);
+                    _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backGroundColor, _context, _organizationId, _shoeID,false);
 
                     if (_sfButton._buttonIsReady) {
                         break;
