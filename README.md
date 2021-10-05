@@ -47,6 +47,11 @@ ProductIdentifer = "TestProduct"
 for a quick test instead of going to the scanning process you may login using the following test account
 Email: test@test.com
 Password: thisisatest
+ActivityContext: is the activity context
+800, 800, 100, 100 = Dimensions of the button
+"#f2f2f2" = Background color of the button
+
+please feel free to modify the button further yourself if needed.
 
 ```ruby
 	// Create your button and hide it
@@ -58,6 +63,6 @@ Password: thisisatest
 	webView.setVisibility(View.GONE);
 
 	// Pass the the two components into the StrutFit bridge
-	StrutFitBridge bridge = new StrutFitBridge(button, webView, this, 800, 800, 100, 100, "#f2f2f2", OrganizationID, ProductIdentifier);
+	StrutFitBridge bridge = new StrutFitBridge(button, webView, ActivityContext, 800, 800, 100, 100, "#f2f2f2", OrganizationID, ProductIdentifier);
 	bridge.InitializeStrutFit();
 ```
