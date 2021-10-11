@@ -105,7 +105,7 @@ public class StrutFitButtonHelper {
 
                     String _buttonText = "Unavaliable in your roccomended size";
                     if(!_size.isEmpty() && _size != "null") {
-                        _buttonText = _isKids ? String.format("Your child's size in this style is %s %s %s", _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width) : "";
+                        _buttonText = _isKids ? String.format("Your child's size in this style is %s %s %s", _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width) : String.format("Your size in this style is %s %s %s", _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width);
                     }
                     buttonText = _buttonText;
 
