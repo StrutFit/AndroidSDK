@@ -1,7 +1,7 @@
 # StrutFit Button Android SDK
 SDK for StrutFit Android integration
 
-If you have any issue or have suggested changes/improvements please email nish@strut.fit
+If you have any issues or suggested changes/improvements please email nish@strut.fit
 
 This code should be executed when a user visits the product display page.
 
