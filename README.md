@@ -54,6 +54,9 @@ This code should be executed when a user visits the product display page.
 	"#f2f2f2" = Background color of the button (this is the reccomended StrutFit colour) 
 
 	please feel free to modify the button further yourself if needed.  
+	
+	**Initiating the StrutFitBridge should be done on the product display page.
+	Re-create the class when the user navigates to a new product page**
 
 ```ruby
 	// Create your button and hide it
