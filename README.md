@@ -42,16 +42,16 @@ This code should be executed when a user visits the product display page.
 	OrganizationID - an integer given to you by your StrutFit account manager.  
 	ProductIdentifer  - string value of the unique identifer of the shoe that is being viewed.  
 
-	If testing you can use  
-	OrganizationID = 5  
-	ProductIdentifer = "TestProduct"  
+	When testing you can use the following.  
+	**OrganizationID:** 5  
+	**ProductIdentifer:** "TestProduct" 
 
-	for a quick test instead of going to the scanning process you may login using the following test account  
-	Email: test@test.com  
-	Password: thisisatest  
-	ActivityContext: is the activity context  
+	For a quick test instead of going to the scanning process you may login using the following test account  
+	**Email:** test@test.com  
+	**Password:** thisisatest  
+	**ActivityContext:** is the activity context  
 	800, 800, 100, 100 = Dimensions of the button  
-	"#f2f2f2" = Background color of the button  
+	"#f2f2f2" = Background color of the button (this is the reccomended StrutFit colour) 
 
 	please feel free to modify the button further yourself if needed.  
 
