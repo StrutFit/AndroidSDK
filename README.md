@@ -1,8 +1,8 @@
 # StrutFit Button Android SDK
 SDK for StrutFit Android integration
 
-If you have any issues or suggested changes/improvements please email nish@strut.fit
-if how we have implemented the the library doesnt quite work for your organisation please let us know we are happy to discuss.
+If you have any issues or suggested changes/improvements please email nish@strut.fit. 
+If we have implemented the the library doesnt quite work for your organisation please let us know we are happy to discuss.
 
 This code should be executed when a user visits the product display page.
 
@@ -47,14 +47,15 @@ This code should be executed when a user visits the product display page.
 	**OrganizationID:** 5  
 	**ProductIdentifer:** "TestProduct" 
 
-	For a quick test instead of going to the scanning process you may login using the following test account  
+	For a quick test instead of going to the scanning process you may login using the following test account 
+	Before release please defer to putting the actual product identifier and oranizationId provided by your StrutFit account manager 
 	**Email:** test@test.com  
 	**Password:** thisisatest  
 	**ActivityContext:** is the activity context  
 	800, 800, 100, 100 = Dimensions of the button  
 	"#f2f2f2" = Background color of the button (this is the reccomended StrutFit colour) 
 
-	please feel free to modify the button further yourself if needed.  
+	we encourage you to modify the button UI to suite your application while conforming to the StrutFit brand guidelines.  
 	
 	**Initiating the StrutFitBridge should be done on the product display page.
 	Re-create the class when the user navigates to a new product page**
