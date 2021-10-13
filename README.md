@@ -48,7 +48,7 @@ This code should be executed when a user visits the product display page.
 	**ProductIdentifer:** "TestProduct" 
 
 	For a quick test instead of going to the scanning process you may login using the following test account 
-	Before release please defer to putting the actual product identifier and oranizationId provided by your StrutFit account manager 
+	Before release please defer to putting the actual product identifier and oranizationId provided by your StrutFit account manager.  
 	**Email:** test@test.com  
 	**Password:** thisisatest  
 	**ActivityContext:** is the activity context  
