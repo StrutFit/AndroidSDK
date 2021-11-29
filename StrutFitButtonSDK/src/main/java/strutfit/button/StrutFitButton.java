@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.Optional;
+
 public class StrutFitButton {
 
     public Boolean _buttonIsReady = false;
@@ -19,7 +21,8 @@ public class StrutFitButton {
     public StrutFitButtonHelper _buttonHelper;
 
     public StrutFitButton(Button button, int minWidth, int maxWidth, int minHeight, int maxHeight, String backGroundColor,
-                            Context context, int organizationID, String shoeID, boolean isDev) {
+                          Context context, int organizationID, String shoeID,
+                          String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) {
 
         _button = button;
         _minWidth = minWidth;
@@ -29,7 +32,7 @@ public class StrutFitButton {
         _backGroundColor = backGroundColor;
 
         try {
-            _buttonHelper = new StrutFitButtonHelper(context, organizationID, shoeID, isDev);
+            _buttonHelper = new StrutFitButtonHelper(context, organizationID, shoeID, sizeUnavailableText, childPreSizeText, childPostSizeText, adultPreSizeText, adultPostSizeText);
             _webviewUrl = _buttonHelper.webViewURL;
             _buttonIsReady = true;
         } catch (Exception e) {

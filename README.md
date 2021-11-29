@@ -71,5 +71,5 @@ This code should be executed when a user visits the product display page.
 
 	// Pass the the two components into the StrutFit bridge
 	StrutFitBridge bridge = new StrutFitBridge(button, webView, ActivityContext, 800, 800, 100, 100, "#f2f2f2", OrganizationID, ProductIdentifier);
-	bridge.InitializeStrutFit();
+	bridge.InitializeStrutfit();
 ```

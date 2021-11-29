@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.Random;
 
 import okhttp3.Call;
@@ -29,19 +30,30 @@ public class StrutFitButtonHelper {
     private String  _shoeID;
     private String _baseAPIUrl;
     private String _baseWebViewUrl;
-    private String _measurementCode;
+    private String _sizeUnavailableText;
+    private String _childPreSizeText;
+    private String _childPostSizeText;
+    private String _adultPreSizeText;
+    private String _adultPostSizeText;
 
     private Context _context;
     private static final String SHARED_PREFS = "sharedPrefs";
     private static final String Measurement_Code = "measurementCode";
     private static final String StrutFit_In_Use = "isStrutFitInUse";
 
-    public StrutFitButtonHelper (Context context, int organizationID, String shoeID, boolean isDev) throws Exception {
+    public StrutFitButtonHelper (Context context, int organizationID, String shoeID, String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) throws Exception {
         _organizationID = organizationID;
         _shoeID = shoeID;
-        _baseAPIUrl = isDev ? "https://api-dev.strut.fit/api/" : "https://api-prod.strut.fit/api/";
-        _baseWebViewUrl = isDev ? "https://consumer-portal-dev.strut.fit/" : "https://scan.strut.fit/";
+        _baseAPIUrl = "https://api-dev.strut.fit/api/"; // "https://api-prod.strut.fit/api/";
+        _baseWebViewUrl = "https://consumer-portal-dev.strut.fit/"; // "https://scan.strut.fit/";
         _context = context;
+
+        _sizeUnavailableText = sizeUnavailableText;
+        _childPreSizeText = childPreSizeText;
+        _childPostSizeText = childPostSizeText;
+        _adultPreSizeText = adultPreSizeText;
+        _adultPostSizeText = adultPostSizeText ;
+
         String measurementCode = getMeasurementCodeLocally();
         GetSizeAndVisibility(measurementCode, true);
     }
@@ -64,7 +76,7 @@ public class StrutFitButtonHelper {
 
                     // Set initial rendering parameters
                     buttonIsVisible = result.getBoolean("show");
-                    buttonText = _isKids ? "What is my child's size?" : "What is my size?";
+                    buttonText = _isKids ? _childPreSizeText : _adultPreSizeText;
 
                     Random rand = new Random();
                     int int_random = rand.nextInt(99999);
@@ -103,9 +115,9 @@ public class StrutFitButtonHelper {
                     // Set initial rendering parameters
                     buttonIsVisible = _visibilityData.getBoolean("show");
 
-                    String _buttonText = "Unavaliable in your roccomended size";
+                    String _buttonText = _sizeUnavailableText;
                     if(!_size.isEmpty() && _size != "null") {
-                        _buttonText = _isKids ? String.format("Your child's size in this style is %s %s %s", _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width) : String.format("Your size in this style is %s %s %s", _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width);
+                        _buttonText = _isKids ? String.format("%s %s %s %s", _childPostSizeText, _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width) : String.format("%s %s %s %s", _adultPostSizeText,  _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width);
                     }
                     buttonText = _buttonText;
 

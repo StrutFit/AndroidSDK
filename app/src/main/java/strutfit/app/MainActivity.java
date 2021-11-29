@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         webView.setVisibility(View.GONE);
 
         // Pass the the two components into the StrutFit bridge
-        StrutFitBridge bridge = new StrutFitBridge(button, webView, this, 800, 800, 100, 100, "#f2f2f2", 1, "Test Product 1");
-        bridge.InitializeStrutFit();
+        StrutFitBridge bridge = new StrutFitBridge(button, webView, this, 800, 800, 100, 100, "#f2f2f2", 5, "TestProduct",  null, null, null, null, null);
+        bridge.InitializeStrutfit();
     }
 }

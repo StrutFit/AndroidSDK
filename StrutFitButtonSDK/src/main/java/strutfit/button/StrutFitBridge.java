@@ -10,6 +10,8 @@ import android.widget.Button;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Optional;
+
 public class StrutFitBridge {
 
     // Activity properties
@@ -26,12 +28,18 @@ public class StrutFitBridge {
     public String _backGroundColor;
     public String _shoeID;
     private boolean _hasInitialized = false;
+    private String _sizeUnavailableText;
+    private String _childPreSizeText;
+    private String _childPostSizeText;
+    private String _adultPreSizeText;
+    private String _adultPostSizeText;
 
     // SF Properties
     private StrutFitButton _sfButton;
     private StrutFitButtonWebview _sfWebView;
 
-    public StrutFitBridge(Button button, WebView webview, Context context, int minWidth, int maxWidth, int minHeight, int maxHeight, String backGroundColor, int organizationId, String shoeID) {
+    public StrutFitBridge(Button button, WebView webview, Context context, int minWidth, int maxWidth, int minHeight, int maxHeight, String backGroundColor, int organizationId, String shoeID,
+                          Optional<String> sizeUnavailableText, Optional<String> childPreSizeText, Optional<String> childPostSizeText, Optional<String> adultPreSizeText, Optional<String> adultPostSizeText) {
         _webView = webview;
         _button = button;
         _context = context;
@@ -44,9 +52,15 @@ public class StrutFitBridge {
         _backGroundColor = backGroundColor;
         _organizationId = organizationId;
         _shoeID = shoeID;
+
+        _sizeUnavailableText = sizeUnavailableText == null ? "Unavailable in your recommended size" : sizeUnavailableText.toString();
+        _childPreSizeText = childPreSizeText == null ? "What is my child's size?" : childPreSizeText.toString();
+        _childPostSizeText = childPostSizeText == null ? "Your child's size in this style is" : childPostSizeText.toString();
+        _adultPreSizeText = adultPreSizeText == null ? "What is my size?" : adultPreSizeText.toString();
+        _adultPostSizeText = adultPostSizeText == null ? "Your size in this style is" : adultPostSizeText.toString();
     }
 
-    public void InitializeStrutFit () {
+    public void InitializeStrutfit () {
         // SF Button library will initialize the button
         // We start a new thread so the main thread does not get disturbed
         new Thread(new Runnable() {
@@ -54,7 +68,7 @@ public class StrutFitBridge {
             public void run() {
                 while (true) {
                     // Construct the SF Button and its properties
-                    _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backGroundColor, _context, _organizationId, _shoeID,false);
+                    _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backGroundColor, _context, _organizationId, _shoeID, _sizeUnavailableText, _childPreSizeText, _childPostSizeText, _adultPreSizeText, _adultPostSizeText);
 
                     if (_sfButton._buttonIsReady) {
                         break;
