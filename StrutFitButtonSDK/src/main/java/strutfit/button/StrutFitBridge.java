@@ -1,11 +1,19 @@
 package strutfit.button;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,7 +76,8 @@ public class StrutFitBridge {
             public void run() {
                 while (true) {
                     // Construct the SF Button and its properties
-                    _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backGroundColor, _context, _organizationId, _shoeID, _sizeUnavailableText, _childPreSizeText, _childPostSizeText, _adultPreSizeText, _adultPostSizeText);
+                    _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backGroundColor, _context, _organizationId, _shoeID,
+                                                    _sizeUnavailableText, _childPreSizeText, _childPostSizeText, _adultPreSizeText, _adultPostSizeText);
 
                     if (_sfButton._buttonIsReady) {
                         break;
@@ -89,6 +98,23 @@ public class StrutFitBridge {
                         // Initialize button on-click function
                         _button.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
+
+                                int MY_PERMISSIONS_REQUEST_CAMERA=0;
+                                // Here, this is the current activity
+                                if (ContextCompat.checkSelfPermission(_context, Manifest.permission.CAMERA) != PERMISSION_GRANTED)
+                                {
+                                    if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) _context, Manifest.permission.CAMERA))
+                                    {
+                                        Toast.makeText(_context, "For the best experience this application needs access to the camera", Toast.LENGTH_LONG).show();
+                                    }
+                                    else
+                                    {
+                                        ActivityCompat.requestPermissions((Activity)_context, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA );
+                                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                                        // app-defined int constant. The callback method gets the
+                                        // result of the request.
+                                    }
+                                }
 
                                 if(!_hasInitialized) {
                                     _sfWebView.OpenAndInitializeWebView();

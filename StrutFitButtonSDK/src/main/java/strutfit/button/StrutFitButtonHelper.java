@@ -44,8 +44,8 @@ public class StrutFitButtonHelper {
     public StrutFitButtonHelper (Context context, int organizationID, String shoeID, String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) throws Exception {
         _organizationID = organizationID;
         _shoeID = shoeID;
-        _baseAPIUrl = "https://api-dev.strut.fit/api/"; // "https://api-prod.strut.fit/api/";
-        _baseWebViewUrl = "https://consumer-portal-dev.strut.fit/"; // "https://scan.strut.fit/";
+        _baseAPIUrl =  "https://api-prod.strut.fit/api/"; // "https://api-dev.strut.fit/api/";
+        _baseWebViewUrl =  "https://scan.strut.fit/"; // "https://consumer-portal-dev.strut.fit/";
         _context = context;
 
         _sizeUnavailableText = sizeUnavailableText;
@@ -62,94 +62,77 @@ public class StrutFitButtonHelper {
 
         if(measurementCode.isEmpty())
         {
-            try {
-                URL url = new URL(String.format(_baseAPIUrl + "MobileApp/DetermineButtonVisibility?OrganizationUnitId=%s&Code=%s", _organizationID, _shoeID));
-                Request request = new Request.Builder().url(url).build();
+            URL url = new URL(String.format(_baseAPIUrl + "MobileApp/DetermineButtonVisibility?OrganizationUnitId=%s&Code=%s", _organizationID, _shoeID));
+            Request request = new Request.Builder().url(url).build();
 
-                try (Response response = client.newCall(request).execute()) {
-                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+            try (Response response = client.newCall(request).execute()) {
+                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-                    String responseAsText = response.body().string();
-                    JSONObject json = new JSONObject(responseAsText);
-                    JSONObject result = json.getJSONObject("result");
-                    Boolean _isKids = result.getBoolean("isKids");
+                String responseAsText = response.body().string();
+                JSONObject json = new JSONObject(responseAsText);
+                JSONObject result = json.getJSONObject("result");
+                Boolean _isKids = result.getBoolean("isKids");
 
-                    // Set initial rendering parameters
-                    buttonIsVisible = result.getBoolean("show");
-                    buttonText = _isKids ? _childPreSizeText : _adultPreSizeText;
+                // Set initial rendering parameters
+                buttonIsVisible = result.getBoolean("show");
+                buttonText = _isKids ? _childPreSizeText : _adultPreSizeText;
 
+                Random rand = new Random();
+                int int_random = rand.nextInt(99999);
+                webViewURL = String.format(_baseWebViewUrl + "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true", _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
+            }
+        }
+        else
+        {
+            URL url = new URL(String.format(_baseAPIUrl + "MobileApp/GetSizeandVisibility?OrganizationUnitId=%s&Code=%s&MCode=%s", _organizationID, _shoeID, measurementCode));
+            Request request = new Request.Builder().url(url).build();
+
+            try (Response response = client.newCall(request).execute()) {
+                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                String responseAsText = response.body().string();
+                JSONObject json = new JSONObject(responseAsText);
+                JSONObject result = json.getJSONObject("result");
+                JSONObject _sizeData = result.getJSONObject("sizeData");
+                JSONObject _visibilityData= result.getJSONObject("visibilityData");
+
+
+                Boolean _isKids = _visibilityData.getBoolean("isKids");
+                String _size = _sizeData.getString("size");
+                int _sizeUnit = _sizeData.getInt("unit");
+                Boolean _showWidthCategory = _sizeData.getBoolean("showWidthCategory");
+                String _widthAbbreviation = _sizeData.getString("widthAbbreviation");
+                String _width = (!_showWidthCategory || _widthAbbreviation.isEmpty() || _widthAbbreviation == "null")? "" : _widthAbbreviation;
+
+
+                // Set initial rendering parameters
+                buttonIsVisible = _visibilityData.getBoolean("show");
+
+                String _buttonText = _sizeUnavailableText;
+                if(!_size.isEmpty() && _size != "null") {
+                    _buttonText = _isKids ? String.format("%s %s %s %s", _childPostSizeText, _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width) : String.format("%s %s %s %s", _adultPostSizeText,  _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width);
+                }
+                buttonText = _buttonText;
+
+                // When initializing we need to set the web view URL
+                if (isInitializing) {
                     Random rand = new Random();
                     int int_random = rand.nextInt(99999);
                     webViewURL = String.format(_baseWebViewUrl + "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true", _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
                 }
 
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-        }
-        else
-        {
-            try {
-                URL url = new URL(String.format(_baseAPIUrl + "MobileApp/GetSizeandVisibility?OrganizationUnitId=%s&Code=%s&MCode=%s", _organizationID, _shoeID, measurementCode));
-                Request request = new Request.Builder().url(url).build();
-
-                try (Response response = client.newCall(request).execute()) {
-                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-                    String responseAsText = response.body().string();
-                    JSONObject json = new JSONObject(responseAsText);
-                    JSONObject result = json.getJSONObject("result");
-                    JSONObject _sizeData = result.getJSONObject("sizeData");
-                    JSONObject _visibilityData= result.getJSONObject("visibilityData");
-
-
-                    Boolean _isKids = _visibilityData.getBoolean("isKids");
-                    String _size = _sizeData.getString("size");
-                    int _sizeUnit = _sizeData.getInt("unit");
-                    Boolean _showWidthCategory = _sizeData.getBoolean("showWidthCategory");
-                    String _widthAbbreviation = _sizeData.getString("widthAbbreviation");
-                    String _width = (!_showWidthCategory || _widthAbbreviation.isEmpty() || _widthAbbreviation == "null")? "" : _widthAbbreviation;
-
-
-                    // Set initial rendering parameters
-                    buttonIsVisible = _visibilityData.getBoolean("show");
-
-                    String _buttonText = _sizeUnavailableText;
-                    if(!_size.isEmpty() && _size != "null") {
-                        _buttonText = _isKids ? String.format("%s %s %s %s", _childPostSizeText, _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width) : String.format("%s %s %s %s", _adultPostSizeText,  _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width);
-                    }
-                    buttonText = _buttonText;
-
-                    // When initializing we need to set the web view URL
-                    if (isInitializing) {
-                        Random rand = new Random();
-                        int int_random = rand.nextInt(99999);
-                        webViewURL = String.format(_baseWebViewUrl + "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true", _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
-                    }
-
-                    // When a post message comes back from the modal with a new measurement code
-                    if (!isInitializing) {
-                        this.SetMeasurementCodeLocally(measurementCode);
-                        this.SetStrutFitInUseLocally(true);
-                    }
+                // When a post message comes back from the modal with a new measurement code
+                if (!isInitializing) {
+                    this.SetMeasurementCodeLocally(measurementCode);
+                    this.SetStrutFitInUseLocally(true);
                 }
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
             }
         }
     }
 
     private String getMeasurementCodeLocally() {
-        try
-        {
-            SharedPreferences sharedPreferences = _context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-            return sharedPreferences.getString(Measurement_Code, "");
-        }
-        catch (Exception e)
-        {
-            return ""; //zrgx0nf
-        }
+        SharedPreferences sharedPreferences = _context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(Measurement_Code, "");
     }
 
     private void SetMeasurementCodeLocally(String measurementCode) {

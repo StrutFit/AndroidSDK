@@ -36,7 +36,7 @@ public class StrutFitButton {
             _webviewUrl = _buttonHelper.webViewURL;
             _buttonIsReady = true;
         } catch (Exception e) {
-            _buttonIsReady = true;
+            e.printStackTrace();
         }
     }
 
