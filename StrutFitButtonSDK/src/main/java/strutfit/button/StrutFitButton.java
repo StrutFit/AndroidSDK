@@ -20,6 +20,13 @@ public class StrutFitButton {
     public String _backGroundColor;
     public StrutFitButtonHelper _buttonHelper;
 
+    private Runnable _callback = new Runnable() {
+        @Override
+        public void run() {
+            SetInitialButtonValues();
+        }
+    };
+
     public StrutFitButton(Button button, int minWidth, int maxWidth, int minHeight, int maxHeight, String backGroundColor,
                           Context context, int organizationID, String shoeID,
                           String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) {
@@ -32,7 +39,7 @@ public class StrutFitButton {
         _backGroundColor = backGroundColor;
 
         try {
-            _buttonHelper = new StrutFitButtonHelper(context, organizationID, shoeID, sizeUnavailableText, childPreSizeText, childPostSizeText, adultPreSizeText, adultPostSizeText);
+            _buttonHelper = new StrutFitButtonHelper(context, _callback, organizationID, shoeID, sizeUnavailableText, childPreSizeText, childPostSizeText, adultPreSizeText, adultPostSizeText);
             _webviewUrl = _buttonHelper.webViewURL;
             _buttonIsReady = true;
         } catch (Exception e) {
@@ -47,9 +54,12 @@ public class StrutFitButton {
         _button.setMaxHeight(_maxHeight);
         _button.setBackgroundColor(Color.parseColor((_backGroundColor)));
         _button.setTextSize(12);
+    }
 
+    private void SetInitialButtonValues() {
         if(_buttonHelper.buttonIsVisible) {
             _button.setText(_buttonHelper.buttonText);
+            _webviewUrl = _buttonHelper.webViewURL;
             _button.setVisibility(View.VISIBLE);
         } else {
             _button.setVisibility(View.GONE);

@@ -21,7 +21,7 @@ import java.io.IOException;
 
 public class StrutFitButtonWebview {
 
-    private String _url;
+    private StrutFitButton _button;
     private WebView _webView;
     private Context _context;
     private static final int FILECHOOSER_RESULTCODE = 1;
@@ -31,8 +31,8 @@ public class StrutFitButtonWebview {
     private String mCameraPhotoPath;
     private ValueCallback<Uri> mUploadMessage;
 
-    public StrutFitButtonWebview(WebView webview, String url, Context context) {
-        _url = url;
+    public StrutFitButtonWebview(WebView webview, StrutFitButton button, Context context) {
+        _button = button;
         _webView = webview;
         _context = context;
         TAG = ((Activity) _context).getClass().getSimpleName();
@@ -185,7 +185,7 @@ public class StrutFitButtonWebview {
     }
 
     public void OpenAndInitializeWebView() {
-        _webView.loadUrl(_url);
+        _webView.loadUrl(_button._webviewUrl);
         _webView.setVisibility(View.VISIBLE);
     }
 

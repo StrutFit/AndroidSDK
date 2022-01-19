@@ -22,7 +22,14 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        StrutFitButtonHelper ButtonHelper = new StrutFitButtonHelper(appContext, 1, "Test Product 1", null, null, null, null, null);
+        Runnable callback = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        };
+
+        StrutFitButtonHelper ButtonHelper = new StrutFitButtonHelper(appContext, callback, 1, "Test Product 1", null, null, null, null, null);
 
         assertEquals("strutfit.button.test", appContext.getPackageName());
     }

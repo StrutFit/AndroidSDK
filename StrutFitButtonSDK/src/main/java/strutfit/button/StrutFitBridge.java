@@ -74,15 +74,9 @@ public class StrutFitBridge {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    // Construct the SF Button and its properties
-                    _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backGroundColor, _context, _organizationId, _shoeID,
-                                                    _sizeUnavailableText, _childPreSizeText, _childPostSizeText, _adultPreSizeText, _adultPostSizeText);
-
-                    if (_sfButton._buttonIsReady) {
-                        break;
-                    }
-                }
+                // Construct the SF Button and its properties
+                _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backGroundColor, _context, _organizationId, _shoeID,
+                                                _sizeUnavailableText, _childPreSizeText, _childPostSizeText, _adultPreSizeText, _adultPostSizeText);
 
                 // Ui changes need to run on the UI thread
                 ((Activity) _context).runOnUiThread(new Runnable() {
@@ -92,7 +86,7 @@ public class StrutFitBridge {
                         _sfButton.SetInitialButtonUI();
 
                         // Initialize webView
-                        _sfWebView = new StrutFitButtonWebview(_webView, _sfButton._webviewUrl, _context);
+                        _sfWebView = new StrutFitButtonWebview(_webView, _sfButton, _context);
                         _sfWebView.SetJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context));
 
                         // Initialize button on-click function
