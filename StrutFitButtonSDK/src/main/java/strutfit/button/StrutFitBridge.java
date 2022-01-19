@@ -61,11 +61,11 @@ public class StrutFitBridge {
         _organizationId = organizationId;
         _shoeID = shoeID;
 
-        _sizeUnavailableText = sizeUnavailableText == null ? "Unavailable in your recommended size" : sizeUnavailableText.toString();
-        _childPreSizeText = childPreSizeText == null ? "What is my child's size?" : childPreSizeText.toString();
-        _childPostSizeText = childPostSizeText == null ? "Your child's size in this style is" : childPostSizeText.toString();
-        _adultPreSizeText = adultPreSizeText == null ? "What is my size?" : adultPreSizeText.toString();
-        _adultPostSizeText = adultPostSizeText == null ? "Your size in this style is" : adultPostSizeText.toString();
+        _sizeUnavailableText = sizeUnavailableText == null ? _context.getResources().getString(R.string.defaultSizeUnavailableText) : sizeUnavailableText.toString();
+        _childPreSizeText = childPreSizeText == null ? _context.getResources().getString(R.string.defaultChildPreSizeText) : childPreSizeText.toString();
+        _childPostSizeText = childPostSizeText == null ? _context.getResources().getString(R.string.defaultChildPostSizeText) : childPostSizeText.toString();
+        _adultPreSizeText = adultPreSizeText == null ? _context.getResources().getString(R.string.defaultAdultPreSizeText) : adultPreSizeText.toString();
+        _adultPostSizeText = adultPostSizeText == null ? _context.getResources().getString(R.string.defaultAdultPostSizeText) : adultPostSizeText.toString();
     }
 
     public void InitializeStrutfit () {
