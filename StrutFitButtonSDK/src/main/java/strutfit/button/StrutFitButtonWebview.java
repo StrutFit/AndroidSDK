@@ -21,7 +21,7 @@ import java.io.IOException;
 
 public class StrutFitButtonWebview {
 
-    private String _url;
+    private StrutFitButton _button;
     private WebView _webView;
     private Context _context;
     private static final int FILECHOOSER_RESULTCODE = 1;
@@ -31,8 +31,8 @@ public class StrutFitButtonWebview {
     private String mCameraPhotoPath;
     private ValueCallback<Uri> mUploadMessage;
 
-    public StrutFitButtonWebview(WebView webview, String url, Context context) {
-        _url = url;
+    public StrutFitButtonWebview(WebView webview, StrutFitButton button, Context context) {
+        _button = button;
         _webView = webview;
         _context = context;
         TAG = ((Activity) _context).getClass().getSimpleName();
@@ -169,7 +169,7 @@ public class StrutFitButtonWebview {
         });
     }
 
-    public void SetJavaScriptInterface (StrutFitJavaScriptInterface javascriptInterFace) {
+    public void setJavaScriptInterface(StrutFitJavaScriptInterface javascriptInterFace) {
         // Set settings
         WebSettings webSettings = _webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -184,17 +184,17 @@ public class StrutFitButtonWebview {
         _webView.addJavascriptInterface(javascriptInterFace, "Android");
     }
 
-    public void OpenAndInitializeWebView() {
-        _webView.loadUrl(_url);
+    public void openAndInitializeWebView() {
+        _webView.loadUrl(_button._webviewUrl);
         _webView.setVisibility(View.VISIBLE);
     }
 
-    public void OpenWebView() {
+    public void openWebView() {
         _webView.setVisibility(View.VISIBLE);
         _webView.bringToFront();
     }
 
-    public void CloseWebView() {
+    public void closeWebView() {
         _webView.setVisibility(View.GONE);
     }
 }

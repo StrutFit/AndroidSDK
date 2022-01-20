@@ -19,6 +19,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue 'integer', 'organizationUnitId', '5'
+            resValue 'string', 'productCode', 'TestProduct'
+        }
+        debug {
+            resValue 'integer', 'organizationUnitId', '1'
+            resValue 'string', 'productCode', 'Test Product 1'
+        }
+        staging {
+            initWith debug
+            resValue 'integer', 'organizationUnitId', '5'
+            resValue 'string', 'productCode', 'TestProduct'
         }
     }
     compileOptions {

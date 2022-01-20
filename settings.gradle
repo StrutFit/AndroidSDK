@@ -6,6 +6,6 @@ dependencyResolutionManagement {
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
-rootProject.name = "StrtuFitApplication"
+rootProject.name = "StrutFitApplication"
 include ':app'
 include ':StrutFitButtonSDK'

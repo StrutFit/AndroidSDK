@@ -33,7 +33,7 @@ public class StrutFitBridge {
     public int _minHeight;
     public int _maxHeight;
     public int _organizationId;
-    public String _backGroundColor;
+    public String _backgroundColor;
     public String _shoeID;
     private boolean _hasInitialized = false;
     private String _sizeUnavailableText;
@@ -46,7 +46,7 @@ public class StrutFitBridge {
     private StrutFitButton _sfButton;
     private StrutFitButtonWebview _sfWebView;
 
-    public StrutFitBridge(Button button, WebView webview, Context context, int minWidth, int maxWidth, int minHeight, int maxHeight, String backGroundColor, int organizationId, String shoeID,
+    public StrutFitBridge(Button button, WebView webview, Context context, int minWidth, int maxWidth, int minHeight, int maxHeight, String backgroundColor, int organizationId, String shoeID,
                           Optional<String> sizeUnavailableText, Optional<String> childPreSizeText, Optional<String> childPostSizeText, Optional<String> adultPreSizeText, Optional<String> adultPostSizeText) {
         _webView = webview;
         _button = button;
@@ -57,71 +57,62 @@ public class StrutFitBridge {
         _maxWidth = maxWidth;
         _minHeight = minHeight;
         _maxHeight = maxHeight;
-        _backGroundColor = backGroundColor;
+        _backgroundColor = backgroundColor;
         _organizationId = organizationId;
         _shoeID = shoeID;
 
-        _sizeUnavailableText = sizeUnavailableText == null ? "Unavailable in your recommended size" : sizeUnavailableText.toString();
-        _childPreSizeText = childPreSizeText == null ? "What is my child's size?" : childPreSizeText.toString();
-        _childPostSizeText = childPostSizeText == null ? "Your child's size in this style is" : childPostSizeText.toString();
-        _adultPreSizeText = adultPreSizeText == null ? "What is my size?" : adultPreSizeText.toString();
-        _adultPostSizeText = adultPostSizeText == null ? "Your size in this style is" : adultPostSizeText.toString();
+        _sizeUnavailableText = sizeUnavailableText == null ? _context.getResources().getString(R.string.defaultSizeUnavailableText) : sizeUnavailableText.toString();
+        _childPreSizeText = childPreSizeText == null ? _context.getResources().getString(R.string.defaultChildPreSizeText) : childPreSizeText.toString();
+        _childPostSizeText = childPostSizeText == null ? _context.getResources().getString(R.string.defaultChildPostSizeText) : childPostSizeText.toString();
+        _adultPreSizeText = adultPreSizeText == null ? _context.getResources().getString(R.string.defaultAdultPreSizeText) : adultPreSizeText.toString();
+        _adultPostSizeText = adultPostSizeText == null ? _context.getResources().getString(R.string.defaultAdultPostSizeText) : adultPostSizeText.toString();
     }
 
-    public void InitializeStrutfit () {
+    public void initializeStrutFit() {
         // SF Button library will initialize the button
         // We start a new thread so the main thread does not get disturbed
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
-                    // Construct the SF Button and its properties
-                    _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backGroundColor, _context, _organizationId, _shoeID,
-                                                    _sizeUnavailableText, _childPreSizeText, _childPostSizeText, _adultPreSizeText, _adultPostSizeText);
-
-                    if (_sfButton._buttonIsReady) {
-                        break;
-                    }
-                }
+                // Construct the SF Button and its properties
+                _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backgroundColor, _context, _organizationId, _shoeID,
+                                                _sizeUnavailableText, _childPreSizeText, _childPostSizeText, _adultPreSizeText, _adultPostSizeText);
 
                 // Ui changes need to run on the UI thread
                 ((Activity) _context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         // StrutFit library will render the text / size
-                        _sfButton.SetInitialButtonUI();
+                        _sfButton.setInitialButtonUI();
 
                         // Initialize webView
-                        _sfWebView = new StrutFitButtonWebview(_webView, _sfButton._webviewUrl, _context);
-                        _sfWebView.SetJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context));
+                        _sfWebView = new StrutFitButtonWebview(_webView, _sfButton, _context);
+                        _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context));
 
                         // Initialize button on-click function
                         _button.setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
 
                                 int MY_PERMISSIONS_REQUEST_CAMERA=0;
-                                // Here, this is the current activity
+
                                 if (ContextCompat.checkSelfPermission(_context, Manifest.permission.CAMERA) != PERMISSION_GRANTED)
                                 {
                                     if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) _context, Manifest.permission.CAMERA))
                                     {
-                                        Toast.makeText(_context, "For the best experience this application needs access to the camera", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(_context, _context.getResources().getString(R.string.cameraAccessToastMessage), Toast.LENGTH_LONG).show();
                                     }
                                     else
                                     {
                                         ActivityCompat.requestPermissions((Activity)_context, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA );
-                                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                                        // app-defined int constant. The callback method gets the
-                                        // result of the request.
                                     }
                                 }
 
                                 if(!_hasInitialized) {
-                                    _sfWebView.OpenAndInitializeWebView();
+                                    _sfWebView.openAndInitializeWebView();
                                 } else {
-                                    _sfWebView.OpenWebView();
+                                    _sfWebView.openWebView();
                                 }
-                                _sfButton.HideButton();
+                                _sfButton.hideButton();
                                 _hasInitialized = true;
                             }
                         });
@@ -138,12 +129,14 @@ class StrutFitJavaScriptInterface {
     private StrutFitButton _sfButton;
     private StrutFitButtonWebview _sfWebView;
     private Context _context;
+    private String TAG;
 
 
     StrutFitJavaScriptInterface(StrutFitButton sfButton, StrutFitButtonWebview sfWebView, Context context) {
         _sfButton = sfButton;
         _sfWebView = sfWebView;
         _context = context;
+        TAG = ((Activity) _context).getClass().getSimpleName();
     }
 
     @JavascriptInterface
@@ -158,11 +151,7 @@ class StrutFitJavaScriptInterface {
                 case 0:
                 case 1:
                     // update m-code
-                    try {
-                        updateMeasurementCode(json.getString("mcode").toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    updateMeasurementCode(json);
                     break;
                 case 2:
                     closeModal();
@@ -171,7 +160,15 @@ class StrutFitJavaScriptInterface {
                     break;
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Unable to process message", e);
+        }
+    }
+
+    private void updateMeasurementCode(JSONObject json){
+        try {
+            updateMeasurementCode(json.getString("mcode").toString());
+        } catch (Exception e) {
+            Log.e(TAG, "Unable to update measurement code", e);
         }
     }
 
@@ -179,13 +176,13 @@ class StrutFitJavaScriptInterface {
         ((Activity) _context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                _sfWebView.CloseWebView();
-                _sfButton.ShowButton();
+                _sfWebView.closeWebView();
+                _sfButton.showButton();
             }
         });
     }
 
     private void updateMeasurementCode(String measurementCode) throws Exception {
-        _sfButton.GetSizeAndVisibility(measurementCode);
+        _sfButton.getSizeAndVisibility(measurementCode);
     }
 }

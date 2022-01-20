@@ -1,14 +1,8 @@
 package strutfit.app;
-import static android.content.pm.PackageManager.PERMISSION_DENIED;
-import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -31,7 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Pass the the two components into the StrutFit bridge
-        StrutFitBridge bridge = new StrutFitBridge(button, webView, this, 800, 800, 100, 100, "#f2f2f2", 5, "TestProduct",  null, null, null, null, null);
-        bridge.InitializeStrutfit();
+        StrutFitBridge bridge = new StrutFitBridge(button, webView, this, 800, 800, 100, 100, "#f2f2f2",
+                this.getResources().getInteger(R.integer.organizationUnitId),
+                this.getResources().getString(R.string.productCode),
+                null, null, null, null, null);
+        bridge.initializeStrutFit();
     }
 }
