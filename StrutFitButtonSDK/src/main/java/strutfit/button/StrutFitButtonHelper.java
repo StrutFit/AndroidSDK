@@ -4,29 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Optional;
 import java.util.Random;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Scheduler;
-import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Headers;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 import strutfit.button.models.ButtonSizeResult;
 import strutfit.button.models.ButtonVisibilityAndSizeOutput;
 import strutfit.button.models.ButtonVisibilityAndSizeResult;
@@ -68,10 +52,10 @@ public class StrutFitButtonHelper {
         _adultPostSizeText = adultPostSizeText ;
 
         String measurementCode = getMeasurementCodeLocally();
-        GetSizeAndVisibility(measurementCode, true);
+        getSizeAndVisibility(measurementCode, true);
     }
 
-    public void GetSizeAndVisibility(String measurementCode, Boolean isInitializing) throws Exception  {
+    public void getSizeAndVisibility(String measurementCode, Boolean isInitializing) throws Exception  {
 
         if(measurementCode.isEmpty())
         {
@@ -160,8 +144,8 @@ public class StrutFitButtonHelper {
 
                                 // When a post message comes back from the modal with a new measurement code
                                 if (!isInitializing) {
-                                    SetMeasurementCodeLocally(measurementCode);
-                                    SetStrutFitInUseLocally(true);
+                                    setMeasurementCodeLocally(measurementCode);
+                                    setStrutFitInUseLocally(true);
                                 }
 
                                 _buttonDataCallback.run();
@@ -179,7 +163,7 @@ public class StrutFitButtonHelper {
         return sharedPreferences.getString(Measurement_Code, "");
     }
 
-    private void SetMeasurementCodeLocally(String measurementCode) {
+    private void setMeasurementCodeLocally(String measurementCode) {
         SharedPreferences sharedPreferences = _context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -188,7 +172,7 @@ public class StrutFitButtonHelper {
         editor.apply();
     }
 
-    private void SetStrutFitInUseLocally(Boolean inUse) {
+    private void setStrutFitInUseLocally(Boolean inUse) {
         SharedPreferences sharedPreferences = _context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 

@@ -169,7 +169,7 @@ public class StrutFitButtonWebview {
         });
     }
 
-    public void SetJavaScriptInterface (StrutFitJavaScriptInterface javascriptInterFace) {
+    public void setJavaScriptInterface(StrutFitJavaScriptInterface javascriptInterFace) {
         // Set settings
         WebSettings webSettings = _webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -184,17 +184,17 @@ public class StrutFitButtonWebview {
         _webView.addJavascriptInterface(javascriptInterFace, "Android");
     }
 
-    public void OpenAndInitializeWebView() {
+    public void openAndInitializeWebView() {
         _webView.loadUrl(_button._webviewUrl);
         _webView.setVisibility(View.VISIBLE);
     }
 
-    public void OpenWebView() {
+    public void openWebView() {
         _webView.setVisibility(View.VISIBLE);
         _webView.bringToFront();
     }
 
-    public void CloseWebView() {
+    public void closeWebView() {
         _webView.setVisibility(View.GONE);
     }
 }

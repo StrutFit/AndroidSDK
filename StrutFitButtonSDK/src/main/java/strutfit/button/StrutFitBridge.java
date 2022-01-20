@@ -33,7 +33,7 @@ public class StrutFitBridge {
     public int _minHeight;
     public int _maxHeight;
     public int _organizationId;
-    public String _backGroundColor;
+    public String _backgroundColor;
     public String _shoeID;
     private boolean _hasInitialized = false;
     private String _sizeUnavailableText;
@@ -46,7 +46,7 @@ public class StrutFitBridge {
     private StrutFitButton _sfButton;
     private StrutFitButtonWebview _sfWebView;
 
-    public StrutFitBridge(Button button, WebView webview, Context context, int minWidth, int maxWidth, int minHeight, int maxHeight, String backGroundColor, int organizationId, String shoeID,
+    public StrutFitBridge(Button button, WebView webview, Context context, int minWidth, int maxWidth, int minHeight, int maxHeight, String backgroundColor, int organizationId, String shoeID,
                           Optional<String> sizeUnavailableText, Optional<String> childPreSizeText, Optional<String> childPostSizeText, Optional<String> adultPreSizeText, Optional<String> adultPostSizeText) {
         _webView = webview;
         _button = button;
@@ -57,7 +57,7 @@ public class StrutFitBridge {
         _maxWidth = maxWidth;
         _minHeight = minHeight;
         _maxHeight = maxHeight;
-        _backGroundColor = backGroundColor;
+        _backgroundColor = backgroundColor;
         _organizationId = organizationId;
         _shoeID = shoeID;
 
@@ -68,14 +68,14 @@ public class StrutFitBridge {
         _adultPostSizeText = adultPostSizeText == null ? _context.getResources().getString(R.string.defaultAdultPostSizeText) : adultPostSizeText.toString();
     }
 
-    public void InitializeStrutfit () {
+    public void initializeStrutfit() {
         // SF Button library will initialize the button
         // We start a new thread so the main thread does not get disturbed
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // Construct the SF Button and its properties
-                _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backGroundColor, _context, _organizationId, _shoeID,
+                _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backgroundColor, _context, _organizationId, _shoeID,
                                                 _sizeUnavailableText, _childPreSizeText, _childPostSizeText, _adultPreSizeText, _adultPostSizeText);
 
                 // Ui changes need to run on the UI thread
@@ -83,11 +83,11 @@ public class StrutFitBridge {
                     @Override
                     public void run() {
                         // StrutFit library will render the text / size
-                        _sfButton.SetInitialButtonUI();
+                        _sfButton.setInitialButtonUI();
 
                         // Initialize webView
                         _sfWebView = new StrutFitButtonWebview(_webView, _sfButton, _context);
-                        _sfWebView.SetJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context));
+                        _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context));
 
                         // Initialize button on-click function
                         _button.setOnClickListener(new View.OnClickListener() {
@@ -111,11 +111,11 @@ public class StrutFitBridge {
                                 }
 
                                 if(!_hasInitialized) {
-                                    _sfWebView.OpenAndInitializeWebView();
+                                    _sfWebView.openAndInitializeWebView();
                                 } else {
-                                    _sfWebView.OpenWebView();
+                                    _sfWebView.openWebView();
                                 }
-                                _sfButton.HideButton();
+                                _sfButton.hideButton();
                                 _hasInitialized = true;
                             }
                         });
@@ -175,13 +175,13 @@ class StrutFitJavaScriptInterface {
         ((Activity) _context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                _sfWebView.CloseWebView();
-                _sfButton.ShowButton();
+                _sfWebView.closeWebView();
+                _sfButton.showButton();
             }
         });
     }
 
     private void updateMeasurementCode(String measurementCode) throws Exception {
-        _sfButton.GetSizeAndVisibility(measurementCode);
+        _sfButton.getSizeAndVisibility(measurementCode);
     }
 }

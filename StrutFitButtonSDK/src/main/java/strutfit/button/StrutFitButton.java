@@ -2,12 +2,9 @@ package strutfit.button;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
-import java.util.Optional;
 
 public class StrutFitButton {
 
@@ -27,7 +24,7 @@ public class StrutFitButton {
     private Runnable _callback = new Runnable() {
         @Override
         public void run() {
-            SetInitialButtonValues();
+            setInitialButtonValues();
         }
     };
 
@@ -53,7 +50,7 @@ public class StrutFitButton {
         }
     }
 
-    public void SetInitialButtonUI() {
+    public void setInitialButtonUI() {
         _button.setMinimumWidth(_minWidth);
         _button.setMaxWidth(_maxWidth);
         _button.setMinimumHeight(_minHeight);
@@ -62,7 +59,7 @@ public class StrutFitButton {
         _button.setTextSize(12);
     }
 
-    private void SetInitialButtonValues() {
+    private void setInitialButtonValues() {
         if(_buttonHelper.buttonIsVisible) {
             _button.setText(_buttonHelper.buttonText);
             _webviewUrl = _buttonHelper.webViewURL;
@@ -72,16 +69,16 @@ public class StrutFitButton {
         }
     }
 
-    public void HideButton() {
+    public void hideButton() {
         _button.setVisibility(View.GONE);
     }
 
-    public void ShowButton() {
+    public void showButton() {
         _button.setVisibility(View.VISIBLE);
     }
 
-    public void GetSizeAndVisibility(String MeasurementCode) throws Exception {
-        _buttonHelper.GetSizeAndVisibility(MeasurementCode, false);
+    public void getSizeAndVisibility(String MeasurementCode) throws Exception {
+        _buttonHelper.getSizeAndVisibility(MeasurementCode, false);
         _button.setText(_buttonHelper.buttonText);
     }
 }
