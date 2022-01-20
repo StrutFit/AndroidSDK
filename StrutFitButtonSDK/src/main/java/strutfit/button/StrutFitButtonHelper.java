@@ -133,7 +133,7 @@ public class StrutFitButtonHelper {
                                 }
                                 buttonText = _buttonText;
 
-                                // When initializing we need to set the web view URL
+                                // When initializing we need to set the webview URL
                                 if (isInitializing) {
                                     Random rand = new Random();
                                     int int_random = rand.nextInt(99999);

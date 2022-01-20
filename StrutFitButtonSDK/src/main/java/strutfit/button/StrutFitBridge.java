@@ -94,7 +94,7 @@ public class StrutFitBridge {
                             public void onClick(View v) {
 
                                 int MY_PERMISSIONS_REQUEST_CAMERA=0;
-                                // Here, this is the current activity
+
                                 if (ContextCompat.checkSelfPermission(_context, Manifest.permission.CAMERA) != PERMISSION_GRANTED)
                                 {
                                     if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) _context, Manifest.permission.CAMERA))
@@ -104,9 +104,6 @@ public class StrutFitBridge {
                                     else
                                     {
                                         ActivityCompat.requestPermissions((Activity)_context, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA );
-                                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                                        // app-defined int constant. The callback method gets the
-                                        // result of the request.
                                     }
                                 }
 
