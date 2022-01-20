@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,6 +20,9 @@ public class StrutFitButton {
     public int _maxHeight;
     public String _backGroundColor;
     public StrutFitButtonHelper _buttonHelper;
+
+    private Context _context;
+    private String TAG;
 
     private Runnable _callback = new Runnable() {
         @Override
@@ -37,13 +41,15 @@ public class StrutFitButton {
         _minHeight = minHeight;
         _maxHeight = maxHeight;
         _backGroundColor = backGroundColor;
+        _context = context;
+        TAG = ((Activity) _context).getClass().getSimpleName();
 
         try {
             _buttonHelper = new StrutFitButtonHelper(context, _callback, organizationID, shoeID, sizeUnavailableText, childPreSizeText, childPostSizeText, adultPreSizeText, adultPostSizeText);
             _webviewUrl = _buttonHelper.webViewURL;
             _buttonIsReady = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Unable to construct button helper and initialize the button", e);
         }
     }
 

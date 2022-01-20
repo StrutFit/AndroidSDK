@@ -132,12 +132,14 @@ class StrutFitJavaScriptInterface {
     private StrutFitButton _sfButton;
     private StrutFitButtonWebview _sfWebView;
     private Context _context;
+    private String TAG;
 
 
     StrutFitJavaScriptInterface(StrutFitButton sfButton, StrutFitButtonWebview sfWebView, Context context) {
         _sfButton = sfButton;
         _sfWebView = sfWebView;
         _context = context;
+        TAG = ((Activity) _context).getClass().getSimpleName();
     }
 
     @JavascriptInterface
@@ -155,7 +157,7 @@ class StrutFitJavaScriptInterface {
                     try {
                         updateMeasurementCode(json.getString("mcode").toString());
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        Log.e(TAG, "Unable to update measurement code", e);
                     }
                     break;
                 case 2:
@@ -165,7 +167,7 @@ class StrutFitJavaScriptInterface {
                     break;
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Unable to process message", e);
         }
     }
 
