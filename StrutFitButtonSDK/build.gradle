@@ -20,6 +20,17 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue 'string', 'serverBaseUrl', 'https://api-prod.strut.fit/'
+            resValue 'string', 'webViewBaseUrl', 'https://scan.strut.fit/'
+        }
+        debug {
+            resValue 'string', 'serverBaseUrl', 'https://api-dev.strut.fit/'
+            resValue 'string', 'webViewBaseUrl', 'https://consumer-portal-dev.strut.fit/'
+        }
+        staging {
+            initWith debug
+            resValue 'string', 'serverBaseUrl', 'https://api-prod.strut.fit/'
+            resValue 'string', 'webViewBaseUrl', 'https://scan.strut.fit/'
         }
     }
     compileOptions {

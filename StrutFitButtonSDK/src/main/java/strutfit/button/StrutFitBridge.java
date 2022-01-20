@@ -99,7 +99,7 @@ public class StrutFitBridge {
                                 {
                                     if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) _context, Manifest.permission.CAMERA))
                                     {
-                                        Toast.makeText(_context, "For the best experience this application needs access to the camera", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(_context, _context.getResources().getString(R.string.cameraAccessToastMessage), Toast.LENGTH_LONG).show();
                                     }
                                     else
                                     {

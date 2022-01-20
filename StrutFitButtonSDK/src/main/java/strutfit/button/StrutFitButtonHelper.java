@@ -42,8 +42,6 @@ public class StrutFitButtonHelper {
     private final OkHttpClient client = new OkHttpClient();
     private int  _organizationID;
     private String  _shoeID;
-    private String _baseAPIUrl;
-    private String _baseWebViewUrl;
     private String _sizeUnavailableText;
     private String _childPreSizeText;
     private String _childPostSizeText;
@@ -60,8 +58,6 @@ public class StrutFitButtonHelper {
     public StrutFitButtonHelper (Context context, Runnable callback, int organizationID, String shoeID, String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) throws Exception {
         _organizationID = organizationID;
         _shoeID = shoeID;
-        _baseAPIUrl =  "https://api-prod.strut.fit/api/"; // "https://api-dev.strut.fit/api/";
-        _baseWebViewUrl =  "https://scan.strut.fit/"; // "https://consumer-portal-dev.strut.fit/";
         _context = context;
         _buttonDataCallback = callback;
 
@@ -79,7 +75,7 @@ public class StrutFitButtonHelper {
 
         if(measurementCode.isEmpty())
         {
-            disposables.add(StrutFitClient.getInstance()
+            disposables.add(StrutFitClient.getInstance(_context)
                     .getButtonVisibility(_organizationID, _shoeID)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -103,7 +99,9 @@ public class StrutFitButtonHelper {
 
                                 Random rand = new Random();
                                 int int_random = rand.nextInt(99999);
-                                webViewURL = String.format(_baseWebViewUrl + "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true", _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
+                                webViewURL = String.format(_context.getResources().getString(R.string.webViewBaseUrl) +
+                                        "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true",
+                                        _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
                                 _buttonDataCallback.run();
                             }
                             catch(Exception e) {
@@ -114,7 +112,7 @@ public class StrutFitButtonHelper {
         }
         else
         {
-            disposables.add(StrutFitClient.getInstance()
+            disposables.add(StrutFitClient.getInstance(_context)
                     .getButtonSizeAndVisibility(_organizationID, _shoeID, measurementCode)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -155,7 +153,9 @@ public class StrutFitButtonHelper {
                                 if (isInitializing) {
                                     Random rand = new Random();
                                     int int_random = rand.nextInt(99999);
-                                    webViewURL = String.format(_baseWebViewUrl + "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true", _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
+                                    webViewURL = String.format(_context.getResources().getString(R.string.webViewBaseUrl) +
+                                            "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true",
+                                            _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
                                 }
 
                                 // When a post message comes back from the modal with a new measurement code
@@ -171,15 +171,6 @@ public class StrutFitButtonHelper {
                             }
                         }
                     }));
-            URL url = new URL(String.format(_baseAPIUrl + "MobileApp/GetSizeandVisibility?OrganizationUnitId=%s&Code=%s&MCode=%s", _organizationID, _shoeID, measurementCode));
-            Request request = new Request.Builder().url(url).build();
-
-            try (Response response = client.newCall(request).execute()) {
-                if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-                String responseAsText = response.body().string();
-
-            }
         }
     }
 

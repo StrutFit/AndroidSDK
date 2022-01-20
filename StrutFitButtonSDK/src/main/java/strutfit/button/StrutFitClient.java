@@ -1,5 +1,7 @@
 package strutfit.button;
 
+import android.content.Context;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,14 +16,12 @@ import strutfit.button.models.ButtonVisibilityAndSizeOutput;
 import strutfit.button.models.ButtonVisibilityOutput;
 
 public class StrutFitClient {
-    private static final String STRUTFIT_BASE_URL = "https://api-prod.strut.fit/";
-
     private static StrutFitClient instance;
     private StrutFitService strutFitService;
 
-    private StrutFitClient() {
+    private StrutFitClient(Context context) {
         final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
-        final Retrofit retrofit = new Retrofit.Builder().baseUrl(STRUTFIT_BASE_URL)
+        final Retrofit retrofit = new Retrofit.Builder().baseUrl(context.getResources().getString(R.string.serverBaseUrl))
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
@@ -29,9 +29,9 @@ public class StrutFitClient {
         strutFitService = retrofit.create(StrutFitService.class);
     }
 
-    public static StrutFitClient getInstance() {
+    public static StrutFitClient getInstance(Context context) {
         if (instance == null) {
-            instance = new StrutFitClient();
+            instance = new StrutFitClient(context);
         }
         return instance;
     }

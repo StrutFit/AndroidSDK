@@ -5,4 +5,5 @@
     <string name="defaultChildPostSizeText">Your child\'s size in this style is</string>
     <string name="defaultAdultPreSizeText">What is my size?</string>
     <string name="defaultAdultPostSizeText">Your size in this style is</string>
+    <string name="cameraAccessToastMessage">For the best experience this application needs access to the camera</string>
 </resources>

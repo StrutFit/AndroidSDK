@@ -31,7 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Pass the the two components into the StrutFit bridge
-        StrutFitBridge bridge = new StrutFitBridge(button, webView, this, 800, 800, 100, 100, "#f2f2f2", 5, "TestProduct",  null, null, null, null, null);
+        StrutFitBridge bridge = new StrutFitBridge(button, webView, this, 800, 800, 100, 100, "#f2f2f2",
+                this.getResources().getInteger(R.integer.organizationUnitId),
+                this.getResources().getString(R.string.productCode),
+                null, null, null, null, null);
         bridge.InitializeStrutfit();
     }
 }
