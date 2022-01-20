@@ -66,10 +66,12 @@ public class StrutFitButtonHelper {
                     .subscribeWith(new DisposableObserver<ButtonVisibilityOutput>() {
                         @Override public void onComplete() {
                             Log.d("StrutFitButtonHelper", "onComplete()");
+                            disposables.clear();
                         }
 
                         @Override public void onError(Throwable e) {
                             Log.e("StrutFitButtonHelper", "onError()", e);
+                            disposables.clear();
                         }
 
                         @Override public void onNext(ButtonVisibilityOutput output) {
@@ -103,10 +105,12 @@ public class StrutFitButtonHelper {
                     .subscribeWith(new DisposableObserver<ButtonVisibilityAndSizeOutput>() {
                         @Override public void onComplete() {
                             Log.d("StrutFitButtonHelper", "onComplete()");
+                            disposables.clear();
                         }
 
                         @Override public void onError(Throwable e) {
                             Log.e("StrutFitButtonHelper", "onError()", e);
+                            disposables.clear();
                         }
 
                         @Override public void onNext(ButtonVisibilityAndSizeOutput output) {
