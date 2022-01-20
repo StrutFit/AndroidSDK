@@ -125,14 +125,14 @@ public class StrutFitButtonHelper {
                                 int _sizeUnit = _sizeData.getUnit();
                                 Boolean _showWidthCategory = _sizeData.getShowWidthCategory();
                                 String _widthAbbreviation = _sizeData.getWidthAbbreviation();
-                                String _width = (!_showWidthCategory || _widthAbbreviation.isEmpty() || _widthAbbreviation == "null")? "" : _widthAbbreviation;
+                                String _width = (!_showWidthCategory || _widthAbbreviation == null || _widthAbbreviation.isEmpty())? "" : _widthAbbreviation;
 
 
                                 // Set initial rendering parameters
                                 buttonIsVisible = _visibilityData.getShow();
 
                                 String _buttonText = _sizeUnavailableText;
-                                if(!_size.isEmpty() && _size != "null") {
+                                if(_size != null && !_size.isEmpty()) {
                                     _buttonText = _isKids ? String.format("%s %s %s %s", _childPostSizeText, _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width) : String.format("%s %s %s %s", _adultPostSizeText,  _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width);
                                 }
                                 buttonText = _buttonText;

@@ -79,6 +79,5 @@ public class StrutFitButton {
 
     public void getSizeAndVisibility(String MeasurementCode) throws Exception {
         _buttonHelper.getSizeAndVisibility(MeasurementCode, false);
-        _button.setText(_buttonHelper.buttonText);
     }
 }

@@ -151,11 +151,7 @@ class StrutFitJavaScriptInterface {
                 case 0:
                 case 1:
                     // update m-code
-                    try {
-                        updateMeasurementCode(json.getString("mcode").toString());
-                    } catch (Exception e) {
-                        Log.e(TAG, "Unable to update measurement code", e);
-                    }
+                    updateMeasurementCode(json);
                     break;
                 case 2:
                     closeModal();
@@ -165,6 +161,14 @@ class StrutFitJavaScriptInterface {
             }
         } catch (JSONException e) {
             Log.e(TAG, "Unable to process message", e);
+        }
+    }
+
+    private void updateMeasurementCode(JSONObject json){
+        try {
+            updateMeasurementCode(json.getString("mcode").toString());
+        } catch (Exception e) {
+            Log.e(TAG, "Unable to update measurement code", e);
         }
     }
 
