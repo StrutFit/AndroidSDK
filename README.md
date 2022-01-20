@@ -2,12 +2,12 @@
 SDK for StrutFit Android integration
 
 If you have any issues or suggested changes/improvements please email nish@strut.fit. 
-If we have implemented the the library doesnt quite work for your organisation please let us know we are happy to discuss.
+If what we have implemented in the library doesnt quite work for your organisation, please let us know, we are happy to discuss.
 
 This code should be executed when a user visits the product display page.
 
 
-1. Add it in your root build.gradle at the end of repositories:
+1. Add the jitpack.io url in your root build.gradle at the end of repositories if not already present:
 ```ruby
 	allprojects {
 		repositories {
@@ -24,11 +24,11 @@ This code should be executed when a user visits the product display page.
 	}
 ```
 
-3. Ensure the following permission are given to the application if it does not already:  
+3. Ensure the following permissions are given to the application if it does not already:  
 	**Internet:** We are accessing a website  
-	**Write External Storage:** To allow the webapp to store variable locally  
-	**Read External Stoarge:** Allows the app to access camer role for uploading photos  
-	**Camera & Audio:** For the in app camera view to allow users to take photos.  
+	**Write External Storage:** To allow the web-app to store variables locally  
+	**Read External Stoarge:** Allows the app to access camera roll for uploading photos  
+	**Camera & Audio:** For the in-app camera view to allow users to take photos.  
 			Although we dont actually record audio we still need the permission.
 ```ruby
 	<uses-permission android:name="android.permission.INTERNET"/>
@@ -48,14 +48,14 @@ This code should be executed when a user visits the product display page.
 	**ProductIdentifer:** "TestProduct" 
 
 	For a quick test instead of going to the scanning process you may login using the following test account 
-	Before release please defer to putting the actual product identifier and oranizationId provided by your StrutFit account manager.  
+	Before release please remember to put in the actual product identifier and organizationId provided by your StrutFit account manager.  
 	**Email:** test@test.com  
 	**Password:** thisisatest  
 	**ActivityContext:** is the activity context  
 	800, 800, 100, 100 = Dimensions of the button  
-	"#f2f2f2" = Background color of the button (this is the reccomended StrutFit colour) 
+	"#f2f2f2" = Background color of the button (this is the recommended StrutFit colour) 
 
-	we encourage you to modify the button UI to suite your application while conforming to the StrutFit brand guidelines.  
+	We encourage you to modify the button UI to suit your application while conforming to the StrutFit brand guidelines.  
 	
 	**Initiating the StrutFitBridge should be done on the product display page.
 	Re-create the class when the user navigates to a new product page**
@@ -70,6 +70,6 @@ This code should be executed when a user visits the product display page.
 	webView.setVisibility(View.GONE);
 
 	// Pass the the two components into the StrutFit bridge
-	StrutFitBridge bridge = new StrutFitBridge(button, webView, ActivityContext, 800, 800, 100, 100, "#f2f2f2", OrganizationID, ProductIdentifier);
-	bridge.InitializeStrutfit();
+	StrutFitBridge bridge = new StrutFitBridge(button, webView, ActivityContext, 800, 800, 100, 100, "#f2f2f2", OrganizationID, ProductIdentifier, null, null, null, null, null);
+	bridge.initializeStrutFit();
 ```
