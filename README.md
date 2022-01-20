@@ -16,6 +16,13 @@ This code should be executed when a user visits the product display page.
 		}
 	}
 ```
+OR add the jitpack.io url in your project settings.gradle in the repositories section:
+```ruby
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+``` 
   
 2. Add the dependency: replace x.x.x with the desired version. Please check the release tab to see the latest production release version
 ```ruby
@@ -29,7 +36,7 @@ This code should be executed when a user visits the product display page.
 	**Write External Storage:** To allow the web-app to store variables locally  
 	**Read External Stoarge:** Allows the app to access camera roll for uploading photos  
 	**Camera & Audio:** For the in-app camera view to allow users to take photos.  
-			Although we dont actually record audio we still need the permission.
+			Although we don't actually record audio we still need the permission.
 ```ruby
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -47,7 +54,7 @@ This code should be executed when a user visits the product display page.
 	**OrganizationID:** 5  
 	**ProductIdentifer:** "TestProduct" 
 
-	For a quick test instead of going to the scanning process you may login using the following test account 
+	For a quick test instead of going to the scanning process you may login using the following test account. 
 	Before release please remember to put in the actual product identifier and organizationId provided by your StrutFit account manager.  
 	**Email:** test@test.com  
 	**Password:** thisisatest  
