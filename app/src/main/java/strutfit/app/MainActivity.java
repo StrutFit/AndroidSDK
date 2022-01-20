@@ -29,6 +29,6 @@ public class MainActivity extends AppCompatActivity {
                 this.getResources().getInteger(R.integer.organizationUnitId),
                 this.getResources().getString(R.string.productCode),
                 null, null, null, null, null);
-        bridge.initializeStrutfit();
+        bridge.initializeStrutFit();
     }
 }

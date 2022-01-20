@@ -68,7 +68,7 @@ public class StrutFitBridge {
         _adultPostSizeText = adultPostSizeText == null ? _context.getResources().getString(R.string.defaultAdultPostSizeText) : adultPostSizeText.toString();
     }
 
-    public void initializeStrutfit() {
+    public void initializeStrutFit() {
         // SF Button library will initialize the button
         // We start a new thread so the main thread does not get disturbed
         new Thread(new Runnable() {
