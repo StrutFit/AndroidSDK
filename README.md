@@ -42,8 +42,6 @@ OR add the jitpack.io url in your project settings.gradle in the repositories se
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.CAMERA" />
-	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-	<uses-permission android:name="android.permission.RECORD_AUDIO" />
 ```
 
 4. Initializing StrutFit button  
