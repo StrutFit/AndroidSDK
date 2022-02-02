@@ -1,7 +1,6 @@
-package strutfit.button;
+package strutfit.button.helpers;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.util.Random;
@@ -11,6 +10,9 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
+import strutfit.button.R;
+import strutfit.button.SizeUnit;
+import strutfit.button.clients.StrutFitClient;
 import strutfit.button.models.ButtonSizeResult;
 import strutfit.button.models.ButtonVisibilityAndSizeOutput;
 import strutfit.button.models.ButtonVisibilityAndSizeResult;
@@ -35,9 +37,6 @@ public class StrutFitButtonHelper {
     private Context _context;
     private CompositeDisposable disposables = new CompositeDisposable();
     private Runnable _buttonDataCallback;
-    private static final String SHARED_PREFS = "sharedPrefs";
-    private static final String Measurement_Code = "measurementCode";
-    private static final String StrutFit_In_Use = "isStrutFitInUse";
 
     public StrutFitButtonHelper (Context context, Runnable callback, int organizationID, String shoeID, String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) throws Exception {
         _organizationID = organizationID;
@@ -51,7 +50,7 @@ public class StrutFitButtonHelper {
         _adultPreSizeText = adultPreSizeText;
         _adultPostSizeText = adultPostSizeText ;
 
-        String measurementCode = getMeasurementCodeLocally();
+        String measurementCode = StrutFitCommonHelper.getLocalMcode(context);
         getSizeAndVisibility(measurementCode, true);
     }
 
@@ -148,8 +147,8 @@ public class StrutFitButtonHelper {
 
                                 // When a post message comes back from the modal with a new measurement code
                                 if (!isInitializing) {
-                                    setMeasurementCodeLocally(measurementCode);
-                                    setStrutFitInUseLocally(true);
+                                    StrutFitCommonHelper.setLocalMcode(_context, measurementCode);
+                                    StrutFitCommonHelper.setStrutFitInUse(_context, true);
                                 }
 
                                 _buttonDataCallback.run();
@@ -160,28 +159,5 @@ public class StrutFitButtonHelper {
                         }
                     }));
         }
-    }
-
-    private String getMeasurementCodeLocally() {
-        SharedPreferences sharedPreferences = _context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(Measurement_Code, "");
-    }
-
-    private void setMeasurementCodeLocally(String measurementCode) {
-        SharedPreferences sharedPreferences = _context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(Measurement_Code, measurementCode);
-
-        editor.apply();
-    }
-
-    private void setStrutFitInUseLocally(Boolean inUse) {
-        SharedPreferences sharedPreferences = _context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putBoolean(StrutFit_In_Use, inUse);
-
-        editor.apply();
     }
 }
