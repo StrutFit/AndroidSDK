@@ -37,14 +37,14 @@ public class MainActivity extends AppCompatActivity {
         bridge.initializeStrutFit();
 
 
-        StrutFitTracking sfTracking = new StrutFitTracking(this, this.getResources().getInteger(R.integer.organizationUnitId));
-        ArrayList<ConversionItem> items = new ArrayList<ConversionItem>();
-        ConversionItem item = new ConversionItem();
-        item.size = "5";
-        item.price = 3.00;
-        item.productIdentifier = "LC123";
-        item.sku = "12312313";
-        items.add(item);
-        sfTracking.registerOrder("TestRef", 123, "USD", items);
+        // StrutFitTracking sfTracking = new StrutFitTracking(this, this.getResources().getInteger(R.integer.organizationUnitId));
+        // ArrayList<ConversionItem> items = new ArrayList<ConversionItem>();
+        // ConversionItem item = new ConversionItem();
+        // item.size = "5";
+        // item.price = 3.00;
+        // item.productIdentifier = "LC123";
+        // item.sku = "12312313";
+        // items.add(item);
+        // sfTracking.registerOrder("TestRef", 123, "USD", items);
     }
 }
