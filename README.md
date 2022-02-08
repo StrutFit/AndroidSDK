@@ -1,4 +1,4 @@
-# StrutFit Button Android SDK
+# StrutFit (Android) Button integration
 SDK for StrutFit Android integration
 
 If you have any issues or suggested changes/improvements please email nish@strut.fit. 
@@ -78,3 +78,28 @@ OR add the jitpack.io url in your project settings.gradle in the repositories se
 	StrutFitBridge bridge = new StrutFitBridge(button, webView, ActivityContext, 800, 800, 100, 100, "#f2f2f2", OrganizationID, ProductIdentifier, null, null, null, null, null);
 	bridge.initializeStrutFit();
 ```
+# StrutFit (Android) tracking pixel integration
+Prerquisite: Complete the button integration as shown above.
+
+The tracking pixel is used to record orders from the retailer. This is to allow us to track the preformace of StrutFit on your website.
+You can see the analytics in the Retailer dashboard/
+
+1. You must have the StrutFit Android SDK package in your project.
+2. Go to the area in your code where the end consumer successfully completes an order
+3. Consider the following code: create an instance of StrutFitTracking then register an order
+
+```ruby
+	StrutFitTracking sfTracking = new StrutFitTracking(ActivityContext, OrganizationID);
+	sfTracking.registerOrder(OrderReference, OrderValue, CurrencyCode, ListOfItems);
+```
+OrderReference: Typically every order has a unique order reference (string)  
+OrderValue: total value of the order (double)  
+CurrencyCode: e.g. "USD", "NZD", "AUD" etc.  
+ListOfItems:  create an object **ArrayList<ConversionItem>** ListOfItems  
+ConversionItem: Data structure producded by StrutFit which contains the information for every item that was purchased for this particular order.  
+	sku: unique code for the item (string)  
+	productIdentifier: same as the productIdentifer you used in the button integration (sometimes this could be the same as sku) (string)  
+	price: price of this particular item (double)  
+	quantity: number of this item purchased (int)  
+	size: if there is a size to the item (string)
+	

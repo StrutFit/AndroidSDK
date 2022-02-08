@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import strutfit.button.helpers.StrutFitButtonHelper;
+
 public class StrutFitButton {
 
     public Boolean _buttonIsReady = false;

@@ -6,7 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+
+import java.util.ArrayList;
+
 import strutfit.button.StrutFitBridge;
+import strutfit.button.StrutFitTracking;
+import strutfit.button.models.ConversionItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,5 +35,16 @@ public class MainActivity extends AppCompatActivity {
                 this.getResources().getString(R.string.productCode),
                 null, null, null, null, null);
         bridge.initializeStrutFit();
+
+
+        // StrutFitTracking sfTracking = new StrutFitTracking(this, this.getResources().getInteger(R.integer.organizationUnitId));
+        // ArrayList<ConversionItem> items = new ArrayList<ConversionItem>();
+        // ConversionItem item = new ConversionItem();
+        // item.size = "5";
+        // item.price = 3.00;
+        // item.productIdentifier = "LC123";
+        // item.sku = "12312313";
+        // items.add(item);
+        // sfTracking.registerOrder("TestRef", 123, "USD", items);
     }
 }

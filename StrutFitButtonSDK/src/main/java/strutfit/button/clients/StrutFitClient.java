@@ -1,4 +1,4 @@
-package strutfit.button;
+package strutfit.button.clients;
 
 import android.content.Context;
 
@@ -10,6 +10,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import io.reactivex.rxjava3.core.Observable;
+import strutfit.button.R;
+import strutfit.button.services.StrutFitService;
 import strutfit.button.models.ButtonVisibilityAndSizeOutput;
 import strutfit.button.models.ButtonVisibilityOutput;
 

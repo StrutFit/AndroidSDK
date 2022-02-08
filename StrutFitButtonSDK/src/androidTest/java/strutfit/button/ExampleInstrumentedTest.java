@@ -10,6 +10,8 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+import strutfit.button.helpers.StrutFitButtonHelper;
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
