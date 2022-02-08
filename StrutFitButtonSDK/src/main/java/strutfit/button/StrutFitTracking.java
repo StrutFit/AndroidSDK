@@ -54,35 +54,40 @@ public class StrutFitTracking {
 
         // Send data to conversion API
         String pixelJsonString = _gson.toJson(data);
+        String encodedString = "";
 
+        // Different API versions have different way to base64 strings
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            String encodedString = Base64.getEncoder().encodeToString(pixelJsonString.getBytes());
-            disposables.add(PixelClient.getInstance(_context)
-                    .registerConversion(encodedString)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(new DisposableObserver<JSONObject>() {
-                        @Override
-                        public void onComplete() {
-                            Log.d("StrutFitTracker", "onComplete()");
-                            disposables.clear();
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e("StrutFitTracker", "onError()", e);
-                            disposables.clear();
-                        }
-
-                        @Override
-                        public void onNext(JSONObject output) {
-                            try {
-
-                            } catch (Exception e) {
-                                Log.e("StrutFitTracker", "onError()", e);
-                            }
-                        }
-                    }));
+            encodedString = Base64.getEncoder().encodeToString(pixelJsonString.getBytes());
+        } else {
+            encodedString = android.util.Base64.encodeToString(pixelJsonString.getBytes(), android.util.Base64.DEFAULT);
         }
+
+        disposables.add(PixelClient.getInstance(_context)
+                .registerConversion(encodedString)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableObserver<JSONObject>() {
+                    @Override
+                    public void onComplete() {
+                        Log.d("StrutFitTracker", "onComplete()");
+                        disposables.clear();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("StrutFitTracker", "onError()", e);
+                        disposables.clear();
+                    }
+
+                    @Override
+                    public void onNext(JSONObject output) {
+                        try {
+
+                        } catch (Exception e) {
+                            Log.e("StrutFitTracker", "onError()", e);
+                        }
+                    }
+                }));
     }
 }
