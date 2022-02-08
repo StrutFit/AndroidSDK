@@ -92,14 +92,14 @@ You can see the analytics in the Retailer dashboard/
 	StrutFitTracking sfTracking = new StrutFitTracking(ActivityContext, OrganizationID);
 	sfTracking.registerOrder(OrderReference, OrderValue, CurrencyCode, ListOfItems);
 ```
-OrderReference: Typically every order has a unique order reference (string)  
-OrderValue: total value of the order (double)  
-CurrencyCode: e.g. "USD", "NZD", "AUD" etc.  
-ListOfItems:  create an object **ArrayList<ConversionItem>** ListOfItems  
-ConversionItem: Data structure producded by StrutFit which contains the information for every item that was purchased for this particular order.  
-	sku: unique code for the item (string)  
-	productIdentifier: same as the productIdentifer you used in the button integration (sometimes this could be the same as sku) (string)  
-	price: price of this particular item (double)  
-	quantity: number of this item purchased (int)  
-	size: if there is a size to the item (string)
+**OrderReference:** Typically every order has a unique order reference (string)  
+**OrderValue:** Total value of the order (double)  
+**CurrencyCode:** e.g. "USD", "NZD", "AUD" etc.  
+**ListOfItems:** Create an object **ArrayList<ConversionItem>** ListOfItems  
+**ConversionItem:** Data structure producded by StrutFit which contains the information for every item that was purchased for this particular order.  
+	-sku: unique code for the item (string)  
+	-productIdentifier: same as the productIdentifer you used in the button integration (sometimes this could be the same as sku) (string)  
+	-price: price of this particular item (double)  
+	-quantity: number of this item purchased (int)  
+	-size: if there is a size to the item (string)
 	
