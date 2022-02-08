@@ -31,7 +31,7 @@ public class StrutFitTracking {
     private CompositeDisposable disposables = new CompositeDisposable();
 
     public StrutFitTracking (Context context, int organizationId) {
-        _endPoint  = context.getResources().getString(R.string.consversionUrl);
+        _endPoint  = context.getResources().getString(R.string.conversionUrl);
         _context = context;
         _organizationId = organizationId;
         _gson = new Gson();

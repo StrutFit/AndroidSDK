@@ -21,7 +21,7 @@ public class PixelClient {
 
     private PixelClient(Context context) {
         final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
-        final Retrofit retrofit = new Retrofit.Builder().baseUrl(context.getResources().getString(R.string.consversionUrl))
+        final Retrofit retrofit = new Retrofit.Builder().baseUrl(context.getResources().getString(R.string.conversionUrl))
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
