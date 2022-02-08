@@ -21,6 +21,7 @@ import strutfit.button.helpers.StrutFitCommonHelper;
 import strutfit.button.models.ButtonVisibilityAndSizeOutput;;
 import strutfit.button.models.ConversionItem;
 import strutfit.button.clients.PixelClient;
+import strutfit.button.models.PixelData;
 
 public class StrutFitTracking {
 
@@ -40,7 +41,7 @@ public class StrutFitTracking {
     public void registerOrder (String orderReference, float orderValue, String currencyCode, ArrayList<ConversionItem> items ) {
 
         // Construct conversion data
-        pixelData data = new pixelData();
+        PixelData data = new PixelData();
 
         data.organizationId = _organizationId;
         data.sfEnabled = StrutFitCommonHelper.getStrutFitInUse(_context);
@@ -83,24 +84,5 @@ public class StrutFitTracking {
                         }
                     }));
         }
-    }
-
-    public class pixelData {
-
-        public int organizationId;
-
-        public Boolean sfEnabled;
-
-        public String orderRef;
-
-        public Float orderValue;
-
-        public String mCode;
-
-        public String items;
-
-        public String currencyCode;
-
-        public String domain;
     }
 }
