@@ -25,7 +25,7 @@ public class StrutFitBridge {
     // Activity properties
     private Context _context;
     private WebView _webView;
-    private Button _button;
+    private StrutFitButtonView _button;
 
     // Button properties
     public int _minWidth;
@@ -46,7 +46,7 @@ public class StrutFitBridge {
     private StrutFitButton _sfButton;
     private StrutFitButtonWebview _sfWebView;
 
-    public StrutFitBridge(Button button, WebView webview, Context context, int minWidth, int maxWidth, int minHeight, int maxHeight, String backgroundColor, int organizationId, String shoeID,
+    public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int minWidth, int maxWidth, int minHeight, int maxHeight, String backgroundColor, int organizationId, String shoeID,
                           Optional<String> sizeUnavailableText, Optional<String> childPreSizeText, Optional<String> childPostSizeText, Optional<String> adultPreSizeText, Optional<String> adultPostSizeText) {
         _webView = webview;
         _button = button;
@@ -90,7 +90,7 @@ public class StrutFitBridge {
                         _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context));
 
                         // Initialize button on-click function
-                        _button.setOnClickListener(new View.OnClickListener() {
+                        _button.getButton().setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
 
                                 int MY_PERMISSIONS_REQUEST_CAMERA=0;

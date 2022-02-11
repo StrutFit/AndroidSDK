@@ -10,6 +10,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 import strutfit.button.StrutFitBridge;
+import strutfit.button.StrutFitButtonView;
 import strutfit.button.StrutFitTracking;
 import strutfit.button.models.ConversionItem;
 
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Create your button and hide it
-        Button button = findViewById(R.id.StruftFitButton);
+        StrutFitButtonView button = findViewById(R.id.StruftFitButton);
         button.setVisibility(View.GONE);
 
         // Create your web view
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Pass the the two components into the StrutFit bridge
-        StrutFitBridge bridge = new StrutFitBridge(button, webView, this, 800, 800, 100, 100, "#f2f2f2",
+        StrutFitBridge bridge = new StrutFitBridge(button, webView, this, 1500, 1500, 100, 100, "#f2f2f2",
                 this.getResources().getInteger(R.integer.organizationUnitId),
                 this.getResources().getString(R.string.productCode),
                 null, null, null, null, null);

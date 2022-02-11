@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+
 
 import strutfit.button.helpers.StrutFitButtonHelper;
 
@@ -12,7 +12,7 @@ public class StrutFitButton {
 
     public Boolean _buttonIsReady = false;
     public String _webviewUrl = "";
-    public Button _button;
+    public StrutFitButtonView _button;
     public int _minWidth;
     public int _maxWidth;
     public int _minHeight;
@@ -30,7 +30,7 @@ public class StrutFitButton {
         }
     };
 
-    public StrutFitButton(Button button, int minWidth, int maxWidth, int minHeight, int maxHeight, String backGroundColor,
+    public StrutFitButton(StrutFitButtonView button, int minWidth, int maxWidth, int minHeight, int maxHeight, String backGroundColor,
                           Context context, int organizationID, String shoeID,
                           String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) {
 
@@ -53,12 +53,7 @@ public class StrutFitButton {
     }
 
     public void setInitialButtonUI() {
-        _button.setMinimumWidth(_minWidth);
-        _button.setMaxWidth(_maxWidth);
-        _button.setMinimumHeight(_minHeight);
-        _button.setMaxHeight(_maxHeight);
         _button.setBackgroundColor(Color.parseColor((_backGroundColor)));
-        _button.setTextSize(12);
     }
 
     private void setInitialButtonValues() {

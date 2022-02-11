@@ -17,13 +17,11 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <ImageButton
+    <strutfit.button.StrutFitButtonView
         android:id="@+id/StruftFitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Button"
-        android:src="@drawable/ic_sf_btn_glyph"
+        android:layout_width="800px"
+        android:layout_height="100px"
+        android:gravity="center|center_vertical"
         android:textAllCaps="false"
         android:textColor="#000000"
         tools:ignore="MissingConstraints"

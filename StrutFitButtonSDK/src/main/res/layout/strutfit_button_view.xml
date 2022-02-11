@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:id="@+id/strutfit_button"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:clickable="true"
+android:orientation="horizontal"
+android:gravity="center">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        ><ImageView
+        android:id="@+id/strutfit_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:scaleType="fitCenter"
+        android:clickable="false"
+        android:src="@drawable/ic_sf_btn_glyph" />
+
+        <TextView
+            android:id="@+id/strutfit_button_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:clickable="false"
+            android:text="" />
+    </LinearLayout>
+
+
+</LinearLayout>
