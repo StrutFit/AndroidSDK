@@ -148,7 +148,6 @@ public class StrutFitButtonHelper {
                                 // When a post message comes back from the modal with a new measurement code
                                 if (!isInitializing) {
                                     StrutFitCommonHelper.setLocalMcode(_context, measurementCode);
-                                    StrutFitCommonHelper.setStrutFitInUse(_context, true);
                                 }
 
                                 _buttonDataCallback.run();
