@@ -1,7 +1,6 @@
 package strutfit.button;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 
@@ -25,7 +24,7 @@ public class StrutFitButton {
         }
     };
 
-    public StrutFitButton(StrutFitButtonView button, Context context, int organizationID, String shoeID,
+    public StrutFitButton(StrutFitButtonView button, Context context, int organizationID, String shoeID, StrutFitEventListener strutFitEventListener,
                           String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) {
 
         _button = button;
@@ -33,7 +32,8 @@ public class StrutFitButton {
         TAG = ((Activity) _context).getClass().getSimpleName();
 
         try {
-            _buttonHelper = new StrutFitButtonHelper(context, _callback, organizationID, shoeID, sizeUnavailableText, childPreSizeText, childPostSizeText, adultPreSizeText, adultPostSizeText);
+            _buttonHelper = new StrutFitButtonHelper(context, _callback, organizationID, shoeID, strutFitEventListener,
+                    sizeUnavailableText, childPreSizeText, childPostSizeText, adultPreSizeText, adultPostSizeText);
             _webviewUrl = _buttonHelper.webViewURL;
             _buttonIsReady = true;
         } catch (Exception e) {

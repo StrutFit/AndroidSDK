@@ -30,6 +30,7 @@ public class StrutFitBridge {
     public int _organizationId;
     public String _shoeID;
     private boolean _hasInitialized = false;
+    private StrutFitEventListener _strutFitEventListener;
     private String _sizeUnavailableText;
     private String _childPreSizeText;
     private String _childPostSizeText;
@@ -40,7 +41,17 @@ public class StrutFitBridge {
     private StrutFitButton _sfButton;
     private StrutFitButtonWebview _sfWebView;
 
+    public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID) {
+        this(button, webview, context, organizationId, shoeID, null, null, null, null, null, null);
+    }
+
     public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID,
+                          StrutFitEventListener sizeEventListener) {
+        this(button, webview, context, organizationId, shoeID, sizeEventListener, null, null, null, null, null);
+    }
+
+    public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID,
+                          StrutFitEventListener strutFitEventListener,
                           Optional<String> sizeUnavailableText, Optional<String> childPreSizeText, Optional<String> childPostSizeText,
                           Optional<String> adultPreSizeText, Optional<String> adultPostSizeText) {
         _webView = webview;
@@ -50,6 +61,7 @@ public class StrutFitBridge {
         _button = button;
         _organizationId = organizationId;
         _shoeID = shoeID;
+        _strutFitEventListener = strutFitEventListener;
 
         _sizeUnavailableText = sizeUnavailableText == null ? _context.getResources().getString(R.string.defaultSizeUnavailableText) : sizeUnavailableText.toString();
         _childPreSizeText = childPreSizeText == null ? _context.getResources().getString(R.string.defaultChildPreSizeText) : childPreSizeText.toString();
@@ -65,7 +77,7 @@ public class StrutFitBridge {
             @Override
             public void run() {
                 // Construct the SF Button and its properties
-                _sfButton = new StrutFitButton(_button, _context, _organizationId, _shoeID,
+                _sfButton = new StrutFitButton(_button, _context, _organizationId, _shoeID, _strutFitEventListener,
                                                 _sizeUnavailableText, _childPreSizeText, _childPostSizeText, _adultPreSizeText, _adultPostSizeText);
 
                 // Ui changes need to run on the UI thread

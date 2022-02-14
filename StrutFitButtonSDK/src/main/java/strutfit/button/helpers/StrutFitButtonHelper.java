@@ -12,6 +12,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import strutfit.button.R;
 import strutfit.button.SizeUnit;
+import strutfit.button.StrutFitEventListener;
 import strutfit.button.clients.StrutFitClient;
 import strutfit.button.models.ButtonSizeResult;
 import strutfit.button.models.ButtonVisibilityAndSizeOutput;
@@ -28,6 +29,7 @@ public class StrutFitButtonHelper {
     private final OkHttpClient client = new OkHttpClient();
     private int  _organizationID;
     private String  _shoeID;
+    private StrutFitEventListener _strutFitEventListener;
     private String _sizeUnavailableText;
     private String _childPreSizeText;
     private String _childPostSizeText;
@@ -38,11 +40,12 @@ public class StrutFitButtonHelper {
     private CompositeDisposable disposables = new CompositeDisposable();
     private Runnable _buttonDataCallback;
 
-    public StrutFitButtonHelper (Context context, Runnable callback, int organizationID, String shoeID, String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) throws Exception {
+    public StrutFitButtonHelper (Context context, Runnable callback, int organizationID, String shoeID, StrutFitEventListener strutFitEventListener, String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) throws Exception {
         _organizationID = organizationID;
         _shoeID = shoeID;
         _context = context;
         _buttonDataCallback = callback;
+        _strutFitEventListener = strutFitEventListener;
 
         _sizeUnavailableText = sizeUnavailableText;
         _childPreSizeText = childPreSizeText;
@@ -87,7 +90,16 @@ public class StrutFitButtonHelper {
                                 webViewURL = String.format(_context.getResources().getString(R.string.webViewBaseUrl) +
                                         "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true",
                                         _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
+
+                                // When a post message comes back from the modal with empty measurement code
+                                if (!isInitializing) {
+                                    StrutFitCommonHelper.setLocalMcode(_context, null);
+                                }
+
                                 _buttonDataCallback.run();
+                                if(_strutFitEventListener != null) {
+                                    _strutFitEventListener.onSizeEvent(null, null);
+                                }
                             }
                             catch(Exception e) {
                                 Log.e("StrutFitButtonHelper", "onError()", e);
@@ -151,6 +163,9 @@ public class StrutFitButtonHelper {
                                 }
 
                                 _buttonDataCallback.run();
+                                if(_strutFitEventListener != null) {
+                                    _strutFitEventListener.onSizeEvent(_size, SizeUnit.valueOf(_sizeUnit));
+                                }
                         }
                             catch(Exception e) {
                                 Log.e("StrutFitButtonHelper", "onError()", e);
