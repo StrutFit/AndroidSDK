@@ -13,11 +13,6 @@ public class StrutFitButton {
     public Boolean _buttonIsReady = false;
     public String _webviewUrl = "";
     public StrutFitButtonView _button;
-    public int _minWidth;
-    public int _maxWidth;
-    public int _minHeight;
-    public int _maxHeight;
-    public String _backGroundColor;
     public StrutFitButtonHelper _buttonHelper;
 
     private Context _context;
@@ -30,16 +25,10 @@ public class StrutFitButton {
         }
     };
 
-    public StrutFitButton(StrutFitButtonView button, int minWidth, int maxWidth, int minHeight, int maxHeight, String backGroundColor,
-                          Context context, int organizationID, String shoeID,
+    public StrutFitButton(StrutFitButtonView button, Context context, int organizationID, String shoeID,
                           String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) {
 
         _button = button;
-        _minWidth = minWidth;
-        _maxWidth = maxWidth;
-        _minHeight = minHeight;
-        _maxHeight = maxHeight;
-        _backGroundColor = backGroundColor;
         _context = context;
         TAG = ((Activity) _context).getClass().getSimpleName();
 
@@ -50,10 +39,6 @@ public class StrutFitButton {
         } catch (Exception e) {
             Log.e(TAG, "Unable to construct button helper and initialize the button", e);
         }
-    }
-
-    public void setInitialButtonUI() {
-       //_button.setBackgroundColor(Color.parseColor((_backGroundColor)));
     }
 
     private void setInitialButtonValues() {

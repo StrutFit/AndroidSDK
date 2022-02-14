@@ -3,6 +3,7 @@ package strutfit.button;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.util.AttributeSet;
@@ -11,6 +12,8 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.content.res.ResourcesCompat;
 
 public class StrutFitButtonView extends LinearLayout {
 
@@ -39,18 +42,20 @@ public class StrutFitButtonView extends LinearLayout {
                 R.styleable.StrutFitButtonView,
                 0, 0);
 
-
         try {
+            //logo
             boolean useWhiteLogo = a.getBoolean(R.styleable.StrutFitButtonView_useWhiteLogo, false);
             if (useWhiteLogo) {
                 _image.setImageResource(R.drawable.ic_sf_btn_glyph_white);
             }
 
+            //text color
             String textColor = a.getString(R.styleable.StrutFitButtonView_textColor);
             if(textColor != null && !textColor.isEmpty()) {
                 _text.setTextColor(Color.parseColor(textColor));
             }
 
+            //button colors
             int buttonColor = getResources().getColor(R.color.strutfit_button);
             int buttonPressedColor = getResources().getColor(R.color.strutfit_button_focused);
 
@@ -66,6 +71,14 @@ public class StrutFitButtonView extends LinearLayout {
             }
 
             _button.setBackground(this.getStateListDrawable(buttonColor, buttonPressedColor));
+
+            //font
+            if (a.hasValue(R.styleable.StrutFitButtonView_buttonTextFont)) {
+                int fontId = a.getResourceId(R.styleable.StrutFitButtonView_buttonTextFont, -1);
+                Typeface typeface = ResourcesCompat.getFont(context, fontId);
+                _text.setTypeface(typeface);
+            }
+
         } finally {
             a.recycle();
         }

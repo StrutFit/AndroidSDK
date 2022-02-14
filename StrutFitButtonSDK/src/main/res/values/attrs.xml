@@ -5,6 +5,7 @@
         <attr name="buttonColor" format="string" />
         <attr name="buttonPressedColor" format="string" />
         <attr name="textColor" format="string" />
+        <attr name="buttonTextFont" format="reference" />
     </declare-styleable>
 
 </resources>
