@@ -97,9 +97,9 @@ You can see the analytics in the Retailer dashboard/
 **CurrencyCode:** e.g. "USD", "NZD", "AUD" etc.  
 **ListOfItems:** Create an object **ArrayList<ConversionItem>** ListOfItems  
 **ConversionItem:** Data structure producded by StrutFit which contains the information for every item that was purchased for this particular order.  
-	-sku: unique code for the item (string)  
-	-productIdentifier: same as the productIdentifer you used in the button integration (sometimes this could be the same as sku) (string)  
-	-price: price of this particular item (double)  
-	-quantity: number of this item purchased (int)  
-	-size: if there is a size to the item (string)
+* sku: unique code for the item (string)  
+* productIdentifier: same as the productIdentifer you used in the button integration (sometimes this could be the same as sku) (string)  
+* price: price of this particular item (double)  
+* quantity: number of this item purchased (int)  
+* size: if there is a size to the item (string)
 	
