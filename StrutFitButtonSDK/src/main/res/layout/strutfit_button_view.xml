@@ -6,7 +6,6 @@
     android:paddingHorizontal="10dp"
     android:focusable="true"
     android:clickable="true"
-    android:background="@drawable/strutfit_button_selector"
     android:orientation="horizontal"
     android:gravity="center"
     >
@@ -18,7 +17,7 @@
         <ImageView
             android:id="@+id/strutfit_logo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60px"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
             android:layout_marginTop="4dp"
@@ -34,7 +33,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:clickable="false"
-            android:text="" />
+            android:text=""
+            android:fontFamily="@font/brandon_grotesque_regular"
+            android:textColor="#232323"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
     </LinearLayout>
 
 

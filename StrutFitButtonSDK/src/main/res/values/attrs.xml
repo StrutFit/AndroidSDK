@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StrutFitButtonView">
+        <attr name="useWhiteLogo" format="boolean" />
+        <attr name="buttonColor" format="string" />
+        <attr name="buttonPressedColor" format="string" />
+        <attr name="textColor" format="string" />
+    </declare-styleable>
+
+</resources>

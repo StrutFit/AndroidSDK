@@ -1,7 +1,12 @@
 package strutfit.button;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.util.AttributeSet;
+import android.util.StateSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,7 +34,57 @@ public class StrutFitButtonView extends LinearLayout {
         _image = (ImageView) findViewById(R.id.strutfit_logo);
         _button = (LinearLayout) findViewById(R.id.strutfit_button);
 
-        _text.setTextSize(12);
+        TypedArray a = context.getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.StrutFitButtonView,
+                0, 0);
+
+
+        try {
+            boolean useWhiteLogo = a.getBoolean(R.styleable.StrutFitButtonView_useWhiteLogo, false);
+            if (useWhiteLogo) {
+                _image.setImageResource(R.drawable.ic_sf_btn_glyph_white);
+            }
+
+            String textColor = a.getString(R.styleable.StrutFitButtonView_textColor);
+            if(textColor != null && !textColor.isEmpty()) {
+                _text.setTextColor(Color.parseColor(textColor));
+            }
+
+            int buttonColor = getResources().getColor(R.color.strutfit_button);
+            int buttonPressedColor = getResources().getColor(R.color.strutfit_button_focused);
+
+            String customButtonColor = a.getString(R.styleable.StrutFitButtonView_buttonColor);
+            String customButtonPressedColor = a.getString(R.styleable.StrutFitButtonView_buttonPressedColor);
+
+            if(customButtonColor != null && !customButtonColor.isEmpty()) {
+                buttonColor = Color.parseColor(customButtonColor);
+            }
+
+            if(customButtonPressedColor != null && !customButtonPressedColor.isEmpty()) {
+                buttonPressedColor = Color.parseColor(customButtonPressedColor);
+            }
+
+            _button.setBackground(this.getStateListDrawable(buttonColor, buttonPressedColor));
+        } finally {
+            a.recycle();
+        }
+
+    }
+
+    /**
+     * Get {@link StateListDrawable} given the {@code normalColor} and {@code pressedColor}
+     * for dynamic button coloring
+     *
+     * @param normalColor  The color in normal state.
+     * @param pressedColor The color in pressed state.
+     * @return
+     */
+    private StateListDrawable getStateListDrawable(int normalColor, int pressedColor) {
+        StateListDrawable stateListDrawable = new StateListDrawable();
+        stateListDrawable.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(pressedColor));
+        stateListDrawable.addState(StateSet.WILD_CARD, new ColorDrawable(normalColor));
+        return stateListDrawable;
     }
 
     public void setText(String text) {

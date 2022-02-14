@@ -53,7 +53,7 @@ public class StrutFitButton {
     }
 
     public void setInitialButtonUI() {
-        _button.setBackgroundColor(Color.parseColor((_backGroundColor)));
+       //_button.setBackgroundColor(Color.parseColor((_backGroundColor)));
     }
 
     private void setInitialButtonValues() {
