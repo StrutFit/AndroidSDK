@@ -1,10 +1,9 @@
 package strutfit.button;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+
 
 import strutfit.button.helpers.StrutFitButtonHelper;
 
@@ -12,12 +11,7 @@ public class StrutFitButton {
 
     public Boolean _buttonIsReady = false;
     public String _webviewUrl = "";
-    public Button _button;
-    public int _minWidth;
-    public int _maxWidth;
-    public int _minHeight;
-    public int _maxHeight;
-    public String _backGroundColor;
+    public StrutFitButtonView _button;
     public StrutFitButtonHelper _buttonHelper;
 
     private Context _context;
@@ -30,35 +24,21 @@ public class StrutFitButton {
         }
     };
 
-    public StrutFitButton(Button button, int minWidth, int maxWidth, int minHeight, int maxHeight, String backGroundColor,
-                          Context context, int organizationID, String shoeID,
+    public StrutFitButton(StrutFitButtonView button, Context context, int organizationID, String shoeID, StrutFitEventListener strutFitEventListener,
                           String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) {
 
         _button = button;
-        _minWidth = minWidth;
-        _maxWidth = maxWidth;
-        _minHeight = minHeight;
-        _maxHeight = maxHeight;
-        _backGroundColor = backGroundColor;
         _context = context;
         TAG = ((Activity) _context).getClass().getSimpleName();
 
         try {
-            _buttonHelper = new StrutFitButtonHelper(context, _callback, organizationID, shoeID, sizeUnavailableText, childPreSizeText, childPostSizeText, adultPreSizeText, adultPostSizeText);
+            _buttonHelper = new StrutFitButtonHelper(context, _callback, organizationID, shoeID, strutFitEventListener,
+                    sizeUnavailableText, childPreSizeText, childPostSizeText, adultPreSizeText, adultPostSizeText);
             _webviewUrl = _buttonHelper.webViewURL;
             _buttonIsReady = true;
         } catch (Exception e) {
             Log.e(TAG, "Unable to construct button helper and initialize the button", e);
         }
-    }
-
-    public void setInitialButtonUI() {
-        _button.setMinimumWidth(_minWidth);
-        _button.setMaxWidth(_maxWidth);
-        _button.setMinimumHeight(_minHeight);
-        _button.setMaxHeight(_maxHeight);
-        _button.setBackgroundColor(Color.parseColor((_backGroundColor)));
-        _button.setTextSize(12);
     }
 
     private void setInitialButtonValues() {

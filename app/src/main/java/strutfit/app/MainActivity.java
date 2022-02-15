@@ -3,13 +3,16 @@ package strutfit.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.Button;
 
 import java.util.ArrayList;
 
+import strutfit.button.SizeUnit;
 import strutfit.button.StrutFitBridge;
+import strutfit.button.StrutFitButtonView;
+import strutfit.button.StrutFitEventListener;
 import strutfit.button.StrutFitTracking;
 import strutfit.button.models.ConversionItem;
 
@@ -21,19 +24,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Create your button and hide it
-        Button button = findViewById(R.id.StruftFitButton);
+        StrutFitButtonView button = findViewById(R.id.StruftFitButton);
         button.setVisibility(View.GONE);
 
         // Create your web view
         WebView webView = findViewById(R.id.StruftFitWebview);
         webView.setVisibility(View.GONE);
 
+        StrutFitEventListener strutFitEventListener = new StrutFitEventListener() {
+            @Override
+            public void onSizeEvent(String size, SizeUnit unit) {
+                if(size != null) {
+                    Log.i("OnSizeEvent", "Size: " + size + " " + SizeUnit.getSizeUnitString(unit));
+                } else {
+                    Log.i("OnSizeEvent", "No size");
+                }
+            }
+        };
+
 
         // Pass the the two components into the StrutFit bridge
-        StrutFitBridge bridge = new StrutFitBridge(button, webView, this, 800, 800, 100, 100, "#f2f2f2",
+        StrutFitBridge bridge = new StrutFitBridge(button, webView, this,
                 this.getResources().getInteger(R.integer.organizationUnitId),
                 this.getResources().getString(R.string.productCode),
-                null, null, null, null, null);
+                strutFitEventListener);
         bridge.initializeStrutFit();
 
 

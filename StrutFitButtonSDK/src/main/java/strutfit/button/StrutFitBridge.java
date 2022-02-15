@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -25,17 +24,13 @@ public class StrutFitBridge {
     // Activity properties
     private Context _context;
     private WebView _webView;
-    private Button _button;
+    private StrutFitButtonView _button;
 
     // Button properties
-    public int _minWidth;
-    public int _maxWidth;
-    public int _minHeight;
-    public int _maxHeight;
     public int _organizationId;
-    public String _backgroundColor;
     public String _shoeID;
     private boolean _hasInitialized = false;
+    private StrutFitEventListener _strutFitEventListener;
     private String _sizeUnavailableText;
     private String _childPreSizeText;
     private String _childPostSizeText;
@@ -46,20 +41,27 @@ public class StrutFitBridge {
     private StrutFitButton _sfButton;
     private StrutFitButtonWebview _sfWebView;
 
-    public StrutFitBridge(Button button, WebView webview, Context context, int minWidth, int maxWidth, int minHeight, int maxHeight, String backgroundColor, int organizationId, String shoeID,
-                          Optional<String> sizeUnavailableText, Optional<String> childPreSizeText, Optional<String> childPostSizeText, Optional<String> adultPreSizeText, Optional<String> adultPostSizeText) {
+    public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID) {
+        this(button, webview, context, organizationId, shoeID, null, null, null, null, null, null);
+    }
+
+    public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID,
+                          StrutFitEventListener sizeEventListener) {
+        this(button, webview, context, organizationId, shoeID, sizeEventListener, null, null, null, null, null);
+    }
+
+    public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID,
+                          StrutFitEventListener strutFitEventListener,
+                          Optional<String> sizeUnavailableText, Optional<String> childPreSizeText, Optional<String> childPostSizeText,
+                          Optional<String> adultPreSizeText, Optional<String> adultPostSizeText) {
         _webView = webview;
         _button = button;
         _context = context;
 
         _button = button;
-        _minWidth = minWidth;
-        _maxWidth = maxWidth;
-        _minHeight = minHeight;
-        _maxHeight = maxHeight;
-        _backgroundColor = backgroundColor;
         _organizationId = organizationId;
         _shoeID = shoeID;
+        _strutFitEventListener = strutFitEventListener;
 
         _sizeUnavailableText = sizeUnavailableText == null ? _context.getResources().getString(R.string.defaultSizeUnavailableText) : sizeUnavailableText.toString();
         _childPreSizeText = childPreSizeText == null ? _context.getResources().getString(R.string.defaultChildPreSizeText) : childPreSizeText.toString();
@@ -75,22 +77,19 @@ public class StrutFitBridge {
             @Override
             public void run() {
                 // Construct the SF Button and its properties
-                _sfButton = new StrutFitButton(_button, _minWidth, _maxWidth, _minHeight, _maxHeight, _backgroundColor, _context, _organizationId, _shoeID,
+                _sfButton = new StrutFitButton(_button, _context, _organizationId, _shoeID, _strutFitEventListener,
                                                 _sizeUnavailableText, _childPreSizeText, _childPostSizeText, _adultPreSizeText, _adultPostSizeText);
 
                 // Ui changes need to run on the UI thread
                 ((Activity) _context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        // StrutFit library will render the text / size
-                        _sfButton.setInitialButtonUI();
-
                         // Initialize webView
                         _sfWebView = new StrutFitButtonWebview(_webView, _sfButton, _context);
                         _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context));
 
                         // Initialize button on-click function
-                        _button.setOnClickListener(new View.OnClickListener() {
+                        _button.getButton().setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
 
                                 int MY_PERMISSIONS_REQUEST_CAMERA=0;
