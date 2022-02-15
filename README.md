@@ -58,15 +58,28 @@ Layout width and height can be modified to best suit your app, just be sure to t
 We encourage you to modify the button UI to suit your application while conforming to the StrutFit brand guidelines.  
 You can do this by using the below optional attributes on the StrutFitButtonView component.  
 
-buttonColor - string color hex value to set the background color of the button, e.g. "#ffffff" (defaults as #f2f2f2)  
-buttonPressedColor - string color hex value to set the background color of the button while button is pressed, e.g. "#ffffff" (defaults as #bcbdbd)  
-textColor - string color hex value to set the color of the button text, e.g. "#000000" (defaults as #232323)  
-useWhiteLogo - boolean value, if true it uses the StrutFit logo icon with a colour #e3e3e3, if false or omitted it uses logo with a colour #232323  
-buttonTextFont - reference to font file, e.g. "@font/my_custom_font" (defaults as Brandon Grotesque)  
+**buttonColor** - string color hex value to set the background color of the button, e.g. "#ffffff" (defaults as #f2f2f2)  
+**buttonPressedColor** - string color hex value to set the background color of the button while button is pressed, e.g. "#ffffff" (defaults as #bcbdbd)  
+**textColor** - string color hex value to set the color of the button text, e.g. "#000000" (defaults as #232323)  
+**useWhiteLogo** - boolean value, if true it uses the StrutFit logo icon with a colour #e3e3e3, if false or omitted it uses logo with a colour #232323  
+**buttonTextFont** - reference to font file, e.g. "@font/my_custom_font" (defaults as Brandon Grotesque)  
+
+Example StrutFitButtonView using all of the options:
+```ruby
+<strutfit.button.StrutFitButtonView
+	android:id="@+id/StruftFitButton"
+	android:layout_width="800px"
+	android:layout_height="100px"
+	app:textColor="#232323"
+        app:buttonColor="#f2f2f2"
+        app:buttonPressedColor="#bcbdbd"
+        app:useWhiteLogo="false"
+        app:buttonTextFont="@font/my_custom_font"/>
+```  
 
 You will also need to use a WebView component in your layout.  
 	
-5. Initializing StrutFit button 
+5. Initializing StrutFit button  
 	Then in your Java code you need to intialize the StrutFitBridge, passing through references to the StrutFitButtonView and WebView.  
 
 	You will also need the following properties:  
@@ -101,12 +114,12 @@ You will also need to use a WebView component in your layout.
 	bridge.initializeStrutFit();
 ```
 You can also pass in the following optional parameters to the StrutFitBridge constructor:  
-strutFitEventListener - this is an object with a class that implements the **StrutFitEventListener** interface. The onSizeEvent method will receive a size string and size unit enum when the StrutFit button size value is updated. You can use this to update your size dropdowns.   
-sizeUnavailableText - You can override the text that is displayed on the button when a size is unavailable for the user (default is "Unavailable in your recommended size")  
-childPreSizeText - You can override the text that is displayed on the button for child shoes before the user has scanned (default is "What is my child's size?")  
-childPostSizeText - You can override the text that is displayed on the button before the recommended size for child shoes after the user has scanned (default is "Your child's size in this style is")  
-adultPreSizeText - You can override the text that is displayed on the button for adult shoes before the user has scanned  (default is "What is my size?")  
-adultPostSizeText - You can override the text that is displayed on the button before the recommended size for adult shoes after the user has scanned (default is "Your size in this style is")  
+**strutFitEventListener** - this is an object with a class that implements the **StrutFitEventListener** interface. The onSizeEvent method will receive a size string and size unit enum when the StrutFit button size value is updated. You can use this to update your size dropdowns.   
+**sizeUnavailableText** - You can override the text that is displayed on the button when a size is unavailable for the user (default is "Unavailable in your recommended size")  
+**childPreSizeText** - You can override the text that is displayed on the button for child shoes before the user has scanned (default is "What is my child's size?")  
+**childPostSizeText** - You can override the text that is displayed on the button before the recommended size for child shoes after the user has scanned (default is "Your child's size in this style is")  
+**adultPreSizeText** - You can override the text that is displayed on the button for adult shoes before the user has scanned  (default is "What is my size?")  
+**adultPostSizeText** - You can override the text that is displayed on the button before the recommended size for adult shoes after the user has scanned (default is "Your size in this style is")  
  
 ```ruby
 public interface StrutFitEventListener {
