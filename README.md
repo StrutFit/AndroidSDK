@@ -100,6 +100,20 @@ You will also need to use a WebView component in your layout.
 	StrutFitBridge bridge = new StrutFitBridge(button, webView, ActivityContext, OrganizationID, ProductIdentifier);
 	bridge.initializeStrutFit();
 ```
+You can also pass in the following optional parameters to the StrutFitBridge constructor:  
+strutFitEventListener - this is an object with a class that implements the **StrutFitEventListener** interface. The onSizeEvent method will receive a size string and size unit enum when the StrutFit button size value is updated. You can use this to update your size dropdowns.   
+sizeUnavailableText - You can override the text that is displayed on the button when a size is unavailable for the user (default is "Unavailable in your recommended size")  
+childPreSizeText - You can override the text that is displayed on the button for child shoes before the user has scanned (default is "What is my child's size?")  
+childPostSizeText - You can override the text that is displayed on the button before the recommended size for child shoes after the user has scanned (default is "Your child's size in this style is")  
+adultPreSizeText - You can override the text that is displayed on the button for adult shoes before the user has scanned  (default is "What is my size?")  
+adultPostSizeText - You can override the text that is displayed on the button before the recommended size for adult shoes after the user has scanned (default is "Your size in this style is")  
+ 
+```ruby
+public interface StrutFitEventListener {
+    void onSizeEvent(String size, SizeUnit unit);
+}
+
+```
 
 # StrutFit (Android) tracking pixel integration
 Prerquisite: Complete the button integration as shown above.
