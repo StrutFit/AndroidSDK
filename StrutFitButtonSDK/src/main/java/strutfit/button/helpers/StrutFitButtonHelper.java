@@ -79,10 +79,10 @@ public class StrutFitButtonHelper {
                         @Override public void onNext(ButtonVisibilityOutput output) {
                             try {
                                 ButtonVisibilityResult result = output.getResult();
-                                Boolean _isKids = result.getIsKids();
+                                Boolean _isKids = result != null ? result.getIsKids() : false;
 
                                 // Set initial rendering parameters
-                                buttonIsVisible = result.getShow();
+                                buttonIsVisible = result != null ? result.getShow() : false;
                                 buttonText = _isKids ? _childPreSizeText : _adultPreSizeText;
 
                                 Random rand = new Random();
@@ -127,20 +127,20 @@ public class StrutFitButtonHelper {
                         @Override public void onNext(ButtonVisibilityAndSizeOutput output) {
                             try {
                                 ButtonVisibilityAndSizeResult result = output.getResult();
-                                ButtonSizeResult _sizeData = result.getSizeData();
-                                ButtonVisibilityResult _visibilityData = result.getVisibilityData();
+                                ButtonSizeResult _sizeData = result != null ? result.getSizeData() : null;
+                                ButtonVisibilityResult _visibilityData = result != null ? result.getVisibilityData() : null;
 
 
-                                Boolean _isKids = _visibilityData.getIsKids();
-                                String _size = _sizeData.getSize();
-                                int _sizeUnit = _sizeData.getUnit();
-                                Boolean _showWidthCategory = _sizeData.getShowWidthCategory();
-                                String _widthAbbreviation = _sizeData.getWidthAbbreviation();
-                                String _width = (!_showWidthCategory || _widthAbbreviation == null || _widthAbbreviation.isEmpty())? "" : _widthAbbreviation;
+                                Boolean _isKids = _visibilityData != null ? _visibilityData.getIsKids() : false;
+                                String _size = _sizeData != null ? _sizeData.getSize() : null;
+                                int _sizeUnit = _sizeData != null ? _sizeData.getUnit() : 0;
+                                Boolean _showWidthCategory = _sizeData != null ? _sizeData.getShowWidthCategory() : false;
+                                String _widthAbbreviation = _sizeData != null ? _sizeData.getWidthAbbreviation() : "";
+                                String _width = (!_showWidthCategory || _widthAbbreviation == null || _widthAbbreviation.isEmpty()) ? "" : _widthAbbreviation;
 
 
                                 // Set initial rendering parameters
-                                buttonIsVisible = _visibilityData.getShow();
+                                buttonIsVisible = _visibilityData != null ? _visibilityData.getShow() : false;
 
                                 String _buttonText = _sizeUnavailableText;
                                 if(_size != null && !_size.isEmpty()) {
