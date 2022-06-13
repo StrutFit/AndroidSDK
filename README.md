@@ -79,7 +79,7 @@ Example StrutFitButtonView using all of the options:
 
 You will also need to use a WebView component in your layout.  
 	
-5. Initializing StrutFit button  
+5. Initializing StrutFit button 
 	Then in your Java code you need to intialize the StrutFitBridge, passing through references to the StrutFitButtonView and WebView.  
 
 	You will also need the following properties:  
@@ -87,8 +87,13 @@ You will also need to use a WebView component in your layout.
 	ProductIdentifer  - string value of the unique identifer of the shoe that is being viewed.  
 
 	When testing you can use the following.  
-	**OrganizationID:** 5  
+	**OrganizationID:** 5 (when using staging/release build variants, otherwise use 1 for debug build variant)  
 	**ProductIdentifer:** "TestProduct" 
+	
+	You can test the SDK using different build variants: debug, staging and release.  
+	Debug will reference our development environment which may have unreleased code which could cause issues.  
+	We therefore recommend you test while using either the staging or release build variants (as these reference the production environment), unless you have spoken with a StrutFit developer about the current development environment.  
+	If you have been testing the debug build variant and switch to staging/release or vice versa, especially on a physical device, it is a good idea to delete the test application (or at the very least clear the cache) before resuming testing as you may have locally stored data from the wrong environment which may cause errors.  
 
 	For a quick test instead of going through the scanning process you may login using the following test account. 
 	Before release please remember to put in the actual product identifier and organizationId provided by your StrutFit account manager.  
