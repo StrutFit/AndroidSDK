@@ -79,7 +79,7 @@ Example StrutFitButtonView using all of the options:
 
 You will also need to use a WebView component in your layout.  
 	
-5. Initializing StrutFit button 
+5. Initializing StrutFit button  
 	Then in your Java code you need to intialize the StrutFitBridge, passing through references to the StrutFitButtonView and WebView.  
 
 	You will also need the following properties:  
