@@ -130,6 +130,10 @@ public class StrutFitButtonHelper {
                                 ButtonSizeResult _sizeData = result != null ? result.getSizeData() : null;
                                 ButtonVisibilityResult _visibilityData = result != null ? result.getVisibilityData() : null;
 
+                                //SizeData being null indicates invalid measurement code, so we want to clear this in the cache
+                                if(_sizeData == null) {
+                                    StrutFitCommonHelper.setLocalMcode(_context, null);
+                                }
 
                                 Boolean _isKids = _visibilityData != null ? _visibilityData.getIsKids() : false;
                                 String _size = _sizeData != null ? _sizeData.getSize() : null;
