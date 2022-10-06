@@ -88,8 +88,8 @@ public class StrutFitButtonHelper {
                                 Random rand = new Random();
                                 int int_random = rand.nextInt(99999);
                                 webViewURL = String.format(_context.getResources().getString(R.string.webViewBaseUrl) +
-                                        "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true",
-                                        _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
+                                        "?random=%s&isKids=%s&organisationId=%s&shoeId=%s&inApp=true",
+                                        int_random, _isKids, _organizationID, _shoeID);
 
                                 // When a post message comes back from the modal with empty measurement code
                                 if (!isInitializing) {
@@ -157,8 +157,8 @@ public class StrutFitButtonHelper {
                                     Random rand = new Random();
                                     int int_random = rand.nextInt(99999);
                                     webViewURL = String.format(_context.getResources().getString(R.string.webViewBaseUrl) +
-                                            "%s?random=%s&organisationId=%s&shoeId=%s&inApp=true",
-                                            _isKids ? "nkids" : "nadults", int_random, _organizationID, _shoeID);
+                                            "?random=%s&isKids=%s&organisationId=%s&shoeId=%s&inApp=true",
+                                            int_random, _isKids, _organizationID, _shoeID);
                                 }
 
                                 // When a post message comes back from the modal with a new measurement code
