@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class ButtonVisibilityAndSizeResult {
 
-    @SerializedName("visibilityData")
+    @SerializedName("VisibilityData")
     @Expose
     private ButtonVisibilityResult visibilityData;
-    @SerializedName("sizeData")
+    @SerializedName("SizeData")
     @Expose
     private ButtonSizeResult sizeData;
 

@@ -12,12 +12,17 @@ import android.view.View;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebMessage;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.IOException;
+
+import strutfit.button.models.PostMessageInitialAppInfoDto;
 
 public class StrutFitButtonWebview {
 
@@ -184,14 +189,18 @@ public class StrutFitButtonWebview {
         _webView.addJavascriptInterface(javascriptInterFace, "Android");
     }
 
-    public void openAndInitializeWebView() {
-        _webView.loadUrl(_button._webviewUrl);
-        _webView.setVisibility(View.VISIBLE);
-    }
-
     public void openWebView() {
+        _webView.evaluateJavascript("window.callStrutFitFromNativeApp('{\"strutfitMessageType\": 3}')", null);
         _webView.setVisibility(View.VISIBLE);
         _webView.bringToFront();
+    }
+
+    public void sendInitialAppInfo(PostMessageInitialAppInfoDto input) {
+        Gson gson = new Gson();
+        String jsonInput = gson.toJson(input);
+        String x = String.format("window.callStrutFitFromNativeApp('%s')", jsonInput);
+        String y = x;
+        _webView.evaluateJavascript(x, null);
     }
 
     public void closeWebView() {

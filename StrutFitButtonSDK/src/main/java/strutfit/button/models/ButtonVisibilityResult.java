@@ -5,43 +5,43 @@ import com.google.gson.annotations.SerializedName;
 
 public class ButtonVisibilityResult {
 
-    @SerializedName("show")
+    @SerializedName("Show")
     @Expose
     private Boolean show;
-    @SerializedName("isKids")
+    @SerializedName("IsKids")
     @Expose
     private Boolean isKids;
-    @SerializedName("preLoginButtonTextAdults")
+    @SerializedName("PreLoginButtonTextAdults")
     @Expose
     private String preLoginButtonTextAdults;
-    @SerializedName("preLoginButtonTextKids")
+    @SerializedName("PreLoginButtonTextKids")
     @Expose
     private String preLoginButtonTextKids;
-    @SerializedName("preLoginButtonTextAdultsTranslations")
+    @SerializedName("PreLoginButtonTextAdultsTranslations")
     @Expose
     private Object preLoginButtonTextAdultsTranslations;
-    @SerializedName("preLoginButtonTextKidsTranslations")
+    @SerializedName("PreLoginButtonTextKidsTranslations")
     @Expose
     private Object preLoginButtonTextKidsTranslations;
-    @SerializedName("buttonResultTextTranslations")
+    @SerializedName("ButtonResultTextTranslations")
     @Expose
     private Object buttonResultTextTranslations;
-    @SerializedName("showProductName")
+    @SerializedName("ShowProductName")
     @Expose
     private Boolean showProductName;
-    @SerializedName("showProductImage")
+    @SerializedName("ShowProductImage")
     @Expose
     private Boolean showProductImage;
-    @SerializedName("hideDefaultSizeUnit")
+    @SerializedName("HideDefaultSizeUnit")
     @Expose
     private Boolean hideDefaultSizeUnit;
-    @SerializedName("hideOnDesktop")
+    @SerializedName("HideOnDesktop")
     @Expose
     private Boolean hideOnDesktop;
-    @SerializedName("showWidthUnavailableText")
+    @SerializedName("ShowWidthUnavailableText")
     @Expose
     private Boolean showWidthUnavailableText;
-    @SerializedName("chartSpecificResultScreenText")
+    @SerializedName("ChartSpecificResultScreenText")
     @Expose
     private Object chartSpecificResultScreenText;
 

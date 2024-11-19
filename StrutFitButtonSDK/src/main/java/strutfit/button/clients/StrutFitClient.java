@@ -6,22 +6,36 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import io.reactivex.rxjava3.core.Observable;
 import strutfit.button.R;
+import strutfit.button.models.ButtonVisibilityAndSizeResult;
 import strutfit.button.services.StrutFitService;
 import strutfit.button.models.ButtonVisibilityAndSizeOutput;
-import strutfit.button.models.ButtonVisibilityOutput;
 
 public class StrutFitClient {
     private static StrutFitClient instance;
     private StrutFitService strutFitService;
 
     private StrutFitClient(Context context) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(chain -> {
+                    Request originalRequest = chain.request();
+                    // Add the Origin header if necessary
+                    Request newRequest = originalRequest.newBuilder()
+                            .header("Origin", "https://button-test.dev.strut.fit") // Customize as needed
+                            .build();
+                    return chain.proceed(newRequest);
+                })
+                .build();
+
         final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE).create();
-        final Retrofit retrofit = new Retrofit.Builder().baseUrl(context.getResources().getString(R.string.serverBaseUrl))
+        final Retrofit retrofit = new Retrofit.Builder().baseUrl(context.getResources().getString(R.string.sfButtonUrl))
+                .client(client)
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
@@ -36,11 +50,7 @@ public class StrutFitClient {
         return instance;
     }
 
-    public Observable<ButtonVisibilityOutput> getButtonVisibility(int organizationUnitId, String shoeId) {
-        return strutFitService.getButtonVisibility(organizationUnitId, shoeId);
-    }
-
-    public Observable<ButtonVisibilityAndSizeOutput> getButtonSizeAndVisibility(int organizationUnitId, String shoeId, String measurementCode) {
+    public Observable<ButtonVisibilityAndSizeResult> getButtonSizeAndVisibility(int organizationUnitId, String shoeId, String measurementCode) {
         return strutFitService.getButtonSizeAndVisibility(organizationUnitId, shoeId, measurementCode);
     }
 }

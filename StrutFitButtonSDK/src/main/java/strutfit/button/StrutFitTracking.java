@@ -1,7 +1,6 @@
 package strutfit.button;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -10,15 +9,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Optional;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import strutfit.button.helpers.StrutFitCommonHelper;
-import strutfit.button.models.ButtonVisibilityAndSizeOutput;;
 import strutfit.button.models.ConversionItem;
 import strutfit.button.clients.PixelClient;
 import strutfit.button.models.PixelData;

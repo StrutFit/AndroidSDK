@@ -2,7 +2,7 @@
 SDK for StrutFit Android integration
 
 If you have any issues or suggested changes/improvements please email nish@strut.fit. 
-If what we have implemented in the library doesnt quite work for your organisation, please let us know, we are happy to discuss.
+If what we have implemented in the library doesn't quite work for your organisation, please let us know, we are happy to discuss.
 
 This code should be executed when a user visits the product display page.
 
@@ -80,15 +80,15 @@ Example StrutFitButtonView using all of the options:
 You will also need to use a WebView component in your layout.  
 	
 5. Initializing StrutFit button  
-	Then in your Java code you need to intialize the StrutFitBridge, passing through references to the StrutFitButtonView and WebView.  
+	Then in your Java code you need to initialize the StrutFitBridge, passing through references to the StrutFitButtonView and WebView.  
 
 	You will also need the following properties:  
 	OrganizationID - an integer given to you by your StrutFit account manager.  
-	ProductIdentifer  - string value of the unique identifer of the shoe that is being viewed.  
+	ProductIdentifier  - string value of the unique identifier of the shoe that is being viewed.  
 
 	When testing you can use the following.  
 	**OrganizationID:** 5 (when using staging/release build variants, otherwise use 1 for debug build variant)  
-	**ProductIdentifer:** "TestProduct" 
+	**ProductIdentifier:** "TestProduct" 
 	
 	You can test the SDK using different build variants: debug, staging and release.  
 	Debug will reference our development environment which may have unreleased code which could cause issues.  

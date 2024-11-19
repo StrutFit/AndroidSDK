@@ -19,6 +19,9 @@ import org.json.JSONObject;
 
 import java.util.Optional;
 
+import strutfit.button.models.PostMessageDto;
+import strutfit.button.models.PostMessageInitialAppInfoDto;
+
 public class StrutFitBridge {
 
     // Activity properties
@@ -86,7 +89,7 @@ public class StrutFitBridge {
                     public void run() {
                         // Initialize webView
                         _sfWebView = new StrutFitButtonWebview(_webView, _sfButton, _context);
-                        _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context));
+                        _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context, _organizationId, _shoeID));
 
                         // Initialize button on-click function
                         _button.getButton().setOnClickListener(new View.OnClickListener() {
@@ -106,13 +109,34 @@ public class StrutFitBridge {
                                     }
                                 }
 
-                                if(!_hasInitialized) {
-                                    _sfWebView.openAndInitializeWebView();
-                                } else {
-                                    _sfWebView.openWebView();
-                                }
+                                _sfWebView.openWebView();
+                                PostMessageInitialAppInfoDto input = new PostMessageInitialAppInfoDto();
+                                input.strutfitMessageType = 18;
+                                input.productId = _shoeID;
+                                input.organizationUnitId = _organizationId;
+                                input.hideSizeGuide = true;
+
+                                _sfWebView.sendInitialAppInfo(input);
                                 _sfButton.hideButton();
                                 _hasInitialized = true;
+                            }
+                        });
+
+                        _button.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                            private int lastVisibility = _button.getVisibility();
+                            private boolean webViewLoaded = false;
+
+                            @Override
+                            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                                int currentVisibility = _button.getVisibility();
+                                if (currentVisibility != lastVisibility) {
+                                    lastVisibility = currentVisibility;
+                                    if (currentVisibility == View.VISIBLE && !webViewLoaded) {
+                                        // Do something when the view becomes visible
+                                        _webView.loadUrl(_sfButton._webviewUrl);
+                                        webViewLoaded = true;
+                                    }
+                                }
                             }
                         });
                     }
@@ -130,11 +154,17 @@ class StrutFitJavaScriptInterface {
     private Context _context;
     private String TAG;
 
+    private int _organizationId;
+    private String _shoeId;
 
-    StrutFitJavaScriptInterface(StrutFitButton sfButton, StrutFitButtonWebview sfWebView, Context context) {
+
+    StrutFitJavaScriptInterface(StrutFitButton sfButton, StrutFitButtonWebview sfWebView, Context context,
+        int organizationId, String shoeId) {
         _sfButton = sfButton;
         _sfWebView = sfWebView;
         _context = context;
+        _organizationId = organizationId;
+        _shoeId = shoeId;
         TAG = ((Activity) _context).getClass().getSimpleName();
     }
 
@@ -143,7 +173,7 @@ class StrutFitJavaScriptInterface {
 
         try {
             JSONObject json = new JSONObject(message);
-            int result = json.getInt("messageType");
+            int result = json.getInt("strutfitMessageType");
 
             switch (result)
             {
@@ -155,6 +185,15 @@ class StrutFitJavaScriptInterface {
                 case 2:
                     closeModal();
                     break;
+                case 5:
+                    //IFrame ready
+                    PostMessageInitialAppInfoDto input = new PostMessageInitialAppInfoDto();
+                    input.strutfitMessageType = 18;
+                    input.productId = _shoeId;
+                    input.organizationUnitId = _organizationId;
+                    input.hideSizeGuide = true;
+
+                    _sfWebView.sendInitialAppInfo(input);
                 default:
                     break;
             }
