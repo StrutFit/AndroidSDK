@@ -10,7 +10,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import strutfit.button.SizeUnit;
+import strutfit.button.enums.SizeUnit;
 import strutfit.button.StrutFitEventListener;
 import strutfit.button.clients.StrutFitClient;
 import strutfit.button.models.ButtonSizeResult;
@@ -84,9 +84,7 @@ public class StrutFitButtonHelper {
                             if (isInitializing) {
                                 Random rand = new Random();
                                 int int_random = rand.nextInt(99999);
-                                webViewURL = String.format(_context.getResources().getString(R.string.webViewBaseUrl) +
-                                                "?random=%s&isKids=%s&organisationId=%s&shoeId=%s&inApp=true",
-                                        int_random, _isKids, _organizationID, _shoeID);
+                                webViewURL = _context.getResources().getString(R.string.webViewBaseUrl);
                             }
 
                             _buttonDataCallback.run();

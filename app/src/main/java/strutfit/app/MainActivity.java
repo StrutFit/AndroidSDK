@@ -7,14 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 
-import java.util.ArrayList;
-
-import strutfit.button.SizeUnit;
+import strutfit.button.enums.SizeUnit;
 import strutfit.button.StrutFitBridge;
 import strutfit.button.StrutFitButtonView;
 import strutfit.button.StrutFitEventListener;
-import strutfit.button.StrutFitTracking;
-import strutfit.button.models.ConversionItem;
 
 public class MainActivity extends AppCompatActivity {
 

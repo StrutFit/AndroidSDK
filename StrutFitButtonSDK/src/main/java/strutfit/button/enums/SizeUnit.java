@@ -1,4 +1,4 @@
-package strutfit.button;
+package strutfit.button.enums;
 
 import java.util.HashMap;
 import java.util.Map;

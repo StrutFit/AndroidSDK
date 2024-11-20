@@ -12,7 +12,6 @@ import android.view.View;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebMessage;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
@@ -190,7 +189,7 @@ public class StrutFitButtonWebview {
     }
 
     public void openWebView() {
-        _webView.evaluateJavascript("window.callStrutFitFromNativeApp('{\"strutfitMessageType\": 3}')", null);
+        _webView.post(() -> _webView.evaluateJavascript("window.callStrutFitFromNativeApp('{\"strutfitMessageType\": 3}')", null));
         _webView.setVisibility(View.VISIBLE);
         _webView.bringToFront();
     }
@@ -198,9 +197,8 @@ public class StrutFitButtonWebview {
     public void sendInitialAppInfo(PostMessageInitialAppInfoDto input) {
         Gson gson = new Gson();
         String jsonInput = gson.toJson(input);
-        String x = String.format("window.callStrutFitFromNativeApp('%s')", jsonInput);
-        String y = x;
-        _webView.evaluateJavascript(x, null);
+        String javaScriptCode = String.format("window.callStrutFitFromNativeApp('%s')", jsonInput);
+        _webView.post(() -> _webView.evaluateJavascript(javaScriptCode, null));
     }
 
     public void closeWebView() {

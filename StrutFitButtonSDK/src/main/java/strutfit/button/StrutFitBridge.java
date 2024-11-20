@@ -14,12 +14,17 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import strutfit.button.models.PostMessageDto;
+import strutfit.button.enums.PostMessageType;
+import strutfit.button.models.PostMessageAuthenticationDto;
 import strutfit.button.models.PostMessageInitialAppInfoDto;
 
 public class StrutFitBridge {
@@ -110,13 +115,6 @@ public class StrutFitBridge {
                                 }
 
                                 _sfWebView.openWebView();
-                                PostMessageInitialAppInfoDto input = new PostMessageInitialAppInfoDto();
-                                input.strutfitMessageType = 18;
-                                input.productId = _shoeID;
-                                input.organizationUnitId = _organizationId;
-                                input.hideSizeGuide = true;
-
-                                _sfWebView.sendInitialAppInfo(input);
                                 _sfButton.hideButton();
                                 _hasInitialized = true;
                             }
@@ -168,9 +166,10 @@ class StrutFitJavaScriptInterface {
         TAG = ((Activity) _context).getClass().getSimpleName();
     }
 
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+
     @JavascriptInterface
     public void receiveMessage(String message) {
-
         try {
             JSONObject json = new JSONObject(message);
             int result = json.getInt("strutfitMessageType");
@@ -180,7 +179,7 @@ class StrutFitJavaScriptInterface {
                 case 0:
                 case 1:
                     // update m-code
-                    updateMeasurementCode(json);
+                    updateMeasurementCode(message);
                     break;
                 case 2:
                     closeModal();
@@ -188,10 +187,11 @@ class StrutFitJavaScriptInterface {
                 case 5:
                     //IFrame ready
                     PostMessageInitialAppInfoDto input = new PostMessageInitialAppInfoDto();
-                    input.strutfitMessageType = 18;
+                    input.strutfitMessageType = PostMessageType.InitialAppInfo.getValue();
                     input.productId = _shoeId;
                     input.organizationUnitId = _organizationId;
                     input.hideSizeGuide = true;
+                    input.inApp = true;
 
                     _sfWebView.sendInitialAppInfo(input);
                 default:
@@ -202,9 +202,15 @@ class StrutFitJavaScriptInterface {
         }
     }
 
-    private void updateMeasurementCode(JSONObject json){
+    private void updateMeasurementCode(String json){
         try {
-            updateMeasurementCode(json.getString("mcode").toString());
+            // JSON to Object using Gson
+            Gson gson = new Gson();
+            PostMessageAuthenticationDto postMessage = gson.fromJson(json, PostMessageAuthenticationDto.class);
+            if(postMessage.updateMCode) {
+                _sfButton.getSizeAndVisibility(postMessage.mcode);
+            }
+
         } catch (Exception e) {
             Log.e(TAG, "Unable to update measurement code", e);
         }
@@ -218,9 +224,5 @@ class StrutFitJavaScriptInterface {
                 _sfButton.showButton();
             }
         });
-    }
-
-    private void updateMeasurementCode(String measurementCode) throws Exception {
-        _sfButton.getSizeAndVisibility(measurementCode);
     }
 }
