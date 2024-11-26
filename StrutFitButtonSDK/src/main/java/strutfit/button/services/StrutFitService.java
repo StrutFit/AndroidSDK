@@ -8,6 +8,6 @@ import strutfit.button.models.ButtonVisibilityAndSizeResult;
 import strutfit.button.models.ButtonVisibilityOutput;
 
 public interface StrutFitService {
-    @GET("SFButton-Dev")
+    @GET("SFButton")
     Observable<ButtonVisibilityAndSizeResult> getButtonSizeAndVisibility(@Query("organizationUnitId") int organizationID, @Query("code") String shoeID, @Query("mcode") String measurementCode);
 }

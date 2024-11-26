@@ -4,26 +4,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum PostMessageType {
-    UserHasData(0),
-    UserHasNoData(1),
-    CloseIFrame(2),
-    ShowIFrame(3),
-    ProductInfo(4),
-    IframeReady(5),
-    ABTestInfo(6),
-    ReplicaButtonProductLoad(7),
-    SizeGuideButtonClick(8),
-    DeviceMotion(9),
-    DeviceOrientation(10),
-    UserAcceptedCookies(11),
-    UpdateProduct(12),
-    UpdateTheme(13),
-    ScanSucceeded(14),
-    RequestDeviceMotionAndOrientation(15),
-    ReprocessSize(16),
-    MasterButtonFootLength(17),
-    InitialAppInfo(18),
-    LanguageChange(19);
+    UserAuthData(0),
+    UserFootMeasurementCodeData(1),
+    UserBodyMeasurementCodeData(2),
+    CloseIFrame(3),
+    ShowIFrame(4),
+    ProductInfo(5),
+    IframeReady(6),
+    ABTestInfo(7),
+    ReplicaButtonProductLoad(8),
+    SizeGuideButtonClick(9),
+    DeviceMotion(10),
+    DeviceOrientation(11),
+    UserAcceptedCookies(12),
+    UpdateProduct(13),
+    UpdateTheme(14),
+    ScanSucceeded(15),
+    RequestDeviceMotionAndOrientation(16),
+    ReprocessSize(17),
+    ReplicaButtonData(18),
+    InitialAppInfo(19),
+    LanguageChange(20);
 
     private int value;
     private static Map map = new HashMap<>();

@@ -24,16 +24,14 @@ public class StrutFitButton {
         }
     };
 
-    public StrutFitButton(StrutFitButtonView button, Context context, int organizationID, String shoeID, StrutFitEventListener strutFitEventListener,
-                          String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) {
+    public StrutFitButton(StrutFitButtonView button, Context context, int organizationID, String shoeID, StrutFitEventListener strutFitEventListener) {
 
         _button = button;
         _context = context;
         TAG = ((Activity) _context).getClass().getSimpleName();
 
         try {
-            _buttonHelper = new StrutFitButtonHelper(context, _callback, organizationID, shoeID, strutFitEventListener,
-                    sizeUnavailableText, childPreSizeText, childPostSizeText, adultPreSizeText, adultPostSizeText);
+            _buttonHelper = new StrutFitButtonHelper(context, _callback, organizationID, shoeID, strutFitEventListener);
             _webviewUrl = _buttonHelper.webViewURL;
             _buttonIsReady = true;
         } catch (Exception e) {

@@ -19,12 +19,11 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import strutfit.button.enums.PostMessageType;
-import strutfit.button.models.PostMessageAuthenticationDto;
+import strutfit.button.models.PostMessageUserFootMeasurementCodeDataDto;
 import strutfit.button.models.PostMessageInitialAppInfoDto;
 
 public class StrutFitBridge {
@@ -39,29 +38,17 @@ public class StrutFitBridge {
     public String _shoeID;
     private boolean _hasInitialized = false;
     private StrutFitEventListener _strutFitEventListener;
-    private String _sizeUnavailableText;
-    private String _childPreSizeText;
-    private String _childPostSizeText;
-    private String _adultPreSizeText;
-    private String _adultPostSizeText;
 
     // SF Properties
     private StrutFitButton _sfButton;
     private StrutFitButtonWebview _sfWebView;
 
     public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID) {
-        this(button, webview, context, organizationId, shoeID, null, null, null, null, null, null);
+        this(button, webview, context, organizationId, shoeID, null);
     }
 
     public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID,
-                          StrutFitEventListener sizeEventListener) {
-        this(button, webview, context, organizationId, shoeID, sizeEventListener, null, null, null, null, null);
-    }
-
-    public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID,
-                          StrutFitEventListener strutFitEventListener,
-                          Optional<String> sizeUnavailableText, Optional<String> childPreSizeText, Optional<String> childPostSizeText,
-                          Optional<String> adultPreSizeText, Optional<String> adultPostSizeText) {
+                          StrutFitEventListener strutFitEventListener) {
         _webView = webview;
         _button = button;
         _context = context;
@@ -70,12 +57,6 @@ public class StrutFitBridge {
         _organizationId = organizationId;
         _shoeID = shoeID;
         _strutFitEventListener = strutFitEventListener;
-
-        _sizeUnavailableText = sizeUnavailableText == null ? _context.getResources().getString(R.string.defaultSizeUnavailableText) : sizeUnavailableText.toString();
-        _childPreSizeText = childPreSizeText == null ? _context.getResources().getString(R.string.defaultChildPreSizeText) : childPreSizeText.toString();
-        _childPostSizeText = childPostSizeText == null ? _context.getResources().getString(R.string.defaultChildPostSizeText) : childPostSizeText.toString();
-        _adultPreSizeText = adultPreSizeText == null ? _context.getResources().getString(R.string.defaultAdultPreSizeText) : adultPreSizeText.toString();
-        _adultPostSizeText = adultPostSizeText == null ? _context.getResources().getString(R.string.defaultAdultPostSizeText) : adultPostSizeText.toString();
     }
 
     public void initializeStrutFit() {
@@ -85,8 +66,7 @@ public class StrutFitBridge {
             @Override
             public void run() {
                 // Construct the SF Button and its properties
-                _sfButton = new StrutFitButton(_button, _context, _organizationId, _shoeID, _strutFitEventListener,
-                                                _sizeUnavailableText, _childPreSizeText, _childPostSizeText, _adultPreSizeText, _adultPostSizeText);
+                _sfButton = new StrutFitButton(_button, _context, _organizationId, _shoeID, _strutFitEventListener);
 
                 // Ui changes need to run on the UI thread
                 ((Activity) _context).runOnUiThread(new Runnable() {
@@ -172,19 +152,18 @@ class StrutFitJavaScriptInterface {
     public void receiveMessage(String message) {
         try {
             JSONObject json = new JSONObject(message);
-            int result = json.getInt("strutfitMessageType");
+            PostMessageType result = PostMessageType.valueOf(json.getInt("strutfitMessageType"));
 
             switch (result)
             {
-                case 0:
-                case 1:
+                case UserFootMeasurementCodeData:
                     // update m-code
                     updateMeasurementCode(message);
                     break;
-                case 2:
+                case CloseIFrame:
                     closeModal();
                     break;
-                case 5:
+                case InitialAppInfo:
                     //IFrame ready
                     PostMessageInitialAppInfoDto input = new PostMessageInitialAppInfoDto();
                     input.strutfitMessageType = PostMessageType.InitialAppInfo.getValue();
@@ -206,10 +185,8 @@ class StrutFitJavaScriptInterface {
         try {
             // JSON to Object using Gson
             Gson gson = new Gson();
-            PostMessageAuthenticationDto postMessage = gson.fromJson(json, PostMessageAuthenticationDto.class);
-            if(postMessage.updateMCode) {
-                _sfButton.getSizeAndVisibility(postMessage.mcode);
-            }
+            PostMessageUserFootMeasurementCodeDataDto postMessage = gson.fromJson(json, PostMessageUserFootMeasurementCodeDataDto.class);
+            _sfButton.getSizeAndVisibility(postMessage.footMeasurementCode);
 
         } catch (Exception e) {
             Log.e(TAG, "Unable to update measurement code", e);

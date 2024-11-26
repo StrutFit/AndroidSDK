@@ -31,7 +31,7 @@ public class ExampleInstrumentedTest {
             }
         };
 
-        StrutFitButtonHelper ButtonHelper = new StrutFitButtonHelper(appContext, callback, 1, "Test Product 1", null, null, null, null, null, null);
+        StrutFitButtonHelper ButtonHelper = new StrutFitButtonHelper(appContext, callback, 1, "Test Product 1", null);
 
         assertEquals("strutfit.button.test", appContext.getPackageName());
     }

@@ -19,13 +19,13 @@ public class ButtonVisibilityResult {
     private String preLoginButtonTextKids;
     @SerializedName("PreLoginButtonTextAdultsTranslations")
     @Expose
-    private Object preLoginButtonTextAdultsTranslations;
+    private String preLoginButtonTextAdultsTranslations;
     @SerializedName("PreLoginButtonTextKidsTranslations")
     @Expose
-    private Object preLoginButtonTextKidsTranslations;
+    private String preLoginButtonTextKidsTranslations;
     @SerializedName("ButtonResultTextTranslations")
     @Expose
-    private Object buttonResultTextTranslations;
+    private String buttonResultTextTranslations;
     @SerializedName("ShowProductName")
     @Expose
     private Boolean showProductName;
@@ -77,27 +77,27 @@ public class ButtonVisibilityResult {
         this.preLoginButtonTextKids = preLoginButtonTextKids;
     }
 
-    public Object getPreLoginButtonTextAdultsTranslations() {
+    public String getPreLoginButtonTextAdultsTranslations() {
         return preLoginButtonTextAdultsTranslations;
     }
 
-    public void setPreLoginButtonTextAdultsTranslations(Object preLoginButtonTextAdultsTranslations) {
+    public void setPreLoginButtonTextAdultsTranslations(String preLoginButtonTextAdultsTranslations) {
         this.preLoginButtonTextAdultsTranslations = preLoginButtonTextAdultsTranslations;
     }
 
-    public Object getPreLoginButtonTextKidsTranslations() {
+    public String getPreLoginButtonTextKidsTranslations() {
         return preLoginButtonTextKidsTranslations;
     }
 
-    public void setPreLoginButtonTextKidsTranslations(Object preLoginButtonTextKidsTranslations) {
+    public void setPreLoginButtonTextKidsTranslations(String preLoginButtonTextKidsTranslations) {
         this.preLoginButtonTextKidsTranslations = preLoginButtonTextKidsTranslations;
     }
 
-    public Object getButtonResultTextTranslations() {
+    public String getButtonResultTextTranslations() {
         return buttonResultTextTranslations;
     }
 
-    public void setButtonResultTextTranslations(Object buttonResultTextTranslations) {
+    public void setButtonResultTextTranslations(String buttonResultTextTranslations) {
         this.buttonResultTextTranslations = buttonResultTextTranslations;
     }
 

@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import strutfit.button.StrutFitGlobalState;
 import strutfit.button.enums.SizeUnit;
 import strutfit.button.StrutFitEventListener;
 import strutfit.button.clients.StrutFitClient;
@@ -25,28 +26,17 @@ public class StrutFitButtonHelper {
     private int  _organizationID;
     private String  _shoeID;
     private StrutFitEventListener _strutFitEventListener;
-    private String _sizeUnavailableText;
-    private String _childPreSizeText;
-    private String _childPostSizeText;
-    private String _adultPreSizeText;
-    private String _adultPostSizeText;
 
     private Context _context;
     private CompositeDisposable disposables = new CompositeDisposable();
     private Runnable _buttonDataCallback;
 
-    public StrutFitButtonHelper (Context context, Runnable callback, int organizationID, String shoeID, StrutFitEventListener strutFitEventListener, String sizeUnavailableText, String childPreSizeText, String childPostSizeText, String adultPreSizeText, String adultPostSizeText) throws Exception {
+    public StrutFitButtonHelper (Context context, Runnable callback, int organizationID, String shoeID, StrutFitEventListener strutFitEventListener) throws Exception {
         _organizationID = organizationID;
         _shoeID = shoeID;
         _context = context;
         _buttonDataCallback = callback;
         _strutFitEventListener = strutFitEventListener;
-
-        _sizeUnavailableText = sizeUnavailableText;
-        _childPreSizeText = childPreSizeText;
-        _childPostSizeText = childPostSizeText;
-        _adultPreSizeText = adultPreSizeText;
-        _adultPostSizeText = adultPostSizeText ;
 
         String measurementCode = StrutFitCommonHelper.getLocalMcode(context);
         getSizeAndVisibility(measurementCode, true);
@@ -74,11 +64,15 @@ public class StrutFitButtonHelper {
                             ButtonSizeResult _sizeData = result != null ? result.getSizeData() : null;
                             ButtonVisibilityResult _visibilityData = result != null ? result.getVisibilityData() : null;
 
+                            StrutFitGlobalState globalState = StrutFitGlobalState.getInstance();
+                            if(_visibilityData != null) {
+                                globalState.setButtonTexts(_visibilityData);
+                            }
+
                             Boolean _isKids = _visibilityData != null ? _visibilityData.getIsKids() : false;
 
                             // Set initial rendering parameters
                             buttonIsVisible = _visibilityData != null ? _visibilityData.getShow() : false;
-                            buttonText = _isKids ? _childPreSizeText : _adultPreSizeText;
 
                             // When initializing we need to set the webview URL
                             if (isInitializing) {
@@ -98,13 +92,13 @@ public class StrutFitButtonHelper {
                             String _widthAbbreviation = _sizeData != null ? _sizeData.getWidthAbbreviation() : "";
                             String _width = (!_showWidthCategory || _widthAbbreviation == null || _widthAbbreviation.isEmpty()) ? "" : _widthAbbreviation;
 
-                            String _buttonText = _isKids ? _childPreSizeText : _adultPreSizeText;
+                            String _buttonText = _isKids ? globalState.getPreLoginButtonTextKids() : globalState.getPreLoginButtonTextAdults();
 
                             if(_sizeData != null) {
-                                _buttonText = _sizeUnavailableText;
+                                _buttonText = globalState.getUnavailableSizeText();
                             }
                             if(_size != null && !_size.isEmpty()) {
-                                _buttonText = _isKids ? String.format("%s %s %s %s", _childPostSizeText, _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width) : String.format("%s %s %s %s", _adultPostSizeText,  _size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width);
+                                _buttonText = globalState.getButtonResultText(_size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width);
                             }
                             buttonText = _buttonText;
 
