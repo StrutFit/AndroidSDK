@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 
+import strutfit.button.enums.PostMessageType;
 import strutfit.button.models.PostMessageInitialAppInfoDto;
 
 public class StrutFitButtonWebview {
@@ -189,7 +190,7 @@ public class StrutFitButtonWebview {
     }
 
     public void openWebView() {
-        _webView.post(() -> _webView.evaluateJavascript("window.callStrutFitFromNativeApp('{\"strutfitMessageType\": 3}')", null));
+        _webView.post(() -> _webView.evaluateJavascript(String.format("window.callStrutFitFromNativeApp('{\"strutfitMessageType\": %s}')", PostMessageType.ShowIFrame.getValue()), null));
         _webView.setVisibility(View.VISIBLE);
         _webView.bringToFront();
     }

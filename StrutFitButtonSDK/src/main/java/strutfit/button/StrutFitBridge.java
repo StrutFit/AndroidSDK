@@ -163,7 +163,7 @@ class StrutFitJavaScriptInterface {
                 case CloseIFrame:
                     closeModal();
                     break;
-                case InitialAppInfo:
+                case IframeReady:
                     //IFrame ready
                     PostMessageInitialAppInfoDto input = new PostMessageInitialAppInfoDto();
                     input.strutfitMessageType = PostMessageType.InitialAppInfo.getValue();
