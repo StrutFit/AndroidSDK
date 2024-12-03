@@ -13,7 +13,7 @@ public class PostMessageInitialAppInfoDto extends PostMessageDto {
 
     public int language;
 
-    public int DefaultUnit;
+    public int defaultUnit;
 
     public boolean hideSizeGuide;
 

@@ -10,7 +10,9 @@ public class ButtonVisibilityAndSizeResult {
     private ButtonVisibilityResult visibilityData;
     @SerializedName("SizeData")
     @Expose
-    private ButtonSizeResult sizeData;
+    private ButtonFootwearSizeResult sizeData;
+    @SerializedName("ApparelSizeData")
+    private ButtonApparelSizeResult apparelSizeData;
 
     public ButtonVisibilityResult getVisibilityData() {
         return visibilityData;
@@ -20,12 +22,20 @@ public class ButtonVisibilityAndSizeResult {
         this.visibilityData = visibilityData;
     }
 
-    public ButtonSizeResult getSizeData() {
+    public ButtonFootwearSizeResult getFootwearSizeData() {
         return sizeData;
     }
 
-    public void setSizeData(ButtonSizeResult sizeData) {
+    public void setFootwearSizeData(ButtonFootwearSizeResult sizeData) {
         this.sizeData = sizeData;
+    }
+
+    public ButtonApparelSizeResult getApparelSizeData() {
+        return apparelSizeData;
+    }
+
+    public void setApparelSizeData(ButtonApparelSizeResult apparelSizeData) {
+        this.apparelSizeData = apparelSizeData;
     }
 
 }

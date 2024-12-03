@@ -31,7 +31,6 @@ public class StrutFitClient {
                     // Add the Origin header if necessary
                     Request newRequest = originalRequest.newBuilder()
                             .header("Origin", context.getPackageName())
-//                            .header("Origin", "https://button-test.dev.strut.fit")
                             .build();
                     return chain.proceed(newRequest);
                 })
@@ -54,7 +53,7 @@ public class StrutFitClient {
         return instance;
     }
 
-    public Observable<ButtonVisibilityAndSizeResult> getButtonSizeAndVisibility(int organizationUnitId, String shoeId, String measurementCode) {
-        return strutFitService.getButtonSizeAndVisibility(organizationUnitId, shoeId, measurementCode);
+    public Observable<ButtonVisibilityAndSizeResult> getButtonSizeAndVisibility(int organizationUnitId, String shoeId, String footMeasurementCode, String bodyMeasurementCode) {
+        return strutFitService.getButtonSizeAndVisibility(organizationUnitId, shoeId, footMeasurementCode, bodyMeasurementCode);
     }
 }

@@ -11,4 +11,6 @@ public class ConversionItem {
     public int quantity;
 
     public String size;
+
+    public String sizeUnit;
 }

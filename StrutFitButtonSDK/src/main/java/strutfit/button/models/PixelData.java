@@ -4,17 +4,23 @@ public class PixelData {
 
     public int organizationId;
 
-    public Boolean sfEnabled;
-
     public String orderRef;
 
     public Float orderValue;
 
-    public String mCode;
+    public String userId;
+
+    public String footScanMCode;
+
+    public String bodyScanMCode;
 
     public String items;
 
     public String currencyCode;
 
     public String domain;
+
+    public Boolean isMobile;
+
+    public Integer emailHash;
 }

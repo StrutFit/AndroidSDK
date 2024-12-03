@@ -5,12 +5,15 @@ import android.util.Log;
 import android.view.View;
 
 
+import strutfit.button.enums.ProductType;
 import strutfit.button.helpers.StrutFitButtonHelper;
 
 public class StrutFitButton {
 
     public Boolean _buttonIsReady = false;
     public String _webviewUrl = "";
+
+    public ProductType _productType = ProductType.Footwear;
     public StrutFitButtonView _button;
     public StrutFitButtonHelper _buttonHelper;
 
@@ -32,7 +35,6 @@ public class StrutFitButton {
 
         try {
             _buttonHelper = new StrutFitButtonHelper(context, _callback, organizationID, shoeID, strutFitEventListener);
-            _webviewUrl = _buttonHelper.webViewURL;
             _buttonIsReady = true;
         } catch (Exception e) {
             Log.e(TAG, "Unable to construct button helper and initialize the button", e);
@@ -43,6 +45,7 @@ public class StrutFitButton {
         if(_buttonHelper.buttonIsVisible) {
             _button.setText(_buttonHelper.buttonText);
             _webviewUrl = _buttonHelper.webViewURL;
+            _productType = _buttonHelper.productType;
             _button.setVisibility(View.VISIBLE);
         } else {
             _button.setVisibility(View.GONE);
@@ -57,7 +60,7 @@ public class StrutFitButton {
         _button.setVisibility(View.VISIBLE);
     }
 
-    public void getSizeAndVisibility(String MeasurementCode) throws Exception {
-        _buttonHelper.getSizeAndVisibility(MeasurementCode, false);
+    public void getSizeAndVisibility(String footMeasurementCode, String bodyMeasurementCode) throws Exception {
+        _buttonHelper.getSizeAndVisibility(footMeasurementCode, bodyMeasurementCode, false);
     }
 }

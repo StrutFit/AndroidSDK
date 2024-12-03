@@ -3,11 +3,17 @@ package strutfit.button.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import strutfit.button.enums.ProductType;
+
 public class ButtonVisibilityResult {
 
     @SerializedName("Show")
     @Expose
     private Boolean show;
+    @SerializedName("ProductType")
+    @Expose
+    private int productType;
+
     @SerializedName("IsKids")
     @Expose
     private Boolean isKids;
@@ -51,6 +57,14 @@ public class ButtonVisibilityResult {
 
     public void setShow(Boolean show) {
         this.show = show;
+    }
+
+    public ProductType getProductType() {
+        return ProductType.valueOf(productType);
+    }
+
+    public void setProductType(int productType) {
+        this.productType = productType;
     }
 
     public Boolean getIsKids() {

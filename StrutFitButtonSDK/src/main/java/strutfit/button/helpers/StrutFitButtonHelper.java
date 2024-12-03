@@ -3,18 +3,18 @@ package strutfit.button.helpers;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.Random;
-
 import strutfit.button.R;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import strutfit.button.StrutFitGlobalState;
+import strutfit.button.enums.ProductType;
 import strutfit.button.enums.SizeUnit;
 import strutfit.button.StrutFitEventListener;
 import strutfit.button.clients.StrutFitClient;
-import strutfit.button.models.ButtonSizeResult;
+import strutfit.button.models.ButtonApparelSizeResult;
+import strutfit.button.models.ButtonFootwearSizeResult;
 import strutfit.button.models.ButtonVisibilityAndSizeResult;
 import strutfit.button.models.ButtonVisibilityResult;
 
@@ -23,6 +23,9 @@ public class StrutFitButtonHelper {
     public boolean buttonIsVisible = false;
     public String buttonText;
     public String webViewURL;
+
+    public ProductType productType = ProductType.Footwear;
+
     private int  _organizationID;
     private String  _shoeID;
     private StrutFitEventListener _strutFitEventListener;
@@ -31,21 +34,26 @@ public class StrutFitButtonHelper {
     private CompositeDisposable disposables = new CompositeDisposable();
     private Runnable _buttonDataCallback;
 
-    public StrutFitButtonHelper (Context context, Runnable callback, int organizationID, String shoeID, StrutFitEventListener strutFitEventListener) throws Exception {
+    public StrutFitButtonHelper (Context context,
+                                 Runnable callback,
+                                 int organizationID,
+                                 String shoeID,
+                                 StrutFitEventListener strutFitEventListener) throws Exception {
         _organizationID = organizationID;
         _shoeID = shoeID;
         _context = context;
         _buttonDataCallback = callback;
         _strutFitEventListener = strutFitEventListener;
 
-        String measurementCode = StrutFitCommonHelper.getLocalMcode(context);
-        getSizeAndVisibility(measurementCode, true);
+        String footMeasurementCode = StrutFitCommonHelper.getLocalFootMCode(context);
+        String bodyMeasurementCode = StrutFitCommonHelper.getLocalBodyMCode(context);
+        getSizeAndVisibility(footMeasurementCode, bodyMeasurementCode,true);
     }
 
-    public void getSizeAndVisibility(String measurementCode, Boolean isInitializing) throws Exception  {
+    public void getSizeAndVisibility(String footMeasurementCode, String bodyMeasurementCode, Boolean isInitializing) throws Exception  {
 
             disposables.add(StrutFitClient.getInstance(_context)
-                .getButtonSizeAndVisibility(_organizationID, _shoeID, measurementCode)
+                .getButtonSizeAndVisibility(_organizationID, _shoeID, footMeasurementCode, bodyMeasurementCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<ButtonVisibilityAndSizeResult>() {
@@ -61,7 +69,8 @@ public class StrutFitButtonHelper {
 
                     @Override public void onNext(ButtonVisibilityAndSizeResult result) {
                         try {
-                            ButtonSizeResult _sizeData = result != null ? result.getSizeData() : null;
+                            ButtonFootwearSizeResult _footwearSizeData = result != null ? result.getFootwearSizeData() : null;
+                            ButtonApparelSizeResult _apparelSizeData = result != null ? result.getApparelSizeData() : null;
                             ButtonVisibilityResult _visibilityData = result != null ? result.getVisibilityData() : null;
 
                             StrutFitGlobalState globalState = StrutFitGlobalState.getInstance();
@@ -72,44 +81,37 @@ public class StrutFitButtonHelper {
                             Boolean _isKids = _visibilityData != null ? _visibilityData.getIsKids() : false;
 
                             // Set initial rendering parameters
+                            productType = _visibilityData != null ? _visibilityData.getProductType() : ProductType.Footwear;
                             buttonIsVisible = _visibilityData != null ? _visibilityData.getShow() : false;
 
                             // When initializing we need to set the webview URL
                             if (isInitializing) {
-                                Random rand = new Random();
-                                int int_random = rand.nextInt(99999);
                                 webViewURL = _context.getResources().getString(R.string.webViewBaseUrl);
                             }
 
-                            _buttonDataCallback.run();
-                            if(_strutFitEventListener != null) {
-                                _strutFitEventListener.onSizeEvent(null, null);
-                            }
-
-                            String _size = _sizeData != null ? _sizeData.getSize() : null;
-                            int _sizeUnit = _sizeData != null ? _sizeData.getUnit() : 0;
-                            Boolean _showWidthCategory = _sizeData != null ? _sizeData.getShowWidthCategory() : false;
-                            String _widthAbbreviation = _sizeData != null ? _sizeData.getWidthAbbreviation() : "";
+                            String _size = productType == ProductType.Footwear ?
+                                    (_footwearSizeData != null ? _footwearSizeData.getSize() : null) :
+                                    (_apparelSizeData != null ? _apparelSizeData.getSize() : null);
+                            String _sizeUnit = productType == ProductType.Footwear ?
+                                    (_footwearSizeData != null ? SizeUnit.getSizeUnitString(SizeUnit.valueOf(_footwearSizeData.getUnit())) : "") :
+                                    "";
+                            Boolean _showWidthCategory = _footwearSizeData != null ? _footwearSizeData.getShowWidthCategory() : false;
+                            String _widthAbbreviation = _footwearSizeData != null ? _footwearSizeData.getWidthAbbreviation() : "";
                             String _width = (!_showWidthCategory || _widthAbbreviation == null || _widthAbbreviation.isEmpty()) ? "" : _widthAbbreviation;
 
                             String _buttonText = _isKids ? globalState.getPreLoginButtonTextKids() : globalState.getPreLoginButtonTextAdults();
 
-                            if(_sizeData != null) {
+                            if(_footwearSizeData != null) {
                                 _buttonText = globalState.getUnavailableSizeText();
                             }
                             if(_size != null && !_size.isEmpty()) {
-                                _buttonText = globalState.getButtonResultText(_size, SizeUnit.getSizeUnitString(SizeUnit.valueOf(_sizeUnit)), _width);
+                                _buttonText = globalState.getButtonResultText(_size, _sizeUnit, _width);
                             }
                             buttonText = _buttonText;
 
-                            // When a post message comes back from the modal with a new measurement code
-                            if (!isInitializing) {
-                                StrutFitCommonHelper.setLocalMcode(_context, measurementCode);
-                            }
-
                             _buttonDataCallback.run();
                             if(_strutFitEventListener != null) {
-                                _strutFitEventListener.onSizeEvent(_size, SizeUnit.valueOf(_sizeUnit));
+                                _strutFitEventListener.onSizeEvent(_size, _sizeUnit);
                             }
                     }
                         catch(Exception e) {

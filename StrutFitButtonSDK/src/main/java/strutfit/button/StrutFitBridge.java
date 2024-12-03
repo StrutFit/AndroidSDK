@@ -23,8 +23,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import strutfit.button.enums.PostMessageType;
+import strutfit.button.enums.ProductType;
+import strutfit.button.helpers.StrutFitCommonHelper;
+import strutfit.button.models.PostMessageUserBodyMeasurementCodeDataDto;
 import strutfit.button.models.PostMessageUserFootMeasurementCodeDataDto;
 import strutfit.button.models.PostMessageInitialAppInfoDto;
+import strutfit.button.models.PostMessageUserIdDataDto;
 
 public class StrutFitBridge {
 
@@ -50,9 +54,7 @@ public class StrutFitBridge {
     public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID,
                           StrutFitEventListener strutFitEventListener) {
         _webView = webview;
-        _button = button;
         _context = context;
-
         _button = button;
         _organizationId = organizationId;
         _shoeID = shoeID;
@@ -72,10 +74,6 @@ public class StrutFitBridge {
                 ((Activity) _context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        // Initialize webView
-                        _sfWebView = new StrutFitButtonWebview(_webView, _sfButton, _context);
-                        _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context, _organizationId, _shoeID));
-
                         // Initialize button on-click function
                         _button.getButton().setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
@@ -110,7 +108,15 @@ public class StrutFitBridge {
                                 if (currentVisibility != lastVisibility) {
                                     lastVisibility = currentVisibility;
                                     if (currentVisibility == View.VISIBLE && !webViewLoaded) {
-                                        // Do something when the view becomes visible
+//                                       // Ui changes need to run on the UI thread
+                                        ((Activity) _context).runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                // Initialize webView
+                                                _sfWebView = new StrutFitButtonWebview(_webView, _sfButton, _context);
+                                                _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context, _organizationId, _shoeID, _sfButton._productType));
+                                            }
+                                        });
                                         _webView.loadUrl(_sfButton._webviewUrl);
                                         webViewLoaded = true;
                                     }
@@ -134,15 +140,17 @@ class StrutFitJavaScriptInterface {
 
     private int _organizationId;
     private String _shoeId;
+    private ProductType _productType;
 
 
     StrutFitJavaScriptInterface(StrutFitButton sfButton, StrutFitButtonWebview sfWebView, Context context,
-        int organizationId, String shoeId) {
+                                int organizationId, String shoeId, ProductType productType) {
         _sfButton = sfButton;
         _sfWebView = sfWebView;
         _context = context;
         _organizationId = organizationId;
         _shoeId = shoeId;
+        _productType = productType;
         TAG = ((Activity) _context).getClass().getSimpleName();
     }
 
@@ -156,9 +164,17 @@ class StrutFitJavaScriptInterface {
 
             switch (result)
             {
+                case UserAuthData:
+                    //update uuid
+                    updateUserId(message);
+                    break;
                 case UserFootMeasurementCodeData:
                     // update m-code
-                    updateMeasurementCode(message);
+                    updateFootMeasurementCode(message);
+                    break;
+                case UserBodyMeasurementCodeData:
+                    //update body m-code
+                    updateBodyMeasurementCode(message);
                     break;
                 case CloseIFrame:
                     closeModal();
@@ -167,12 +183,14 @@ class StrutFitJavaScriptInterface {
                     //IFrame ready
                     PostMessageInitialAppInfoDto input = new PostMessageInitialAppInfoDto();
                     input.strutfitMessageType = PostMessageType.InitialAppInfo.getValue();
+                    input.productType = _productType.getValue();
                     input.productId = _shoeId;
                     input.organizationUnitId = _organizationId;
                     input.hideSizeGuide = true;
                     input.inApp = true;
 
                     _sfWebView.sendInitialAppInfo(input);
+                    break;
                 default:
                     break;
             }
@@ -181,17 +199,46 @@ class StrutFitJavaScriptInterface {
         }
     }
 
-    private void updateMeasurementCode(String json){
+    private void updateFootMeasurementCode(String json){
         try {
             // JSON to Object using Gson
             Gson gson = new Gson();
             PostMessageUserFootMeasurementCodeDataDto postMessage = gson.fromJson(json, PostMessageUserFootMeasurementCodeDataDto.class);
-            _sfButton.getSizeAndVisibility(postMessage.footMeasurementCode);
+            String bodyMeasurementCode = StrutFitCommonHelper.getLocalBodyMCode(_context);
+            _sfButton.getSizeAndVisibility(postMessage.footMeasurementCode, bodyMeasurementCode);
+            StrutFitCommonHelper.setLocalFootMCode(_context, postMessage.footMeasurementCode);
 
         } catch (Exception e) {
             Log.e(TAG, "Unable to update measurement code", e);
         }
     }
+
+    private void updateBodyMeasurementCode(String json){
+        try {
+            // JSON to Object using Gson
+            Gson gson = new Gson();
+            PostMessageUserBodyMeasurementCodeDataDto postMessage = gson.fromJson(json, PostMessageUserBodyMeasurementCodeDataDto.class);
+            String footMeasurementCode = StrutFitCommonHelper.getLocalFootMCode(_context);
+            _sfButton.getSizeAndVisibility(footMeasurementCode, postMessage.bodyMeasurementCode);
+            StrutFitCommonHelper.setLocalBodyMCode(_context, postMessage.bodyMeasurementCode);
+
+        } catch (Exception e) {
+            Log.e(TAG, "Unable to update measurement code", e);
+        }
+    }
+
+    private void updateUserId(String json){
+        try {
+            // JSON to Object using Gson
+            Gson gson = new Gson();
+            PostMessageUserIdDataDto postMessage = gson.fromJson(json, PostMessageUserIdDataDto.class);
+            StrutFitCommonHelper.setLocalUserId(_context, postMessage.uuid);
+
+        } catch (Exception e) {
+            Log.e(TAG, "Unable to update measurement code", e);
+        }
+    }
+
 
     private void closeModal() {
         ((Activity) _context).runOnUiThread(new Runnable() {
