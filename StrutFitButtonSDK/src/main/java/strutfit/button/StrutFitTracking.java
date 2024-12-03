@@ -40,7 +40,7 @@ public class StrutFitTracking {
         // Construct conversion data
         PixelData data = new PixelData();
 
-        data.organizationId = _organizationId;
+        data.organizationUnitId = _organizationId;
         data.orderRef = orderReference;
         data.orderValue = orderValue;
         data.userId = StrutFitCommonHelper.getLocalUserId(_context);

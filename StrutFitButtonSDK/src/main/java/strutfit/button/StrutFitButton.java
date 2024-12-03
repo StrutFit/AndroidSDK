@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.View;
 
 
+import java.util.function.Consumer;
+
 import strutfit.button.enums.ProductType;
 import strutfit.button.helpers.StrutFitButtonHelper;
 
@@ -20,6 +22,8 @@ public class StrutFitButton {
     private Context _context;
     private String TAG;
 
+    private Consumer<Boolean> _buttonVisibleCallback;
+
     private Runnable _callback = new Runnable() {
         @Override
         public void run() {
@@ -27,10 +31,13 @@ public class StrutFitButton {
         }
     };
 
-    public StrutFitButton(StrutFitButtonView button, Context context, int organizationID, String shoeID, StrutFitEventListener strutFitEventListener) {
+    public StrutFitButton(StrutFitButtonView button, Context context, int organizationID,
+                          String shoeID, StrutFitEventListener strutFitEventListener,
+                          Consumer<Boolean> buttonVisibleCallback) {
 
         _button = button;
         _context = context;
+        _buttonVisibleCallback = buttonVisibleCallback;
         TAG = ((Activity) _context).getClass().getSimpleName();
 
         try {
@@ -46,9 +53,7 @@ public class StrutFitButton {
             _button.setText(_buttonHelper.buttonText);
             _webviewUrl = _buttonHelper.webViewURL;
             _productType = _buttonHelper.productType;
-            _button.setVisibility(View.VISIBLE);
-        } else {
-            _button.setVisibility(View.GONE);
+            _buttonVisibleCallback.accept(true);
         }
     }
 

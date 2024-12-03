@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 import strutfit.button.enums.PostMessageType;
 import strutfit.button.enums.ProductType;
@@ -40,7 +41,6 @@ public class StrutFitBridge {
     // Button properties
     public int _organizationId;
     public String _shoeID;
-    private boolean _hasInitialized = false;
     private StrutFitEventListener _strutFitEventListener;
 
     // SF Properties
@@ -67,8 +67,29 @@ public class StrutFitBridge {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Consumer<Boolean> buttonVisibleCallback = showButton -> {
+                    if(showButton) {
+                        // Ui changes need to run on the UI thread
+                        ((Activity) _context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Initialize webView
+                                _sfWebView = new StrutFitButtonWebview(_webView, _sfButton, _context, webViewLoaded -> {
+                                    if(webViewLoaded) {
+                                        _sfButton.showButton();
+                                    }
+                                });
+                                _webView.loadUrl(_sfButton._webviewUrl);
+                                _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context, _organizationId, _shoeID, _sfButton._productType));
+                            }
+                        });
+                    }
+                };
+
                 // Construct the SF Button and its properties
-                _sfButton = new StrutFitButton(_button, _context, _organizationId, _shoeID, _strutFitEventListener);
+                _sfButton = new StrutFitButton(_button, _context, _organizationId,
+                        _shoeID, _strutFitEventListener, buttonVisibleCallback
+);
 
                 // Ui changes need to run on the UI thread
                 ((Activity) _context).runOnUiThread(new Runnable() {
@@ -94,33 +115,6 @@ public class StrutFitBridge {
 
                                 _sfWebView.openWebView();
                                 _sfButton.hideButton();
-                                _hasInitialized = true;
-                            }
-                        });
-
-                        _button.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                            private int lastVisibility = _button.getVisibility();
-                            private boolean webViewLoaded = false;
-
-                            @Override
-                            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                                int currentVisibility = _button.getVisibility();
-                                if (currentVisibility != lastVisibility) {
-                                    lastVisibility = currentVisibility;
-                                    if (currentVisibility == View.VISIBLE && !webViewLoaded) {
-//                                       // Ui changes need to run on the UI thread
-                                        ((Activity) _context).runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                // Initialize webView
-                                                _sfWebView = new StrutFitButtonWebview(_webView, _sfButton, _context);
-                                                _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context, _organizationId, _shoeID, _sfButton._productType));
-                                            }
-                                        });
-                                        _webView.loadUrl(_sfButton._webviewUrl);
-                                        webViewLoaded = true;
-                                    }
-                                }
                             }
                         });
                     }

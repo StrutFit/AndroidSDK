@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Consumer;
 
 import strutfit.button.enums.PostMessageType;
 import strutfit.button.models.PostMessageInitialAppInfoDto;
@@ -29,17 +30,19 @@ public class StrutFitButtonWebview {
     private StrutFitButton _button;
     private WebView _webView;
     private Context _context;
+
+    private Consumer<Boolean> _webViewLoadCallback;
     private static final int FILECHOOSER_RESULTCODE = 1;
     private Uri mCapturedImageURI = null;
     private String TAG = null;
     private ValueCallback<Uri[]> mFilePathCallback;
     private String mCameraPhotoPath;
-    private ValueCallback<Uri> mUploadMessage;
 
-    public StrutFitButtonWebview(WebView webview, StrutFitButton button, Context context) {
+    public StrutFitButtonWebview(WebView webview, StrutFitButton button, Context context, Consumer<Boolean> webViewLoadCallback) {
         _button = button;
         _webView = webview;
         _context = context;
+        _webViewLoadCallback = webViewLoadCallback;
         TAG = ((Activity) _context).getClass().getSimpleName();
 
 
@@ -55,6 +58,15 @@ public class StrutFitButtonWebview {
                     }
                 });
 
+            }
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100) {
+                    // WebView loading is complete
+                    _webViewLoadCallback.accept(true);
+                }
             }
 
 
@@ -127,8 +139,6 @@ public class StrutFitButtonWebview {
 
             // openFileChooser for Android 3.0+
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
-                mUploadMessage = uploadMsg;
-
                 try {
                     File imageStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "DirectoryNameHere");
 

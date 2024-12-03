@@ -2,7 +2,7 @@ package strutfit.button.models;
 
 public class PixelData {
 
-    public int organizationId;
+    public int organizationUnitId;
 
     public String orderRef;
 
