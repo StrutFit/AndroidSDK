@@ -80,7 +80,7 @@ public class StrutFitBridge {
                                     }
                                 });
                                 _webView.loadUrl(_sfButton._webviewUrl);
-                                _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context, _organizationId, _shoeID, _sfButton._productType));
+                                _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context, _organizationId, _shoeID, _sfButton._productType, _sfButton._isKids));
                             }
                         });
                     }
@@ -136,15 +136,18 @@ class StrutFitJavaScriptInterface {
     private String _shoeId;
     private ProductType _productType;
 
+    private Boolean _isKids;
+
 
     StrutFitJavaScriptInterface(StrutFitButton sfButton, StrutFitButtonWebview sfWebView, Context context,
-                                int organizationId, String shoeId, ProductType productType) {
+                                int organizationId, String shoeId, ProductType productType, Boolean isKids) {
         _sfButton = sfButton;
         _sfWebView = sfWebView;
         _context = context;
         _organizationId = organizationId;
         _shoeId = shoeId;
         _productType = productType;
+        _isKids = isKids
         TAG = ((Activity) _context).getClass().getSimpleName();
     }
 
@@ -178,6 +181,7 @@ class StrutFitJavaScriptInterface {
                     PostMessageInitialAppInfoDto input = new PostMessageInitialAppInfoDto();
                     input.strutfitMessageType = PostMessageType.InitialAppInfo.getValue();
                     input.productType = _productType.getValue();
+                    input.isKids = _isKids;
                     input.productId = _shoeId;
                     input.organizationUnitId = _organizationId;
                     input.hideSizeGuide = true;

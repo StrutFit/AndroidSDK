@@ -25,6 +25,7 @@ public class StrutFitButtonHelper {
     public String webViewURL;
 
     public ProductType productType = ProductType.Footwear;
+    public Boolean isKids = false;
 
     private int  _organizationID;
     private String  _shoeID;
@@ -78,7 +79,7 @@ public class StrutFitButtonHelper {
                                 globalState.setButtonTexts(_visibilityData);
                             }
 
-                            Boolean _isKids = _visibilityData != null ? _visibilityData.getIsKids() : false;
+                            isKids = _visibilityData != null ? _visibilityData.getIsKids() : false;
 
                             // Set initial rendering parameters
                             productType = _visibilityData != null ? _visibilityData.getProductType() : ProductType.Footwear;
@@ -99,7 +100,7 @@ public class StrutFitButtonHelper {
                             String _widthAbbreviation = _footwearSizeData != null ? _footwearSizeData.getWidthAbbreviation() : "";
                             String _width = (!_showWidthCategory || _widthAbbreviation == null || _widthAbbreviation.isEmpty()) ? "" : _widthAbbreviation;
 
-                            String _buttonText = _isKids ? globalState.getPreLoginButtonTextKids() : globalState.getPreLoginButtonTextAdults();
+                            String _buttonText = isKids ? globalState.getPreLoginButtonTextKids() : globalState.getPreLoginButtonTextAdults();
 
                             if(_footwearSizeData != null) {
                                 _buttonText = globalState.getUnavailableSizeText();

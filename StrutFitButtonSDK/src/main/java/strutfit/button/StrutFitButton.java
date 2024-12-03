@@ -16,6 +16,8 @@ public class StrutFitButton {
     public String _webviewUrl = "";
 
     public ProductType _productType = ProductType.Footwear;
+    public Boolean _isKids = false;
+
     public StrutFitButtonView _button;
     public StrutFitButtonHelper _buttonHelper;
 
@@ -53,6 +55,7 @@ public class StrutFitButton {
             _button.setText(_buttonHelper.buttonText);
             _webviewUrl = _buttonHelper.webViewURL;
             _productType = _buttonHelper.productType;
+            _isKids = _buttonHelper.isKids;
             _buttonVisibleCallback.accept(true);
         }
     }
