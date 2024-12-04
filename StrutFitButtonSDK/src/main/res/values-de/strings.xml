@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="UnavailableInYourSize">In deiner empfohlenen Größe nicht verfügbar</string>
+    <string name="YourStrutfitSize">Deine Größe ist <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="WhatIsMySize">Was ist meine Größe?</string>
+    <string name="WhatIsMySize_Kids">Wie groß ist mein Kind?</string>
+    <string name="InAppCameraAccessToastMessage">Für ein optimales Erlebnis benötigt diese Anwendung Zugriff auf die Kamera</string>
+</resources>

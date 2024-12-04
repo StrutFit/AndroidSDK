@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="UnavailableInYourSize">Ei saatavilla suosittelemassasi koossa</string>
+    <string name="YourStrutfitSize">Kokosi tässä tyylissä on <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="WhatIsMySize">Mikä on kokoni?</string>
+    <string name="WhatIsMySize_Kids">Mikä on lapseni koko?</string>
+    <string name="InAppCameraAccessToastMessage">Parhaan kokemuksen saamiseksi tämä sovellus tarvitsee pääsyn kameraan</string>
+</resources>

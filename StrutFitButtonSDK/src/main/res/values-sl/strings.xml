@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="UnavailableInYourSize">Ni na voljo v vaši priporočeni velikosti</string>
+    <string name="YourStrutfitSize">Vaša velikost v tem slogu je <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="WhatIsMySize">Kakšna je moja velikost?</string>
+    <string name="WhatIsMySize_Kids">Kakšna je velikost mojega otroka?</string>
+    <string name="InAppCameraAccessToastMessage">Za najboljšo izkušnjo ta aplikacija potrebuje dostop do kamere</string>
+</resources>

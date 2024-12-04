@@ -76,7 +76,7 @@ public class StrutFitButtonHelper {
 
                             StrutFitGlobalState globalState = StrutFitGlobalState.getInstance();
                             if(_visibilityData != null) {
-                                globalState.setButtonTexts(_visibilityData);
+                                globalState.setButtonTexts(_context, _visibilityData);
                             }
 
                             isKids = _visibilityData != null ? _visibilityData.getIsKids() : false;
@@ -100,13 +100,13 @@ public class StrutFitButtonHelper {
                             String _widthAbbreviation = _footwearSizeData != null ? _footwearSizeData.getWidthAbbreviation() : "";
                             String _width = (!_showWidthCategory || _widthAbbreviation == null || _widthAbbreviation.isEmpty()) ? "" : _widthAbbreviation;
 
-                            String _buttonText = isKids ? globalState.getPreLoginButtonTextKids() : globalState.getPreLoginButtonTextAdults();
+                            String _buttonText = isKids ? globalState.getPreLoginButtonTextKids(_context) : globalState.getPreLoginButtonTextAdults(_context);
 
                             if(_footwearSizeData != null) {
                                 _buttonText = globalState.getUnavailableSizeText();
                             }
                             if(_size != null && !_size.isEmpty()) {
-                                _buttonText = globalState.getButtonResultText(_size, _sizeUnit, _width);
+                                _buttonText = globalState.getButtonResultText(_context, _size, _sizeUnit, _width);
                             }
                             buttonText = _buttonText;
 

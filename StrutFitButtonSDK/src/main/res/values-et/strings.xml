@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="UnavailableInYourSize">Pole saadaval teie soovitatud suuruses</string>
+    <string name="YourStrutfitSize">Teie suurus selles stiilis on <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="WhatIsMySize">Mis on minu suurus?</string>
+    <string name="WhatIsMySize_Kids">Mis on mu lapse suurus?</string>
+    <string name="InAppCameraAccessToastMessage">Parima kogemuse saamiseks vajab see rakendus juurdepääsu kaamerale</string>
+</resources>

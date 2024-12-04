@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="defaultSizeUnavailableText">Unavailable in your recommended size</string>
-    <string name="defaultChildPreSizeText">What is my child\'s size?</string>
-    <string name="defaultChildPostSizeText">Your child\'s size in this style is</string>
-    <string name="defaultAdultPreSizeText">What is my size?</string>
-    <string name="defaultAdultPostSizeText">Your size in this style is</string>
-    <string name="cameraAccessToastMessage">For the best experience this application needs access to the camera</string>
+    <string name="UnavailableInYourSize">Unavailable in your recommended size</string>
+    <string name="WhatIsMySize_Kids">What is my child\'s size?</string>
+    <string name="WhatIsMySize">What is my size?</string>
+    <string name="YourStrutfitSize">Your size in this style is <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="InAppCameraAccessToastMessage">For the best experience this application needs access to the camera</string>
 </resources>
