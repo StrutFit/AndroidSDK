@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="UnavailableInYourSize">Niet beschikbaar in uw aanbevolen maat</string>
-    <string name="YourStrutfitSize">Je maat is <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="YourStrutfitSize">Je maat is %1$s %2$s %3$s</string>
     <string name="WhatIsMySize">Wat is mijn maat?</string>
     <string name="WhatIsMySize_Kids">Wat is de maat van mijn kind?</string>
     <string name="InAppCameraAccessToastMessage">Voor de beste ervaring heeft deze applicatie toegang tot de camera nodig</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="UnavailableInYourSize">Indisponible dans votre pointure recommandée</string>
-    <string name="YourStrutfitSize">Votre pointure est <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="YourStrutfitSize">Votre pointure est %1$s %2$s %3$s</string>
     <string name="WhatIsMySize">Quelle est ma pointure?</string>
     <string name="WhatIsMySize_Kids">Quelle est la pointure de mon enfant?</string>
     <string name="InAppCameraAccessToastMessage">Pour une expérience optimale, cette application doit accéder à la caméra</string>

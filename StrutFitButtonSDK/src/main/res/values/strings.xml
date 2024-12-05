@@ -3,6 +3,6 @@
     <string name="UnavailableInYourSize">Unavailable in your recommended size</string>
     <string name="WhatIsMySize_Kids">What is my child\'s size?</string>
     <string name="WhatIsMySize">What is my size?</string>
-    <string name="YourStrutfitSize">Your size in this style is <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="YourStrutfitSize">Your size in this style is %1$s %2$s %3$s</string>
     <string name="InAppCameraAccessToastMessage">For the best experience this application needs access to the camera</string>
 </resources>

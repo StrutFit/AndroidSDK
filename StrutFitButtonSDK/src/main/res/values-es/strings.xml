@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="UnavailableInYourSize">¡Lo sentimos! Tu talla no está disponible.</string>
-    <string name="YourStrutfitSize">Tu talla es <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="YourStrutfitSize">Tu talla es %1$s %2$s %3$s</string>
     <string name="WhatIsMySize">¿Cuál es mi talla?</string>
     <string name="WhatIsMySize_Kids">¿Cuál es la talla de mi hijo?</string>
     <string name="InAppCameraAccessToastMessage">Para obtener la mejor experiencia, esta aplicación necesita acceso a la cámara.</string>

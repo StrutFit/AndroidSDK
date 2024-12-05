@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="UnavailableInYourSize">Az ajánlott méretben nem kapható</string>
-    <string name="YourStrutfitSize">Az Ön mérete ebben a stílusban: <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="YourStrutfitSize">Az Ön mérete ebben a stílusban: %1$s %2$s %3$s</string>
     <string name="WhatIsMySize">Mekkora a méretem?</string>
     <string name="WhatIsMySize_Kids">Mekkora a gyermekem?</string>
     <string name="InAppCameraAccessToastMessage">A legjobb élmény érdekében az alkalmazásnak hozzá kell férnie a kamerához</string>

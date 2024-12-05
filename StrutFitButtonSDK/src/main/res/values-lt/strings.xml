@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="UnavailableInYourSize">Jūsų rekomenduojamo dydžio nėra</string>
-    <string name="YourStrutfitSize">Jūsų dydis šiuo stiliumi yra <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="YourStrutfitSize">Jūsų dydis šiuo stiliumi yra %1$s %2$s %3$s</string>
     <string name="WhatIsMySize">Koks mano dydis?</string>
     <string name="WhatIsMySize_Kids">Koks mano vaiko dydis?</string>
     <string name="InAppCameraAccessToastMessage">Kad patirtis būtų geriausia, šiai programai reikia prieigos prie fotoaparato</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="UnavailableInYourSize">あなたのサイズでは利用できません</string>
-    <string name="YourStrutfitSize">あなたのサイズは <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="YourStrutfitSize">あなたのサイズは %1$s %2$s %3$s</string>
     <string name="WhatIsMySize">私のサイズは？</string>
     <string name="WhatIsMySize_Kids">私のサイズは？</string>
     <string name="InAppCameraAccessToastMessage">最高のエクスペリエンスを得るには、このアプリケーションはカメラにアクセスする必要があります</string>

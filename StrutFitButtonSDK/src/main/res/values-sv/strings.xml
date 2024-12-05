@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="UnavailableInYourSize">Inte tillgänglig i din rekommenderade storlek</string>
-    <string name="YourStrutfitSize">Din storlek är <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="YourStrutfitSize">Din storlek är %1$s %2$s %3$s</string>
     <string name="WhatIsMySize">Vad är min storlek?</string>
     <string name="WhatIsMySize_Kids">Vad är mitt barns storlek?</string>
     <string name="InAppCameraAccessToastMessage">För den bästa upplevelsen behöver denna applikation åtkomst till kameran</string>

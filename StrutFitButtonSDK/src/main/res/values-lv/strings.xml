@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="UnavailableInYourSize">Nav pieejams jūsu ieteiktajā izmērā</string>
-    <string name="YourStrutfitSize">Jūsu izmērs šajā stilā ir <b>%1$s</b> <b>%2$s</b> <b>%3$s</b></string>
+    <string name="YourStrutfitSize">Jūsu izmērs šajā stilā ir %1$s %2$s %3$s</string>
     <string name="WhatIsMySize">Kāds ir mans izmērs?</string>
     <string name="WhatIsMySize_Kids">Kāds ir mana bērna izmērs?</string>
     <string name="InAppCameraAccessToastMessage">Lai nodrošinātu vislabāko pieredzi, šai lietojumprogrammai ir nepieciešama piekļuve kamerai</string>
