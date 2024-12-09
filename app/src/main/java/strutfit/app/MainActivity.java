@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         StrutFitBridge bridge = new StrutFitBridge(button, webView, this,
                 this.getResources().getInteger(R.integer.organizationUnitId),
                 this.getResources().getString(R.string.productCode),
+                null,
                 strutFitEventListener);
         bridge.initializeStrutFit();
 

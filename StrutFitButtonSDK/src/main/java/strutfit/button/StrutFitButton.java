@@ -7,6 +7,7 @@ import android.view.View;
 
 import java.util.function.Consumer;
 
+import strutfit.button.enums.OnlineScanInstructionsType;
 import strutfit.button.enums.ProductType;
 import strutfit.button.helpers.StrutFitButtonHelper;
 
@@ -17,6 +18,7 @@ public class StrutFitButton {
 
     public ProductType _productType = ProductType.Footwear;
     public Boolean _isKids = false;
+    public OnlineScanInstructionsType _onlineScanInstructionsType = OnlineScanInstructionsType.OneFootOnPaper;
 
     public StrutFitButtonView _button;
     public StrutFitButtonHelper _buttonHelper;
@@ -56,6 +58,7 @@ public class StrutFitButton {
             _webviewUrl = _buttonHelper.webViewURL;
             _productType = _buttonHelper.productType;
             _isKids = _buttonHelper.isKids;
+            _onlineScanInstructionsType = _buttonHelper.onlineScanInstructionsType;
             _buttonVisibleCallback.accept(true);
         }
     }

@@ -11,11 +11,11 @@ public class PostMessageInitialAppInfoDto extends PostMessageDto {
 
     public String productId;
 
-    public int language;
-
-    public int defaultUnit;
+    public Integer defaultUnit;
 
     public boolean hideSizeGuide;
+
+    public boolean hideUsualSize;
 
     public boolean inApp;
 }

@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import strutfit.button.StrutFitGlobalState;
+import strutfit.button.enums.OnlineScanInstructionsType;
 import strutfit.button.enums.ProductType;
 import strutfit.button.enums.SizeUnit;
 import strutfit.button.StrutFitEventListener;
@@ -26,6 +27,7 @@ public class StrutFitButtonHelper {
 
     public ProductType productType = ProductType.Footwear;
     public Boolean isKids = false;
+    public OnlineScanInstructionsType onlineScanInstructionsType = OnlineScanInstructionsType.OneFootOnPaper;
 
     private int  _organizationID;
     private String  _shoeID;
@@ -83,6 +85,11 @@ public class StrutFitButtonHelper {
 
                             // Set initial rendering parameters
                             productType = _visibilityData != null ? _visibilityData.getProductType() : ProductType.Footwear;
+                            onlineScanInstructionsType =  _visibilityData != null ?
+                                    (isKids ?
+                                            _visibilityData.getKidsOnlineScanInstructionsType() :
+                                            _visibilityData.getAdultsOnlineScanInstructionsType()) :
+                                    OnlineScanInstructionsType.OneFootOnPaper;
                             buttonIsVisible = _visibilityData != null ? _visibilityData.getShow() : false;
 
                             // When initializing we need to set the webview URL

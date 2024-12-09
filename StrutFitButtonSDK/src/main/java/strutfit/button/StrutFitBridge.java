@@ -19,12 +19,16 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
+import strutfit.button.enums.OnlineScanInstructionsType;
 import strutfit.button.enums.PostMessageType;
 import strutfit.button.enums.ProductType;
+import strutfit.button.enums.SizeUnit;
 import strutfit.button.helpers.StrutFitCommonHelper;
 import strutfit.button.models.PostMessageUserBodyMeasurementCodeDataDto;
 import strutfit.button.models.PostMessageUserFootMeasurementCodeDataDto;
@@ -41,6 +45,7 @@ public class StrutFitBridge {
     // Button properties
     public int _organizationId;
     public String _shoeID;
+    public SizeUnit _sizeUnit;
     private StrutFitEventListener _strutFitEventListener;
 
     // SF Properties
@@ -48,16 +53,21 @@ public class StrutFitBridge {
     private StrutFitButtonWebview _sfWebView;
 
     public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID) {
-        this(button, webview, context, organizationId, shoeID, null);
+        this(button, webview, context, organizationId, shoeID, null, null);
+    }
+
+    public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID, String sizeUnit) {
+        this(button, webview, context, organizationId, shoeID, sizeUnit, null);
     }
 
     public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID,
-                          StrutFitEventListener strutFitEventListener) {
+                          String sizeUnit, StrutFitEventListener strutFitEventListener) {
         _webView = webview;
         _context = context;
         _button = button;
         _organizationId = organizationId;
         _shoeID = shoeID;
+        _sizeUnit = SizeUnit.getSizeUnitFromString(sizeUnit);
         _strutFitEventListener = strutFitEventListener;
     }
 
@@ -80,7 +90,14 @@ public class StrutFitBridge {
                                     }
                                 });
                                 _webView.loadUrl(_sfButton._webviewUrl);
-                                _sfWebView.setJavaScriptInterface( new StrutFitJavaScriptInterface(_sfButton, _sfWebView, _context, _organizationId, _shoeID, _sfButton._productType, _sfButton._isKids));
+                                _sfWebView.setJavaScriptInterface(
+                                        new StrutFitJavaScriptInterface(
+                                                _sfButton, _sfWebView, _context,
+                                                _organizationId, _shoeID, _sizeUnit,
+                                                _sfButton._productType, _sfButton._isKids,
+                                                _sfButton._onlineScanInstructionsType
+                                        )
+                                );
                             }
                         });
                     }
@@ -134,20 +151,26 @@ class StrutFitJavaScriptInterface {
 
     private int _organizationId;
     private String _shoeId;
+    private SizeUnit _sizeUnit;
     private ProductType _productType;
-
     private Boolean _isKids;
+    private OnlineScanInstructionsType _onlineScanInstructionsType;
+
+    private Boolean _initialAppInfoSent = false;
 
 
     StrutFitJavaScriptInterface(StrutFitButton sfButton, StrutFitButtonWebview sfWebView, Context context,
-                                int organizationId, String shoeId, ProductType productType, Boolean isKids) {
+                                int organizationId, String shoeId, SizeUnit sizeUnit, ProductType productType,
+                                Boolean isKids, OnlineScanInstructionsType onlineScanInstructionsType) {
         _sfButton = sfButton;
         _sfWebView = sfWebView;
         _context = context;
         _organizationId = organizationId;
         _shoeId = shoeId;
+        _sizeUnit = sizeUnit;
         _productType = productType;
         _isKids = isKids;
+        _onlineScanInstructionsType = onlineScanInstructionsType;
         TAG = ((Activity) _context).getClass().getSimpleName();
     }
 
@@ -177,17 +200,22 @@ class StrutFitJavaScriptInterface {
                     closeModal();
                     break;
                 case IframeReady:
-                    //IFrame ready
-                    PostMessageInitialAppInfoDto input = new PostMessageInitialAppInfoDto();
-                    input.strutfitMessageType = PostMessageType.InitialAppInfo.getValue();
-                    input.productType = _productType.getValue();
-                    input.isKids = _isKids;
-                    input.productId = _shoeId;
-                    input.organizationUnitId = _organizationId;
-                    input.hideSizeGuide = true;
-                    input.inApp = true;
+                    if(!_initialAppInfoSent) {
+                        PostMessageInitialAppInfoDto input = new PostMessageInitialAppInfoDto();
+                        input.strutfitMessageType = PostMessageType.InitialAppInfo.getValue();
+                        input.productType = _productType.getValue();
+                        input.isKids = _isKids;
+                        input.productId = _shoeId;
+                        input.organizationUnitId = _organizationId;
+                        input.defaultUnit = _sizeUnit != null ? _sizeUnit.getValue() : null;
+                        input.onlineScanInstructionsType = _onlineScanInstructionsType.getValue();
+                        input.hideSizeGuide = true;
+                        input.hideUsualSize = true;
+                        input.inApp = true;
 
-                    _sfWebView.sendInitialAppInfo(input);
+                        _sfWebView.sendInitialAppInfo(input);
+                        _initialAppInfoSent = true;
+                    }
                     break;
                 default:
                     break;
@@ -202,10 +230,14 @@ class StrutFitJavaScriptInterface {
             // JSON to Object using Gson
             Gson gson = new Gson();
             PostMessageUserFootMeasurementCodeDataDto postMessage = gson.fromJson(json, PostMessageUserFootMeasurementCodeDataDto.class);
-            String bodyMeasurementCode = StrutFitCommonHelper.getLocalBodyMCode(_context);
-            _sfButton.getSizeAndVisibility(postMessage.footMeasurementCode, bodyMeasurementCode);
-            StrutFitCommonHelper.setLocalFootMCode(_context, postMessage.footMeasurementCode);
-
+            String currentFootMeasurementCode = StrutFitCommonHelper.getLocalFootMCode(_context);
+            if(!Objects.equals(currentFootMeasurementCode, postMessage.footMeasurementCode)){
+                if(_productType == ProductType.Footwear) {
+                    String bodyMeasurementCode = StrutFitCommonHelper.getLocalBodyMCode(_context);
+                    _sfButton.getSizeAndVisibility(postMessage.footMeasurementCode, bodyMeasurementCode);
+                }
+                StrutFitCommonHelper.setLocalFootMCode(_context, postMessage.footMeasurementCode);
+            }
         } catch (Exception e) {
             Log.e(TAG, "Unable to update measurement code", e);
         }
@@ -216,9 +248,14 @@ class StrutFitJavaScriptInterface {
             // JSON to Object using Gson
             Gson gson = new Gson();
             PostMessageUserBodyMeasurementCodeDataDto postMessage = gson.fromJson(json, PostMessageUserBodyMeasurementCodeDataDto.class);
-            String footMeasurementCode = StrutFitCommonHelper.getLocalFootMCode(_context);
-            _sfButton.getSizeAndVisibility(footMeasurementCode, postMessage.bodyMeasurementCode);
-            StrutFitCommonHelper.setLocalBodyMCode(_context, postMessage.bodyMeasurementCode);
+            String currentBodyMeasurementCode = StrutFitCommonHelper.getLocalFootMCode(_context);
+            if(!Objects.equals(currentBodyMeasurementCode, postMessage.bodyMeasurementCode)) {
+                if(_productType == ProductType.Apparel) {
+                    String footMeasurementCode = StrutFitCommonHelper.getLocalFootMCode(_context);
+                    _sfButton.getSizeAndVisibility(footMeasurementCode, postMessage.bodyMeasurementCode);
+                }
+                StrutFitCommonHelper.setLocalBodyMCode(_context, postMessage.bodyMeasurementCode);
+            }
 
         } catch (Exception e) {
             Log.e(TAG, "Unable to update measurement code", e);

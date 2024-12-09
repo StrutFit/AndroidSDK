@@ -3,6 +3,7 @@ package strutfit.button.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import strutfit.button.enums.OnlineScanInstructionsType;
 import strutfit.button.enums.ProductType;
 
 public class ButtonVisibilityResult {
@@ -50,6 +51,12 @@ public class ButtonVisibilityResult {
     @SerializedName("ChartSpecificResultScreenText")
     @Expose
     private Object chartSpecificResultScreenText;
+    @SerializedName("AdultsOnlineScanInstructionsType")
+    @Expose
+    private int adultsOnlineScanInstructionsType;
+    @SerializedName("KidsOnlineScanInstructionsType")
+    @Expose
+    private int kidsOnlineScanInstructionsType;
 
     public Boolean getShow() {
         return show;
@@ -65,6 +72,22 @@ public class ButtonVisibilityResult {
 
     public void setProductType(int productType) {
         this.productType = productType;
+    }
+
+    public OnlineScanInstructionsType getAdultsOnlineScanInstructionsType() {
+        return OnlineScanInstructionsType.valueOf(adultsOnlineScanInstructionsType);
+    }
+
+    public void setAdultsOnlineScanInstructionsType(int onlineScanInstructionsType) {
+        this.adultsOnlineScanInstructionsType = onlineScanInstructionsType;
+    }
+
+    public OnlineScanInstructionsType getKidsOnlineScanInstructionsType() {
+        return OnlineScanInstructionsType.valueOf(kidsOnlineScanInstructionsType);
+    }
+
+    public void setKidsOnlineScanInstructionsType(int onlineScanInstructionsType) {
+        this.kidsOnlineScanInstructionsType = onlineScanInstructionsType;
     }
 
     public Boolean getIsKids() {
