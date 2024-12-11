@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.function.Consumer;
 
 import strutfit.button.enums.PostMessageType;
+import strutfit.button.helpers.StrutFitJavaScriptInterface;
 import strutfit.button.models.PostMessageInitialAppInfoDto;
 
 public class StrutFitButtonWebview {
