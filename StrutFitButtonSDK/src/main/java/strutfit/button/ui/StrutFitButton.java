@@ -96,11 +96,7 @@ public class StrutFitButton {
                             @Override
                             public void run() {
                                 // Initialize webView
-                                _sfWebView = new StrutFitButtonWebview(_webView, _context, webViewLoaded -> {
-                                    if(webViewLoaded) {
-                                        _sfButtonHelper.showButton();
-                                    }
-                                });
+                                _sfWebView = new StrutFitButtonWebview(_webView, _context);
                                 _webView.loadUrl(_sfButtonHelper.webViewURL);
                                 _sfWebView.setJavaScriptInterface(
                                         new StrutFitJavaScriptInterface(

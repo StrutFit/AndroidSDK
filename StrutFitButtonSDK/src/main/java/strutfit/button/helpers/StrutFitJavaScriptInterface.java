@@ -98,6 +98,13 @@ public class StrutFitJavaScriptInterface {
 
                         _sfWebView.sendInitialAppInfo(input);
                         _initialAppInfoSent = true;
+                        ((Activity) _context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                _sfButtonHelper.showButton();
+                            }
+                        });
+
                     }
                     break;
                 default:

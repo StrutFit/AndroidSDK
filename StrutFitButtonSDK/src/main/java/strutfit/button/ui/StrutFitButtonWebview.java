@@ -20,7 +20,6 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.function.Consumer;
 
 import strutfit.button.enums.PostMessageType;
 import strutfit.button.helpers.StrutFitJavaScriptInterface;
@@ -29,18 +28,15 @@ import strutfit.button.models.PostMessageInitialAppInfoDto;
 public class StrutFitButtonWebview {
     private WebView _webView;
     private Context _context;
-
-    private Consumer<Boolean> _webViewLoadCallback;
     private static final int FILECHOOSER_RESULTCODE = 1;
     private Uri mCapturedImageURI = null;
     private String TAG = null;
     private ValueCallback<Uri[]> mFilePathCallback;
     private String mCameraPhotoPath;
 
-    public StrutFitButtonWebview(WebView webview, Context context, Consumer<Boolean> webViewLoadCallback) {
+    public StrutFitButtonWebview(WebView webview, Context context) {
         _webView = webview;
         _context = context;
-        _webViewLoadCallback = webViewLoadCallback;
         TAG = ((Activity) _context).getClass().getSimpleName();
 
 
@@ -57,16 +53,6 @@ public class StrutFitButtonWebview {
                 });
 
             }
-
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                super.onProgressChanged(view, newProgress);
-                if (newProgress == 100) {
-                    // WebView loading is complete
-                    _webViewLoadCallback.accept(true);
-                }
-            }
-
 
             // for Lollipop, all in one
             public boolean onShowFileChooser(
