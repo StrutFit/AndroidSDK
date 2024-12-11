@@ -39,16 +39,11 @@ public class StrutFitButton {
     private StrutFitButtonWebview _sfWebView;
 
     public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String productCode) {
-        this(activity, buttonViewId, organizationId, productCode, null, null);
+        this(activity, buttonViewId, organizationId, productCode, null);
     }
 
     public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String productCode,
                           String sizeUnit) {
-        this(activity, buttonViewId, organizationId, productCode, sizeUnit, null);
-    }
-
-    public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String productCode,
-                          String sizeUnit, WebView existingWebView) {
         _context = activity;
         _organizationId = organizationId;
         _productCode = productCode;
@@ -58,27 +53,22 @@ public class StrutFitButton {
         button.setVisibility(View.GONE);
         _button = button;
 
-        if(existingWebView == null) {
-            // Create the WebView dynamically
-            WebView webView = new WebView(activity);
-            webView.setVisibility(View.GONE);
+        // Create the WebView dynamically
+        WebView webView = new WebView(activity);
+        webView.setVisibility(View.GONE);
 
-            // Set LayoutParams to make the WebView fill the entire screen
-            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT,
-                    FrameLayout.LayoutParams.MATCH_PARENT
-            );
-            webView.setLayoutParams(layoutParams);
+        // Set LayoutParams to make the WebView fill the entire screen
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+        );
+        webView.setLayoutParams(layoutParams);
 
-            // Add the WebView directly to the root view of the Activity
-            FrameLayout rootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
-            rootView.addView(webView);
+        // Add the WebView directly to the root view of the Activity
+        FrameLayout rootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
+        rootView.addView(webView);
 
-            _webView = webView;
-        } else {
-            existingWebView.setVisibility(View.GONE);
-            _webView = existingWebView;
-        }
+        _webView = webView;
 
         initializeStrutFit();
     }

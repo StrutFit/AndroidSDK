@@ -2,10 +2,14 @@ package strutfit.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 
+import java.util.ArrayList;
 import java.util.Random;
 
+import strutfit.button.StrutFitTracking;
+import strutfit.button.models.ConversionItem;
 import strutfit.button.ui.StrutFitButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,31 +19,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize the StrutFitBridge
-        new StrutFitButton(this, R.id.StruftFitButton,
-                this.getResources().getInteger(R.integer.organizationUnitId),
-                this.getResources().getString(R.string.productCode));
+        Activity activity = this;
+        int buttonId = R.id.StrutFitButton;
+        int organizationId = this.getResources().getInteger(R.integer.organizationUnitId);
+        String productCode = this.getResources().getString(R.string.productCode);
+        String sizeUnit = "UK";
 
+        // Initialize the StrutFitButton
+        new StrutFitButton(activity, buttonId, organizationId, productCode, sizeUnit);
 
 //        StrutFitTracking sfTracking = new StrutFitTracking(this, this.getResources().getInteger(R.integer.organizationUnitId));
 //        ArrayList<ConversionItem> items = new ArrayList<ConversionItem>();
 //
-//        ConversionItem item = new ConversionItem();
-//        item.size = "5 US";
-//        item.price = 50.00;
-//        item.quantity = 1;
-//        item.productIdentifier = this.getResources().getString(R.string.productCode);
+//        ConversionItem item = new ConversionItem(this.getResources().getString(R.string.productCode), 50.00, 1, "5 US");
 //        items.add(item);
 //
-//        ConversionItem item2 = new ConversionItem();
-//        item2.size = "8";
-//        item2.sizeUnit = "US";
-//        item2.price = 60.00;
-//        item2.quantity = 1;
-//        item2.productIdentifier = this.getResources().getString(R.string.productCode);
+//        ConversionItem item2 = new ConversionItem(this.getResources().getString(R.string.productCode), 50.00, 2, "8", "US");
 //        items.add(item2);
 //
-//        sfTracking.registerOrder(generateRandomString(7), 110, "USD", items);
+//        sfTracking.registerOrder(generateRandomString(7), 150.00, "USD", items);
     }
 
     public static String generateRandomString(int length) {

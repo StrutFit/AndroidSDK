@@ -6,7 +6,7 @@ public class PixelData {
 
     public String orderRef;
 
-    public Float orderValue;
+    public double orderValue;
 
     public String userId;
 

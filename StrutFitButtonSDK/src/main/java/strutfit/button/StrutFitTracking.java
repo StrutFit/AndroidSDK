@@ -31,11 +31,11 @@ public class StrutFitTracking {
         _gson = new Gson();
     }
 
-    public void registerOrder(String orderReference, float orderValue, String currencyCode, ArrayList<ConversionItem> items) {
+    public void registerOrder(String orderReference, double orderValue, String currencyCode, ArrayList<ConversionItem> items) {
         registerOrder(orderReference, orderValue, currencyCode, items, null);
     }
 
-    public void registerOrder(String orderReference, float orderValue, String currencyCode, ArrayList<ConversionItem> items, String userEmail) {
+    public void registerOrder(String orderReference, double orderValue, String currencyCode, ArrayList<ConversionItem> items, String userEmail) {
 
         // Construct conversion data
         PixelData data = new PixelData();

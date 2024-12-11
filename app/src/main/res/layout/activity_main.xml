@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <strutfit.button.StrutFitButtonView
-        android:id="@+id/StruftFitButton"
+        android:id="@+id/StrutFitButton"
         android:layout_width="900px"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

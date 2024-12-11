@@ -24,20 +24,17 @@ android {
             resValue 'string', 'sfButtonUrl', 'https://sizinglambda.strut.fit/'
             resValue 'string', 'webViewBaseUrl', 'https://scan.strut.fit/'
             resValue 'string', 'conversionUrl', 'https://pixellambda.strut.fit/'
-            resValue 'string', 'conversiondomain', 'app.sdk.android'
         }
         debug {
             resValue 'string', 'sfButtonUrl', 'https://sizinglambda.dev.strut.fit/'
             resValue 'string', 'webViewBaseUrl', 'https://scan.dev.strut.fit/'
             resValue 'string', 'conversionUrl', 'https://pixellambda.dev.strut.fit/'
-            resValue 'string', 'conversiondomain', 'app-dev.sdk.android'
         }
         staging {
             initWith debug
             resValue 'string', 'sfButtonUrl', 'https://sizinglambda.strut.fit/'
             resValue 'string', 'webViewBaseUrl', 'https://scan.strut.fit/'
             resValue 'string', 'conversionUrl', 'https://pixellambda.strut.fit/'
-            resValue 'string', 'conversiondomain', 'app.sdk.android'
         }
     }
     compileOptions {
