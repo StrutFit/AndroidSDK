@@ -31,27 +31,27 @@ public class StrutFitButton {
 
     // Button properties
     public int _organizationId;
-    public String _shoeID;
+    public String _productCode;
     public SizeUnit _sizeUnit;
 
     // SF Properties
     private StrutFitButtonHelper _sfButtonHelper;
     private StrutFitButtonWebview _sfWebView;
 
-    public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String shoeID) {
-        this(activity, buttonViewId, organizationId, shoeID, null, null);
+    public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String productCode) {
+        this(activity, buttonViewId, organizationId, productCode, null, null);
     }
 
-    public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String shoeID,
+    public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String productCode,
                           String sizeUnit) {
-        this(activity, buttonViewId, organizationId, shoeID, sizeUnit, null);
+        this(activity, buttonViewId, organizationId, productCode, sizeUnit, null);
     }
 
-    public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String shoeID,
+    public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String productCode,
                           String sizeUnit, WebView existingWebView) {
         _context = activity;
         _organizationId = organizationId;
-        _shoeID = shoeID;
+        _productCode = productCode;
         _sizeUnit = SizeUnit.getSizeUnitFromString(sizeUnit);
 
         StrutFitButtonView button = activity.findViewById(buttonViewId);
@@ -101,7 +101,7 @@ public class StrutFitButton {
                                 _sfWebView.setJavaScriptInterface(
                                         new StrutFitJavaScriptInterface(
                                                 _sfButtonHelper, _sfWebView, _context,
-                                                _organizationId, _shoeID, _sizeUnit,
+                                                _organizationId, _productCode, _sizeUnit,
                                                 _sfButtonHelper.productType, _sfButtonHelper.isKids,
                                                 _sfButtonHelper.onlineScanInstructionsType
                                         )
@@ -114,7 +114,7 @@ public class StrutFitButton {
                 // Construct the SF Button and its properties
                 try {
                     _sfButtonHelper = new StrutFitButtonHelper(_button, _context, _organizationId,
-                            _shoeID, buttonVisibleCallback);
+                            _productCode, buttonVisibleCallback);
                 } catch (Exception e) {
                     Log.e(((Activity) _context).getClass().getSimpleName(), "Unable to construct button helper and initialize the button", e);
                 }

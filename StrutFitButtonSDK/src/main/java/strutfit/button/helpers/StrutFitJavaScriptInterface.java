@@ -33,7 +33,7 @@ public class StrutFitJavaScriptInterface {
     private String TAG;
 
     private int _organizationId;
-    private String _shoeId;
+    private String _productCode;
     private SizeUnit _sizeUnit;
     private ProductType _productType;
     private Boolean _isKids;
@@ -43,13 +43,13 @@ public class StrutFitJavaScriptInterface {
 
 
     public StrutFitJavaScriptInterface(StrutFitButtonHelper sfButtonHelper, StrutFitButtonWebview sfWebView, Context context,
-                                       int organizationId, String shoeId, SizeUnit sizeUnit, ProductType productType,
+                                       int organizationId, String productCode, SizeUnit sizeUnit, ProductType productType,
                                        Boolean isKids, OnlineScanInstructionsType onlineScanInstructionsType) {
         _sfButtonHelper = sfButtonHelper;
         _sfWebView = sfWebView;
         _context = context;
         _organizationId = organizationId;
-        _shoeId = shoeId;
+        _productCode = productCode;
         _sizeUnit = sizeUnit;
         _productType = productType;
         _isKids = isKids;
@@ -88,7 +88,7 @@ public class StrutFitJavaScriptInterface {
                         input.strutfitMessageType = PostMessageType.InitialAppInfo.getValue();
                         input.productType = _productType.getValue();
                         input.isKids = _isKids;
-                        input.productId = _shoeId;
+                        input.productId = _productCode;
                         input.organizationUnitId = _organizationId;
                         input.defaultUnit = _sizeUnit != null ? _sizeUnit.getValue() : null;
                         input.onlineScanInstructionsType = _onlineScanInstructionsType.getValue();

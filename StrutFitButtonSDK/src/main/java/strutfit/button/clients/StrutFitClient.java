@@ -53,7 +53,7 @@ public class StrutFitClient {
         return instance;
     }
 
-    public Observable<ButtonVisibilityAndSizeResult> getButtonSizeAndVisibility(int organizationUnitId, String shoeId, String footMeasurementCode, String bodyMeasurementCode) {
-        return strutFitService.getButtonSizeAndVisibility(organizationUnitId, shoeId, footMeasurementCode, bodyMeasurementCode);
+    public Observable<ButtonVisibilityAndSizeResult> getButtonSizeAndVisibility(int organizationUnitId, String productCode, String footMeasurementCode, String bodyMeasurementCode) {
+        return strutFitService.getButtonSizeAndVisibility(organizationUnitId, productCode, footMeasurementCode, bodyMeasurementCode);
     }
 }
