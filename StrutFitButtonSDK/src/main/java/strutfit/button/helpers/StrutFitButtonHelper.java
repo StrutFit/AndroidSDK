@@ -12,7 +12,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import strutfit.button.StrutFitButtonView;
-import strutfit.button.StrutFitGlobalState;
+import strutfit.button.state.StrutFitGlobalState;
 import strutfit.button.enums.OnlineScanInstructionsType;
 import strutfit.button.enums.ProductType;
 import strutfit.button.enums.SizeUnit;

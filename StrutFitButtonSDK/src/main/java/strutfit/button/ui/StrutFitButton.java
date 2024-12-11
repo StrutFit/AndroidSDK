@@ -1,4 +1,4 @@
-package strutfit.button;
+package strutfit.button.ui;
 
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
@@ -25,6 +25,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
+import strutfit.button.R;
+import strutfit.button.StrutFitButtonView;
 import strutfit.button.enums.OnlineScanInstructionsType;
 import strutfit.button.enums.PostMessageType;
 import strutfit.button.enums.ProductType;

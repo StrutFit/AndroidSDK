@@ -1,4 +1,4 @@
-package strutfit.button;
+package strutfit.button.ui;
 
 import android.app.Activity;
 import android.content.Context;

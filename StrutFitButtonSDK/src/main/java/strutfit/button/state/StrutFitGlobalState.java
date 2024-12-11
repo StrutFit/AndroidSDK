@@ -1,4 +1,4 @@
-package strutfit.button;
+package strutfit.button.state;
 
 import android.content.Context;
 
@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import java.util.Arrays;
 import java.util.Locale;
 
+import strutfit.button.R;
 import strutfit.button.enums.Language;
 import strutfit.button.models.ButtonVisibilityResult;
 import strutfit.button.models.CustomTextValue;

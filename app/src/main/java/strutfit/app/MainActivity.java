@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import java.util.Random;
 
-import strutfit.button.StrutFitButton;
+import strutfit.button.ui.StrutFitButton;
 
 public class MainActivity extends AppCompatActivity {
 
