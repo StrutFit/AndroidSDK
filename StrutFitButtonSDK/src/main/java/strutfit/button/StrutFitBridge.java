@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -20,7 +21,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
@@ -51,18 +51,47 @@ public class StrutFitBridge {
     private StrutFitButton _sfButton;
     private StrutFitButtonWebview _sfWebView;
 
-    public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID) {
-        this(button, webview, context, organizationId, shoeID, null);
+    public StrutFitBridge(Activity activity, int buttonId, int organizationId, String shoeID) {
+        this(activity, buttonId, organizationId, shoeID, null, null);
     }
 
-    public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID,
+    public StrutFitBridge(Activity activity, int buttonId, int organizationId, String shoeID,
                           String sizeUnit) {
-        _webView = webview;
-        _context = context;
-        _button = button;
+        this(activity, buttonId, organizationId, shoeID, sizeUnit, null);
+    }
+
+    public StrutFitBridge(Activity activity, int buttonId, int organizationId, String shoeID,
+                          String sizeUnit, WebView existingWebView) {
+        _context = activity;
         _organizationId = organizationId;
         _shoeID = shoeID;
         _sizeUnit = SizeUnit.getSizeUnitFromString(sizeUnit);
+
+        StrutFitButtonView button = activity.findViewById(buttonId);
+        button.setVisibility(View.GONE);
+        _button = button;
+
+        if(existingWebView == null) {
+            // Create the WebView dynamically
+            WebView webView = new WebView(activity);
+            webView.setVisibility(View.GONE);
+
+            // Set LayoutParams to make the WebView fill the entire screen
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT,
+                    FrameLayout.LayoutParams.MATCH_PARENT
+            );
+            webView.setLayoutParams(layoutParams);
+
+            // Add the WebView directly to the root view of the Activity
+            FrameLayout rootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
+            rootView.addView(webView);
+
+            _webView = webView;
+        } else {
+            existingWebView.setVisibility(View.GONE);
+            _webView = existingWebView;
+        }
     }
 
     public void initializeStrutFit() {

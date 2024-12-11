@@ -18,16 +18,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Create your button and hide it
-        StrutFitButtonView button = findViewById(R.id.StruftFitButton);
-        button.setVisibility(View.GONE);
-
-        // Create your web view
-        WebView webView = findViewById(R.id.StruftFitWebview);
-        webView.setVisibility(View.GONE);
-
         // Pass the the two components into the StrutFit bridge
-        StrutFitBridge bridge = new StrutFitBridge(button, webView, this,
+        StrutFitBridge bridge = new StrutFitBridge(this, R.id.StruftFitButton,
                 this.getResources().getInteger(R.integer.organizationUnitId),
                 this.getResources().getString(R.string.productCode));
         bridge.initializeStrutFit();
