@@ -3,19 +3,13 @@ package strutfit.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-import strutfit.button.StrutFitTracking;
-import strutfit.button.enums.SizeUnit;
 import strutfit.button.StrutFitBridge;
 import strutfit.button.StrutFitButtonView;
-import strutfit.button.StrutFitEventListener;
-import strutfit.button.models.ConversionItem;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,24 +26,10 @@ public class MainActivity extends AppCompatActivity {
         WebView webView = findViewById(R.id.StruftFitWebview);
         webView.setVisibility(View.GONE);
 
-        StrutFitEventListener strutFitEventListener = new StrutFitEventListener() {
-            @Override
-            public void onSizeEvent(String size, String unit) {
-                if(size != null) {
-                    Log.i("OnSizeEvent", "Size: " + size + " " + unit);
-                } else {
-                    Log.i("OnSizeEvent", "No size");
-                }
-            }
-        };
-
-
         // Pass the the two components into the StrutFit bridge
         StrutFitBridge bridge = new StrutFitBridge(button, webView, this,
                 this.getResources().getInteger(R.integer.organizationUnitId),
-                this.getResources().getString(R.string.productCode),
-                null,
-                strutFitEventListener);
+                this.getResources().getString(R.string.productCode));
         bridge.initializeStrutFit();
 
 

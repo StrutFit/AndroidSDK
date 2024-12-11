@@ -36,8 +36,7 @@ public class StrutFitButton {
     };
 
     public StrutFitButton(StrutFitButtonView button, Context context, int organizationID,
-                          String shoeID, StrutFitEventListener strutFitEventListener,
-                          Consumer<Boolean> buttonVisibleCallback) {
+                          String shoeID, Consumer<Boolean> buttonVisibleCallback) {
 
         _button = button;
         _context = context;
@@ -45,7 +44,7 @@ public class StrutFitButton {
         TAG = ((Activity) _context).getClass().getSimpleName();
 
         try {
-            _buttonHelper = new StrutFitButtonHelper(context, _callback, organizationID, shoeID, strutFitEventListener);
+            _buttonHelper = new StrutFitButtonHelper(context, _callback, organizationID, shoeID);
             _buttonIsReady = true;
         } catch (Exception e) {
             Log.e(TAG, "Unable to construct button helper and initialize the button", e);

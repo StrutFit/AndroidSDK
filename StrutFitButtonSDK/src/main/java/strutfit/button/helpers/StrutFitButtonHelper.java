@@ -12,7 +12,6 @@ import strutfit.button.StrutFitGlobalState;
 import strutfit.button.enums.OnlineScanInstructionsType;
 import strutfit.button.enums.ProductType;
 import strutfit.button.enums.SizeUnit;
-import strutfit.button.StrutFitEventListener;
 import strutfit.button.clients.StrutFitClient;
 import strutfit.button.models.ButtonApparelSizeResult;
 import strutfit.button.models.ButtonFootwearSizeResult;
@@ -31,7 +30,6 @@ public class StrutFitButtonHelper {
 
     private int  _organizationID;
     private String  _shoeID;
-    private StrutFitEventListener _strutFitEventListener;
 
     private Context _context;
     private CompositeDisposable disposables = new CompositeDisposable();
@@ -40,13 +38,11 @@ public class StrutFitButtonHelper {
     public StrutFitButtonHelper (Context context,
                                  Runnable callback,
                                  int organizationID,
-                                 String shoeID,
-                                 StrutFitEventListener strutFitEventListener) throws Exception {
+                                 String shoeID) throws Exception {
         _organizationID = organizationID;
         _shoeID = shoeID;
         _context = context;
         _buttonDataCallback = callback;
-        _strutFitEventListener = strutFitEventListener;
 
         String footMeasurementCode = StrutFitCommonHelper.getLocalFootMCode(context);
         String bodyMeasurementCode = StrutFitCommonHelper.getLocalBodyMCode(context);
@@ -118,9 +114,6 @@ public class StrutFitButtonHelper {
                             buttonText = _buttonText;
 
                             _buttonDataCallback.run();
-                            if(_strutFitEventListener != null) {
-                                _strutFitEventListener.onSizeEvent(_size, _sizeUnit);
-                            }
                     }
                         catch(Exception e) {
                             Log.e("StrutFitButtonHelper", "onError()", e);

@@ -46,29 +46,23 @@ public class StrutFitBridge {
     public int _organizationId;
     public String _shoeID;
     public SizeUnit _sizeUnit;
-    private StrutFitEventListener _strutFitEventListener;
 
     // SF Properties
     private StrutFitButton _sfButton;
     private StrutFitButtonWebview _sfWebView;
 
     public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID) {
-        this(button, webview, context, organizationId, shoeID, null, null);
-    }
-
-    public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID, String sizeUnit) {
-        this(button, webview, context, organizationId, shoeID, sizeUnit, null);
+        this(button, webview, context, organizationId, shoeID, null);
     }
 
     public StrutFitBridge(StrutFitButtonView button, WebView webview, Context context, int organizationId, String shoeID,
-                          String sizeUnit, StrutFitEventListener strutFitEventListener) {
+                          String sizeUnit) {
         _webView = webview;
         _context = context;
         _button = button;
         _organizationId = organizationId;
         _shoeID = shoeID;
         _sizeUnit = SizeUnit.getSizeUnitFromString(sizeUnit);
-        _strutFitEventListener = strutFitEventListener;
     }
 
     public void initializeStrutFit() {
@@ -105,7 +99,7 @@ public class StrutFitBridge {
 
                 // Construct the SF Button and its properties
                 _sfButton = new StrutFitButton(_button, _context, _organizationId,
-                        _shoeID, _strutFitEventListener, buttonVisibleCallback
+                        _shoeID, buttonVisibleCallback
 );
 
                 // Ui changes need to run on the UI thread
