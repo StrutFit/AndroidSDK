@@ -26,8 +26,6 @@ import strutfit.button.enums.PostMessageType;
 import strutfit.button.models.PostMessageInitialAppInfoDto;
 
 public class StrutFitButtonWebview {
-
-    private StrutFitButton _button;
     private WebView _webView;
     private Context _context;
 
@@ -38,8 +36,7 @@ public class StrutFitButtonWebview {
     private ValueCallback<Uri[]> mFilePathCallback;
     private String mCameraPhotoPath;
 
-    public StrutFitButtonWebview(WebView webview, StrutFitButton button, Context context, Consumer<Boolean> webViewLoadCallback) {
-        _button = button;
+    public StrutFitButtonWebview(WebView webview, Context context, Consumer<Boolean> webViewLoadCallback) {
         _webView = webview;
         _context = context;
         _webViewLoadCallback = webViewLoadCallback;

@@ -3,13 +3,10 @@ package strutfit.app;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.webkit.WebView;
 
 import java.util.Random;
 
-import strutfit.button.StrutFitBridge;
-import strutfit.button.StrutFitButtonView;
+import strutfit.button.StrutFitButton;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initialize the StrutFitBridge
-        new StrutFitBridge(this, R.id.StruftFitButton,
+        new StrutFitButton(this, R.id.StruftFitButton,
                 this.getResources().getInteger(R.integer.organizationUnitId),
                 this.getResources().getString(R.string.productCode));
 

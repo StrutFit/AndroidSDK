@@ -2,12 +2,16 @@ package strutfit.button.helpers;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+
+import java.util.function.Consumer;
 
 import strutfit.button.R;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import strutfit.button.StrutFitButtonView;
 import strutfit.button.StrutFitGlobalState;
 import strutfit.button.enums.OnlineScanInstructionsType;
 import strutfit.button.enums.ProductType;
@@ -28,21 +32,22 @@ public class StrutFitButtonHelper {
     public Boolean isKids = false;
     public OnlineScanInstructionsType onlineScanInstructionsType = OnlineScanInstructionsType.OneFootOnPaper;
 
+    public StrutFitButtonView _sfButtonView;
+
     private int  _organizationID;
     private String  _shoeID;
 
     private Context _context;
     private CompositeDisposable disposables = new CompositeDisposable();
-    private Runnable _buttonDataCallback;
+    private Consumer<Boolean> _buttonVisibleCallback;
 
-    public StrutFitButtonHelper (Context context,
-                                 Runnable callback,
-                                 int organizationID,
-                                 String shoeID) throws Exception {
+    public StrutFitButtonHelper (StrutFitButtonView sfButtonView, Context context, int organizationID,
+                                 String shoeID, Consumer<Boolean> buttonVisibleCallback) throws Exception {
         _organizationID = organizationID;
         _shoeID = shoeID;
         _context = context;
-        _buttonDataCallback = callback;
+        _buttonVisibleCallback = buttonVisibleCallback;
+        _sfButtonView = sfButtonView;
 
         String footMeasurementCode = StrutFitCommonHelper.getLocalFootMCode(context);
         String bodyMeasurementCode = StrutFitCommonHelper.getLocalBodyMCode(context);
@@ -113,12 +118,27 @@ public class StrutFitButtonHelper {
                             }
                             buttonText = _buttonText;
 
-                            _buttonDataCallback.run();
+                            setInitialButtonValues();
                     }
                         catch(Exception e) {
                             Log.e("StrutFitButtonHelper", "onError()", e);
                         }
                     }
                 }));
+    }
+
+    public void hideButton() {
+        _sfButtonView.setVisibility(View.GONE);
+    }
+
+    public void showButton() {
+        _sfButtonView.setVisibility(View.VISIBLE);
+    }
+
+    private void setInitialButtonValues() {
+        if(buttonIsVisible) {
+            _sfButtonView.setText(buttonText);
+            _buttonVisibleCallback.accept(true);
+        }
     }
 }
