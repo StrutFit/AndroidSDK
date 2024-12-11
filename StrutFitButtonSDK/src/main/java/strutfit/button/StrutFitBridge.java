@@ -92,9 +92,11 @@ public class StrutFitBridge {
             existingWebView.setVisibility(View.GONE);
             _webView = existingWebView;
         }
+
+        initializeStrutFit();
     }
 
-    public void initializeStrutFit() {
+    private void initializeStrutFit() {
         // SF Button library will initialize the button
         // We start a new thread so the main thread does not get disturbed
         new Thread(new Runnable() {

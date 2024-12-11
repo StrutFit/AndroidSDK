@@ -18,11 +18,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Pass the the two components into the StrutFit bridge
-        StrutFitBridge bridge = new StrutFitBridge(this, R.id.StruftFitButton,
+        // Initialize the StrutFitBridge
+        new StrutFitBridge(this, R.id.StruftFitButton,
                 this.getResources().getInteger(R.integer.organizationUnitId),
                 this.getResources().getString(R.string.productCode));
-        bridge.initializeStrutFit();
 
 
 //        StrutFitTracking sfTracking = new StrutFitTracking(this, this.getResources().getInteger(R.integer.organizationUnitId));
