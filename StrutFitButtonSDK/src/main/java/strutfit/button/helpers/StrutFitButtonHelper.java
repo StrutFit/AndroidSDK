@@ -41,7 +41,7 @@ public class StrutFitButtonHelper {
     private CompositeDisposable disposables = new CompositeDisposable();
     private Consumer<Boolean> _buttonVisibleCallback;
 
-    public StrutFitButtonHelper (StrutFitButtonView sfButtonView, Context context, int organizationID,
+    public StrutFitButtonHelper(StrutFitButtonView sfButtonView, Context context, int organizationID,
                                  String productCode, Consumer<Boolean> buttonVisibleCallback) throws Exception {
         _organizationID = organizationID;
         _productCode = productCode;
@@ -118,7 +118,13 @@ public class StrutFitButtonHelper {
                             }
                             buttonText = _buttonText;
 
-                            setInitialButtonValues();
+                            if(buttonIsVisible) {
+                                _sfButtonView.setText(buttonText);
+                                if(isInitializing) {
+                                    _buttonVisibleCallback.accept(true);
+                                }
+
+                            }
                     }
                         catch(Exception e) {
                             Log.e("StrutFitButtonHelper", "onError()", e);
@@ -133,12 +139,5 @@ public class StrutFitButtonHelper {
 
     public void showButton() {
         _sfButtonView.setVisibility(View.VISIBLE);
-    }
-
-    private void setInitialButtonValues() {
-        if(buttonIsVisible) {
-            _sfButtonView.setText(buttonText);
-            _buttonVisibleCallback.accept(true);
-        }
     }
 }
