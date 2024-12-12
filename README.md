@@ -60,16 +60,18 @@ Layout width can be modified to best suit your app, but it should be fixed. The 
 	**productCode** - string value of the unique identifier of the product that is being viewed. This should a variable that changes depending on the product being viewed.
 	**sizeUnit** - optional string, but can be used when you sell the same product in different regions and want to display a different size unit to the user.
         When not supplied, there is internal logic to determine which size unit to display based on previous configuration in the StrutFit system.
+	**apparelSizeUnit** - optional string, same as sizeUnit but specific to apparel products. 
 
   ```ruby
         Activity activity = this;
         int buttonId = R.id.StrutFitButton;
         int organizationId = this.getResources().getInteger(R.integer.organizationUnitId);
         String productCode = this.getResources().getString(R.string.productCode);
-        String sizeUnit = "US";
+        String sizeUnit = "US"; // Can be null or left out if not needed
+	String apparelSizeUnit = "US"; // Can be null or left out if not needed
 
         // Initialize the StrutFitButton
-        new StrutFitButton(activity, buttonId, organizationId, productCode, sizeUnit);
+        new StrutFitButton(activity, buttonId, organizationId, productCode, sizeUnit, apparelSizeUnit);
 ```
 	
 	You can test the SDK using different build variants: debug, staging and release.  
@@ -103,7 +105,7 @@ You can see the analytics at https://dashboard.strut.fit
 
         sfTracking.registerOrder("ORDER123", 150.00, "USD", items); // orderReference, orderValue, currencyCode, items
 ```
-**organizationUnitId:** Same as the organizationUnitId you used in the button integration (int)  
+**organizationUnitId:** Same as the organizationId you used in the button integration (int)  
 **orderReference:** Every order must have a unique order reference that you've generated (string) e.g. ORDER123  
 **orderValue:** Total value of the order (double) e.g. 150.00 
 **currencyCode:** e.g. "USD", "NZD", "AUD" etc.  

@@ -15,6 +15,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import io.reactivex.rxjava3.core.Observable;
 import strutfit.button.R;
+import strutfit.button.enums.SizeUnit;
 import strutfit.button.models.ButtonVisibilityAndSizeResult;
 import strutfit.button.services.StrutFitService;
 
@@ -53,7 +54,16 @@ public class StrutFitClient {
         return instance;
     }
 
-    public Observable<ButtonVisibilityAndSizeResult> getButtonSizeAndVisibility(int organizationUnitId, String productCode, String footMeasurementCode, String bodyMeasurementCode) {
-        return strutFitService.getButtonSizeAndVisibility(organizationUnitId, productCode, footMeasurementCode, bodyMeasurementCode);
+    public Observable<ButtonVisibilityAndSizeResult> getButtonSizeAndVisibility(
+            int organizationUnitId, String productCode, String footMeasurementCode,
+            String bodyMeasurementCode, SizeUnit sizeUnit, String apparelSizeUnit
+    ) {
+        return strutFitService.getButtonSizeAndVisibility(
+                organizationUnitId,
+                productCode,
+                footMeasurementCode,
+                bodyMeasurementCode,
+                sizeUnit != null ? sizeUnit.getValue() : null,
+                apparelSizeUnit);
     }
 }

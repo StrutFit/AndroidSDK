@@ -35,6 +35,8 @@ public class StrutFitJavaScriptInterface {
     private int _organizationId;
     private String _productCode;
     private SizeUnit _sizeUnit;
+
+    private String _apparelSizeUnit;
     private ProductType _productType;
     private Boolean _isKids;
     private OnlineScanInstructionsType _onlineScanInstructionsType;
@@ -43,7 +45,8 @@ public class StrutFitJavaScriptInterface {
 
 
     public StrutFitJavaScriptInterface(StrutFitButtonHelper sfButtonHelper, StrutFitButtonWebview sfWebView, Context context,
-                                       int organizationId, String productCode, SizeUnit sizeUnit, ProductType productType,
+                                       int organizationId, String productCode, SizeUnit sizeUnit,
+                                       String apparelSizeUnit, ProductType productType,
                                        Boolean isKids, OnlineScanInstructionsType onlineScanInstructionsType) {
         _sfButtonHelper = sfButtonHelper;
         _sfWebView = sfWebView;
@@ -51,6 +54,7 @@ public class StrutFitJavaScriptInterface {
         _organizationId = organizationId;
         _productCode = productCode;
         _sizeUnit = sizeUnit;
+        _apparelSizeUnit = apparelSizeUnit;
         _productType = productType;
         _isKids = isKids;
         _onlineScanInstructionsType = onlineScanInstructionsType;
@@ -90,7 +94,8 @@ public class StrutFitJavaScriptInterface {
                         input.isKids = _isKids;
                         input.productId = _productCode;
                         input.organizationUnitId = _organizationId;
-                        input.defaultUnit = _sizeUnit != null ? _sizeUnit.getValue() : null;
+                        input.defaultSizeUnit = _sizeUnit != null ? _sizeUnit.getValue() : null;
+                        input.defaultApparelSizeUnit = _apparelSizeUnit;
                         input.onlineScanInstructionsType = _onlineScanInstructionsType.getValue();
                         input.hideSizeGuide = true;
                         input.hideUsualSize = true;

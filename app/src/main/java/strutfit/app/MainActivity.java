@@ -24,9 +24,10 @@ public class MainActivity extends AppCompatActivity {
         int organizationId = this.getResources().getInteger(R.integer.organizationUnitId);
         String productCode = this.getResources().getString(R.string.productCode);
         String sizeUnit = "UK";
+        String apparelSizeUnit = "eudeud";
 
         // Initialize the StrutFitButton
-        new StrutFitButton(activity, buttonId, organizationId, productCode, sizeUnit);
+        new StrutFitButton(activity, buttonId, organizationId, productCode, sizeUnit, apparelSizeUnit);
 
 //        StrutFitTracking sfTracking = new StrutFitTracking(this, this.getResources().getInteger(R.integer.organizationUnitId));
 //        ArrayList<ConversionItem> items = new ArrayList<ConversionItem>();

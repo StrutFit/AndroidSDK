@@ -37,14 +37,19 @@ public class StrutFitButtonHelper {
     private int  _organizationID;
     private String _productCode;
 
+    private SizeUnit _sizeUnit;
+    private String _apparelSizeUnit;
+
     private Context _context;
     private CompositeDisposable disposables = new CompositeDisposable();
     private Consumer<Boolean> _buttonVisibleCallback;
 
     public StrutFitButtonHelper(StrutFitButtonView sfButtonView, Context context, int organizationID,
-                                 String productCode, Consumer<Boolean> buttonVisibleCallback) throws Exception {
+                                 String productCode, SizeUnit sizeUnit, String apparelSizeUnit, Consumer<Boolean> buttonVisibleCallback) throws Exception {
         _organizationID = organizationID;
         _productCode = productCode;
+        _sizeUnit = sizeUnit;
+        _apparelSizeUnit = apparelSizeUnit;
         _context = context;
         _buttonVisibleCallback = buttonVisibleCallback;
         _sfButtonView = sfButtonView;
@@ -57,7 +62,7 @@ public class StrutFitButtonHelper {
     public void getSizeAndVisibility(String footMeasurementCode, String bodyMeasurementCode, Boolean isInitializing) throws Exception  {
 
             disposables.add(StrutFitClient.getInstance(_context)
-                .getButtonSizeAndVisibility(_organizationID, _productCode, footMeasurementCode, bodyMeasurementCode)
+                .getButtonSizeAndVisibility(_organizationID, _productCode, footMeasurementCode, bodyMeasurementCode, _sizeUnit, _apparelSizeUnit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableObserver<ButtonVisibilityAndSizeResult>() {
