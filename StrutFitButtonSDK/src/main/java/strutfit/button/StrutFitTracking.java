@@ -1,7 +1,6 @@
 package strutfit.button;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -10,47 +9,48 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Optional;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import strutfit.button.helpers.StrutFitCommonHelper;
-import strutfit.button.models.ButtonVisibilityAndSizeOutput;;
 import strutfit.button.models.ConversionItem;
 import strutfit.button.clients.PixelClient;
 import strutfit.button.models.PixelData;
 
 public class StrutFitTracking {
-
     private Context _context;
-    private String _endPoint;
     private int _organizationId;
     private Gson _gson;
     private CompositeDisposable disposables = new CompositeDisposable();
 
-    public StrutFitTracking (Context context, int organizationId) {
-        _endPoint  = context.getResources().getString(R.string.conversionUrl);
+    public StrutFitTracking(Context context, int organizationId) {
         _context = context;
         _organizationId = organizationId;
         _gson = new Gson();
     }
 
-    public void registerOrder (String orderReference, float orderValue, String currencyCode, ArrayList<ConversionItem> items ) {
+    public void registerOrder(String orderReference, double orderValue, String currencyCode, ArrayList<ConversionItem> items) {
+        registerOrder(orderReference, orderValue, currencyCode, items, null);
+    }
+
+    public void registerOrder(String orderReference, double orderValue, String currencyCode, ArrayList<ConversionItem> items, String userEmail) {
 
         // Construct conversion data
         PixelData data = new PixelData();
 
-        data.organizationId = _organizationId;
-        data.sfEnabled = StrutFitCommonHelper.getStrutFitInUse(_context);
+        data.organizationUnitId = _organizationId;
         data.orderRef = orderReference;
         data.orderValue = orderValue;
-        data.mCode = StrutFitCommonHelper.getLocalMcode(_context);
+        data.userId = StrutFitCommonHelper.getLocalUserId(_context);
+        data.footScanMCode = StrutFitCommonHelper.getLocalFootMCode(_context);
+        data.bodyScanMCode = StrutFitCommonHelper.getLocalBodyMCode(_context);
         data.items = _gson.toJson(items);
         data.currencyCode = currencyCode;
-        data.domain = _context.getResources().getString(R.string.conversiondomain);
+        data.isMobile = true;
+        data.domain = _context.getPackageName();
+        data.emailHash = userEmail != null ? hashCode(userEmail) : null;
 
         // Send data to conversion API
         String pixelJsonString = _gson.toJson(data);
@@ -89,5 +89,14 @@ public class StrutFitTracking {
                         }
                     }
                 }));
+    }
+
+    public static int hashCode(String str) {
+        int hash = 0;
+        for (int i = 0; i < str.length(); i++) {
+            char chr = str.charAt(i);
+            hash = (hash << 5) - hash + chr;
+        }
+        return hash;
     }
 }

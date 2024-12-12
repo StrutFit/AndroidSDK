@@ -3,63 +3,63 @@ package strutfit.button.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ButtonSizeResult {
+public class ButtonFootwearSizeResult {
 
-    @SerializedName("footLength")
+    @SerializedName("FootLength")
     @Expose
     private Double footLength;
-    @SerializedName("size")
+    @SerializedName("Size")
     @Expose
     private String size;
-    @SerializedName("unit")
+    @SerializedName("Unit")
     @Expose
     private Integer unit;
-    @SerializedName("growthLength")
+    @SerializedName("GrowthLength")
     @Expose
     private Double growthLength;
-    @SerializedName("productHasWidth")
+    @SerializedName("ProductHasWidth")
     @Expose
     private Boolean productHasWidth;
-    @SerializedName("usersWidthCategory")
+    @SerializedName("UsersWidthCategory")
     @Expose
     private String usersWidthCategory;
-    @SerializedName("widthCategory")
+    @SerializedName("WidthCategory")
     @Expose
     private String widthCategory;
-    @SerializedName("widthAbbreviation")
+    @SerializedName("WidthAbbreviation")
     @Expose
     private String widthAbbreviation;
-    @SerializedName("showWidthCategory")
+    @SerializedName("ShowWidthCategory")
     @Expose
     private Boolean showWidthCategory;
-    @SerializedName("maxWidth")
+    @SerializedName("MaxWidth")
     @Expose
     private Double maxWidth;
-    @SerializedName("productName")
+    @SerializedName("ProductName")
     @Expose
     private Object productName;
-    @SerializedName("productImageURL")
+    @SerializedName("ProductImageURL")
     @Expose
     private Object productImageURL;
-    @SerializedName("isValid")
+    @SerializedName("IsValid")
     @Expose
     private Boolean isValid;
-    @SerializedName("showProductName")
+    @SerializedName("ShowProductName")
     @Expose
     private Boolean showProductName;
-    @SerializedName("showProductImage")
+    @SerializedName("ShowProductImage")
     @Expose
     private Boolean showProductImage;
-    @SerializedName("hideDefaultSizeUnit")
+    @SerializedName("HideDefaultSizeUnit")
     @Expose
     private Boolean hideDefaultSizeUnit;
-    @SerializedName("hideOnDesktop")
+    @SerializedName("HideOnDesktop")
     @Expose
     private Boolean hideOnDesktop;
-    @SerializedName("showWidthUnavailableText")
+    @SerializedName("ShowWidthUnavailableText")
     @Expose
     private Boolean showWidthUnavailableText;
-    @SerializedName("chartSpecificResultScreenText")
+    @SerializedName("ChartSpecificResultScreenText")
     @Expose
     private Object chartSpecificResultScreenText;
 

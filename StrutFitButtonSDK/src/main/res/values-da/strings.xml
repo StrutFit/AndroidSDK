@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="UnavailableInYourSize">Ikke tilgængelig i din anbefalede størrelse</string>
+    <string name="YourStrutfitSize">Din størrelse i denne stil er %1$s %2$s %3$s</string>
+    <string name="WhatIsMySize">Hvad er min størrelse?</string>
+    <string name="WhatIsMySize_Kids">Hvad er mit barns størrelse?</string>
+    <string name="InAppCameraAccessToastMessage">For den bedste oplevelse skal denne applikation have adgang til kameraet</string>
+</resources>

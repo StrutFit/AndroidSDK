@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="UnavailableInYourSize">Modello non disponibile nel numero consigliato</string>
+    <string name="YourStrutfitSize">Il tuo numero per questo modello è: %1$s %2$s %3$s</string>
+    <string name="WhatIsMySize">Qual è il mio numero?</string>
+    <string name="WhatIsMySize_Kids">Qual è il numero del mio bambino/della mia bambina?</string>
+    <string name="InAppCameraAccessToastMessage">Per un\'esperienza ottimale, questa applicazione necessita dell\'accesso alla fotocamera</string>
+</resources>

@@ -4,11 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    namespace "strutfit.button"
+
+    compileSdk 34
 
     defaultConfig {
-        minSdk 21
-        targetSdk 31
+        minSdk 24
+        targetSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -19,23 +21,20 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            resValue 'string', 'serverBaseUrl', 'https://api-prod.strut.fit/'
+            resValue 'string', 'sfButtonUrl', 'https://sizinglambda.strut.fit/'
             resValue 'string', 'webViewBaseUrl', 'https://scan.strut.fit/'
-            resValue 'string', 'conversionUrl', 'https://omwbh6dj4a.execute-api.ap-southeast-2.amazonaws.com/PixelProxy/'
-            resValue 'string', 'conversiondomain', 'app.sdk.android'
+            resValue 'string', 'conversionUrl', 'https://pixellambda.strut.fit/'
         }
         debug {
-            resValue 'string', 'serverBaseUrl', 'https://api-dev.strut.fit/'
-            resValue 'string', 'webViewBaseUrl', 'https://scan-dev.strut.fit/'
-            resValue 'string', 'conversionUrl', 'https://89is6vgq2c.execute-api.ap-southeast-2.amazonaws.com/PixelProxyDev/'
-            resValue 'string', 'conversiondomain', 'app-dev.sdk.android'
+            resValue 'string', 'sfButtonUrl', 'https://sizinglambda.dev.strut.fit/'
+            resValue 'string', 'webViewBaseUrl', 'https://scan.dev.strut.fit/'
+            resValue 'string', 'conversionUrl', 'https://pixellambda.dev.strut.fit/'
         }
         staging {
             initWith debug
-            resValue 'string', 'serverBaseUrl', 'https://api-prod.strut.fit/'
+            resValue 'string', 'sfButtonUrl', 'https://sizinglambda.strut.fit/'
             resValue 'string', 'webViewBaseUrl', 'https://scan.strut.fit/'
-            resValue 'string', 'conversionUrl', 'https://omwbh6dj4a.execute-api.ap-southeast-2.amazonaws.com/PixelProxy/'
-            resValue 'string', 'conversiondomain', 'app.sdk.android'
+            resValue 'string', 'conversionUrl', 'https://pixellambda.strut.fit/'
         }
     }
     compileOptions {
@@ -63,7 +62,7 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                from components.release
+                from components.findByName('release')
                 groupId = 'com.zj.banner'
                 artifactId = 'banner'
                 version = '1.0.0'

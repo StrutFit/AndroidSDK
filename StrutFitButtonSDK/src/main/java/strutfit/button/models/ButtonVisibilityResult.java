@@ -3,47 +3,60 @@ package strutfit.button.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import strutfit.button.enums.OnlineScanInstructionsType;
+import strutfit.button.enums.ProductType;
+
 public class ButtonVisibilityResult {
 
-    @SerializedName("show")
+    @SerializedName("Show")
     @Expose
     private Boolean show;
-    @SerializedName("isKids")
+    @SerializedName("ProductType")
+    @Expose
+    private int productType;
+
+    @SerializedName("IsKids")
     @Expose
     private Boolean isKids;
-    @SerializedName("preLoginButtonTextAdults")
+    @SerializedName("PreLoginButtonTextAdults")
     @Expose
     private String preLoginButtonTextAdults;
-    @SerializedName("preLoginButtonTextKids")
+    @SerializedName("PreLoginButtonTextKids")
     @Expose
     private String preLoginButtonTextKids;
-    @SerializedName("preLoginButtonTextAdultsTranslations")
+    @SerializedName("PreLoginButtonTextAdultsTranslations")
     @Expose
-    private Object preLoginButtonTextAdultsTranslations;
-    @SerializedName("preLoginButtonTextKidsTranslations")
+    private String preLoginButtonTextAdultsTranslations;
+    @SerializedName("PreLoginButtonTextKidsTranslations")
     @Expose
-    private Object preLoginButtonTextKidsTranslations;
-    @SerializedName("buttonResultTextTranslations")
+    private String preLoginButtonTextKidsTranslations;
+    @SerializedName("ButtonResultTextTranslations")
     @Expose
-    private Object buttonResultTextTranslations;
-    @SerializedName("showProductName")
+    private String buttonResultTextTranslations;
+    @SerializedName("ShowProductName")
     @Expose
     private Boolean showProductName;
-    @SerializedName("showProductImage")
+    @SerializedName("ShowProductImage")
     @Expose
     private Boolean showProductImage;
-    @SerializedName("hideDefaultSizeUnit")
+    @SerializedName("HideDefaultSizeUnit")
     @Expose
     private Boolean hideDefaultSizeUnit;
-    @SerializedName("hideOnDesktop")
+    @SerializedName("HideOnDesktop")
     @Expose
     private Boolean hideOnDesktop;
-    @SerializedName("showWidthUnavailableText")
+    @SerializedName("ShowWidthUnavailableText")
     @Expose
     private Boolean showWidthUnavailableText;
-    @SerializedName("chartSpecificResultScreenText")
+    @SerializedName("ChartSpecificResultScreenText")
     @Expose
     private Object chartSpecificResultScreenText;
+    @SerializedName("AdultsOnlineScanInstructionsType")
+    @Expose
+    private int adultsOnlineScanInstructionsType;
+    @SerializedName("KidsOnlineScanInstructionsType")
+    @Expose
+    private int kidsOnlineScanInstructionsType;
 
     public Boolean getShow() {
         return show;
@@ -51,6 +64,30 @@ public class ButtonVisibilityResult {
 
     public void setShow(Boolean show) {
         this.show = show;
+    }
+
+    public ProductType getProductType() {
+        return ProductType.valueOf(productType);
+    }
+
+    public void setProductType(int productType) {
+        this.productType = productType;
+    }
+
+    public OnlineScanInstructionsType getAdultsOnlineScanInstructionsType() {
+        return OnlineScanInstructionsType.valueOf(adultsOnlineScanInstructionsType);
+    }
+
+    public void setAdultsOnlineScanInstructionsType(int onlineScanInstructionsType) {
+        this.adultsOnlineScanInstructionsType = onlineScanInstructionsType;
+    }
+
+    public OnlineScanInstructionsType getKidsOnlineScanInstructionsType() {
+        return OnlineScanInstructionsType.valueOf(kidsOnlineScanInstructionsType);
+    }
+
+    public void setKidsOnlineScanInstructionsType(int onlineScanInstructionsType) {
+        this.kidsOnlineScanInstructionsType = onlineScanInstructionsType;
     }
 
     public Boolean getIsKids() {
@@ -77,27 +114,27 @@ public class ButtonVisibilityResult {
         this.preLoginButtonTextKids = preLoginButtonTextKids;
     }
 
-    public Object getPreLoginButtonTextAdultsTranslations() {
+    public String getPreLoginButtonTextAdultsTranslations() {
         return preLoginButtonTextAdultsTranslations;
     }
 
-    public void setPreLoginButtonTextAdultsTranslations(Object preLoginButtonTextAdultsTranslations) {
+    public void setPreLoginButtonTextAdultsTranslations(String preLoginButtonTextAdultsTranslations) {
         this.preLoginButtonTextAdultsTranslations = preLoginButtonTextAdultsTranslations;
     }
 
-    public Object getPreLoginButtonTextKidsTranslations() {
+    public String getPreLoginButtonTextKidsTranslations() {
         return preLoginButtonTextKidsTranslations;
     }
 
-    public void setPreLoginButtonTextKidsTranslations(Object preLoginButtonTextKidsTranslations) {
+    public void setPreLoginButtonTextKidsTranslations(String preLoginButtonTextKidsTranslations) {
         this.preLoginButtonTextKidsTranslations = preLoginButtonTextKidsTranslations;
     }
 
-    public Object getButtonResultTextTranslations() {
+    public String getButtonResultTextTranslations() {
         return buttonResultTextTranslations;
     }
 
-    public void setButtonResultTextTranslations(Object buttonResultTextTranslations) {
+    public void setButtonResultTextTranslations(String buttonResultTextTranslations) {
         this.buttonResultTextTranslations = buttonResultTextTranslations;
     }
 

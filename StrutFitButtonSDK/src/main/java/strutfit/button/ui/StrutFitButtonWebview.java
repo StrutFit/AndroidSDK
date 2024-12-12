@@ -1,4 +1,4 @@
-package strutfit.button;
+package strutfit.button.ui;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,12 +16,16 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.IOException;
 
-public class StrutFitButtonWebview {
+import strutfit.button.enums.PostMessageType;
+import strutfit.button.helpers.StrutFitJavaScriptInterface;
+import strutfit.button.models.PostMessageInitialAppInfoDto;
 
-    private StrutFitButton _button;
+public class StrutFitButtonWebview {
     private WebView _webView;
     private Context _context;
     private static final int FILECHOOSER_RESULTCODE = 1;
@@ -29,10 +33,8 @@ public class StrutFitButtonWebview {
     private String TAG = null;
     private ValueCallback<Uri[]> mFilePathCallback;
     private String mCameraPhotoPath;
-    private ValueCallback<Uri> mUploadMessage;
 
-    public StrutFitButtonWebview(WebView webview, StrutFitButton button, Context context) {
-        _button = button;
+    public StrutFitButtonWebview(WebView webview, Context context) {
         _webView = webview;
         _context = context;
         TAG = ((Activity) _context).getClass().getSimpleName();
@@ -51,7 +53,6 @@ public class StrutFitButtonWebview {
                 });
 
             }
-
 
             // for Lollipop, all in one
             public boolean onShowFileChooser(
@@ -122,8 +123,6 @@ public class StrutFitButtonWebview {
 
             // openFileChooser for Android 3.0+
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
-                mUploadMessage = uploadMsg;
-
                 try {
                     File imageStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "DirectoryNameHere");
 
@@ -184,14 +183,17 @@ public class StrutFitButtonWebview {
         _webView.addJavascriptInterface(javascriptInterFace, "Android");
     }
 
-    public void openAndInitializeWebView() {
-        _webView.loadUrl(_button._webviewUrl);
-        _webView.setVisibility(View.VISIBLE);
-    }
-
     public void openWebView() {
+        _webView.post(() -> _webView.evaluateJavascript(String.format("window.callStrutFitFromNativeApp('{\"strutfitMessageType\": %s}')", PostMessageType.ShowIFrame.getValue()), null));
         _webView.setVisibility(View.VISIBLE);
         _webView.bringToFront();
+    }
+
+    public void sendInitialAppInfo(PostMessageInitialAppInfoDto input) {
+        Gson gson = new Gson();
+        String jsonInput = gson.toJson(input);
+        String javaScriptCode = String.format("window.callStrutFitFromNativeApp('%s')", jsonInput);
+        _webView.post(() -> _webView.evaluateJavascript(javaScriptCode, null));
     }
 
     public void closeWebView() {

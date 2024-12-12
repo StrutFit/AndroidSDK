@@ -1,4 +1,4 @@
-package strutfit.button;
+package strutfit.button.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -76,6 +76,48 @@ public enum SizeUnit {
                 return "SA";
             case Mondopoint:
                 return "Mondopoint";
+            default:
+                return null;
+        }
+    }
+
+    public static SizeUnit getSizeUnitFromString(String sizeUnitString) {
+        if(sizeUnitString == null) {
+            return null;
+        }
+        switch(sizeUnitString.toUpperCase()) {
+            case "US":
+                return US;
+            case "UK":
+                return UK;
+            case "EU":
+                return EU;
+            case "AU":
+                return AU;
+            case "FR":
+                return FR;
+            case "DE":
+                return DE;
+            case "NZ":
+                return NZ;
+            case "JP":
+                return JP;
+            case "CN":
+                return CN;
+            case "MX":
+                return MX;
+            case "BR":
+                return BR;
+            case "KR":
+                return KR;
+            case "IN":
+                return IN;
+            case "RU":
+                return RU;
+            case "SA":
+                return SA;
+            case "MONDOPOINT":
+                return Mondopoint;
             default:
                 return null;
         }
