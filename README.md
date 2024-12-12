@@ -76,8 +76,8 @@ new StrutFitButton(activity, buttonId, organizationId, productCode, sizeUnit, ap
 6. Testing
 Your organization will need to have configured some data in StrutFit (https://dashboard.strut.fit) in order for you to test the button.\
 They will need to have added at least a test product to StrutFit and linked it up to a size chart. They can then tell you the product code they have used for that product.\
-You will also need to provide your application's bundle identifier to your StrutFit executive so it can be whitelisted in your StrutFit workspace settings.\
-The StrutFit SDK uses **context.getPackageName()** to get your app's identifier and then attaches it to API requests for whitelisting purposes.
+You will also need to provide your application's package name to your StrutFit executive so it can be whitelisted in your StrutFit workspace settings.\
+The StrutFit SDK uses **context.getPackageName()** to get your app's package name and then attaches it to API requests for whitelisting purposes.
 	
 You can test the SDK using different build variants: debug, staging and release.\
 Debug will reference our development environment which may have unreleased code which could cause issues. You will also need to use different organizationId and productCode values in this environment.\
@@ -109,13 +109,14 @@ You can see the analytics at https://dashboard.strut.fit
         ConversionItem item2 = new ConversionItem("Test Product 1", 50.00, 2, "8", "US"); // productIdentifier, price, quantity, size, sizeUnit
         items.add(item2);
 
-        sfTracking.registerOrder("ORDER123", 150.00, "USD", items); // orderReference, orderValue, currencyCode, items
+        sfTracking.registerOrder("ORDER123", 150.00, "USD", items, "test@test.com"); // orderReference, orderValue, currencyCode, items, userEmail
 ```
 **organizationUnitId:** Same as the organizationId you used in the button integration (int)  
 **orderReference:** Every order must have a unique order reference that you've generated (string) e.g. ORDER123  
 **orderValue:** Total value of the order (double) e.g. 150.00  
-**currencyCode:** e.g. "USD", "NZD", "AUD" etc.  
-**items:** An array of type **ConversionItem**\
+**currencyCode:** e.g. "USD", "NZD", "AUD" etc. (string)  
+**items:** An array of type **ConversionItem**  
+**userEmail:** Optional - useful for user tracking, but not required (string)  
 **ConversionItem:** Data structure producded by StrutFit which contains the information for every item that was purchased for this particular order.  
 * productIdentifier: same as the productCode you used in the button integration (string)  
 * price: price of this particular item (double)  
