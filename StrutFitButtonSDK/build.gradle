@@ -62,12 +62,14 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                from components.release
                 groupId = 'com.strutfit'
                 artifactId = 'strutfit-android-sdk'
-                version = '1.0.0'
+                version = '1.0.0' //will be overwritten by version on tag when releasing
 
-//                artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+                // Attach the AAR file explicitly
+                artifact("$buildDir/outputs/aar/${project.name}-release.aar") {
+                    builtBy assembleRelease // Ensure AAR is built before publishing
+                }
 
                 pom {
                     name = 'StrutFit Android SDK'
