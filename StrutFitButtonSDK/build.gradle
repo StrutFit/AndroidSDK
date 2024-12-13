@@ -62,10 +62,18 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                from components.findByName('release')
-                groupId = 'com.zj.banner'
-                artifactId = 'banner'
+                from components.release
+                groupId = 'com.strutfit'
+                artifactId = 'strutfit-android-sdk'
                 version = '1.0.0'
+
+                artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+
+                pom {
+                    name = 'StrutFit Android SDK'
+                    description = 'StrutFit Android SDK'
+                    url = 'https://github.com/StrutFit/AndroidSDK'
+                }
             }
         }
     }
