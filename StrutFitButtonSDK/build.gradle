@@ -67,7 +67,7 @@ afterEvaluate {
                 artifactId = 'strutfit-android-sdk'
                 version = '1.0.0'
 
-                artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+//                artifact("$buildDir/outputs/aar/${project.name}-release.aar")
 
                 pom {
                     name = 'StrutFit Android SDK'
