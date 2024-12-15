@@ -8,7 +8,7 @@
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:
--keep class strutfit.button.** { *; }
+#-keep class strutfit.button.** { *; }
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
