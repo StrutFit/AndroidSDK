@@ -67,27 +67,14 @@ public class StrutFitTracking {
                 .registerConversion(encodedString)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<JSONObject>() {
-                    @Override
-                    public void onComplete() {
-                        Log.d("StrutFitTracker", "onComplete()");
-                        disposables.clear();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("StrutFitTracker", "onError()", e);
-                        disposables.clear();
-                    }
-
-                    @Override
-                    public void onNext(JSONObject output) {
-                        try {
-
-                        } catch (Exception e) {
-                            Log.e("StrutFitTracker", "onError()", e);
-                        }
-                    }
+                .subscribe(() -> {
+                    // onComplete: Successful completion, no response
+                    Log.d("StrutFitTracker", "Conversion registered successfully");
+                    disposables.clear();
+                }, e -> {
+                    // onError: Handle any errors
+                    Log.e("StrutFitTracker", "Error registering conversion", e);
+                    disposables.clear();
                 }));
     }
 

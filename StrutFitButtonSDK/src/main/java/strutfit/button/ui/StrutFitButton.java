@@ -74,6 +74,9 @@ public class StrutFitButton {
         FrameLayout rootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
         rootView.addView(webView);
 
+        // Apply fitsSystemWindows to the WebView
+        webView.setFitsSystemWindows(true);
+
         _webView = webView;
 
         initializeStrutFit();

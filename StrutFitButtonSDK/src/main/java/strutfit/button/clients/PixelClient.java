@@ -8,6 +8,7 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONObject;
 
+import io.reactivex.rxjava3.core.Completable;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -36,7 +37,7 @@ public class PixelClient {
         return instance;
     }
 
-    public Observable<JSONObject> registerConversion(String token) {
+    public Completable registerConversion(String token) {
         return pixelService.registerConversion(token);
     }
 }
