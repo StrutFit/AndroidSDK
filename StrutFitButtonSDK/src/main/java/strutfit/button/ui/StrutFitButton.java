@@ -141,7 +141,6 @@ public class StrutFitButton {
                                 }
 
                                 _sfWebView.openWebView();
-                                _sfButtonHelper.hideButton();
                             }
                         });
                     }

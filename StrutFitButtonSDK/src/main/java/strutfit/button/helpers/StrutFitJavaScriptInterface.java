@@ -175,7 +175,6 @@ public class StrutFitJavaScriptInterface {
             @Override
             public void run() {
                 _sfWebView.closeWebView();
-                _sfButtonHelper.showButton();
             }
         });
     }

@@ -9,6 +9,7 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -187,6 +188,8 @@ public class StrutFitButtonWebview {
         _webView.post(() -> _webView.evaluateJavascript(String.format("window.callStrutFitFromNativeApp('{\"strutfitMessageType\": %s}')", PostMessageType.ShowIFrame.getValue()), null));
         _webView.setVisibility(View.VISIBLE);
         _webView.bringToFront();
+        ((Activity)_context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     public void sendInitialAppInfo(PostMessageInitialAppInfoDto input) {
@@ -198,5 +201,6 @@ public class StrutFitButtonWebview {
 
     public void closeWebView() {
         _webView.setVisibility(View.GONE);
+        ((Activity)_context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 }
