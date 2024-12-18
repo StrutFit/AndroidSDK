@@ -9,8 +9,10 @@ import java.util.Locale;
 
 import strutfit.button.R;
 import strutfit.button.enums.Language;
+import strutfit.button.models.ButtonTheme;
 import strutfit.button.models.ButtonVisibilityResult;
 import strutfit.button.models.CustomTextValue;
+import strutfit.button.models.StrutFitTheme;
 
 public class StrutFitGlobalState {
     private static StrutFitGlobalState instance;
@@ -21,6 +23,10 @@ public class StrutFitGlobalState {
     private CustomTextValue[] buttonResultTextTranslations;
 
     private String unavailableSizeText;
+
+    private String themeJson;
+
+    private ButtonTheme buttonTheme;
 
     private StrutFitGlobalState() {}
 
@@ -83,6 +89,12 @@ public class StrutFitGlobalState {
         return unavailableSizeText;
     }
 
+    public String getThemeJson() { return themeJson; }
+
+    public ButtonTheme getButtonTheme() {
+        return buttonTheme;
+    }
+
     public void setButtonTexts(Context context, ButtonVisibilityResult visibilityResult) {
         // JSON to Object using Gson
         Gson gson = new Gson();
@@ -92,4 +104,13 @@ public class StrutFitGlobalState {
         unavailableSizeText = context.getString(R.string.UnavailableInYourSize);
     }
 
+    public void setTheme(ButtonVisibilityResult visibilityResult) {
+        themeJson = visibilityResult.getThemeData();
+
+        // JSON to Object using Gson
+        Gson gson = new Gson();
+        StrutFitTheme theme = gson.fromJson(visibilityResult.getThemeData(), StrutFitTheme.class);
+
+        buttonTheme = theme.SFButton.stream().filter(ButtonTheme::isDefault).findFirst().orElse(theme.SFButton.isEmpty() ? null : theme.SFButton.get(0));
+    }
 }

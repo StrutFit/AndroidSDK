@@ -25,6 +25,7 @@ import java.io.IOException;
 import strutfit.button.enums.PostMessageType;
 import strutfit.button.helpers.StrutFitJavaScriptInterface;
 import strutfit.button.models.PostMessageInitialAppInfoDto;
+import strutfit.button.models.PostMessageUpdateThemeDto;
 
 public class StrutFitButtonWebview {
     private WebView _webView;
@@ -193,6 +194,13 @@ public class StrutFitButtonWebview {
     }
 
     public void sendInitialAppInfo(PostMessageInitialAppInfoDto input) {
+        Gson gson = new Gson();
+        String jsonInput = gson.toJson(input);
+        String javaScriptCode = String.format("window.callStrutFitFromNativeApp('%s')", jsonInput);
+        _webView.post(() -> _webView.evaluateJavascript(javaScriptCode, null));
+    }
+
+    public void sendTheme(PostMessageUpdateThemeDto input) {
         Gson gson = new Gson();
         String jsonInput = gson.toJson(input);
         String javaScriptCode = String.format("window.callStrutFitFromNativeApp('%s')", jsonInput);

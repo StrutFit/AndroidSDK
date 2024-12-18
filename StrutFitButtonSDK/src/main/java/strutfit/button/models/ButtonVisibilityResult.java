@@ -57,6 +57,9 @@ public class ButtonVisibilityResult {
     @SerializedName("KidsOnlineScanInstructionsType")
     @Expose
     private int kidsOnlineScanInstructionsType;
+    @SerializedName("ThemeData")
+    @Expose
+    private String themeData;
 
     public Boolean getShow() {
         return show;
@@ -185,5 +188,12 @@ public class ButtonVisibilityResult {
     public void setChartSpecificResultScreenText(Object chartSpecificResultScreenText) {
         this.chartSpecificResultScreenText = chartSpecificResultScreenText;
     }
+
+    public String getThemeData() { return themeData; }
+
+    public void setThemeData(String themeData) {
+        this.themeData = themeData;
+    }
+
 
 }
