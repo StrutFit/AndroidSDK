@@ -85,6 +85,7 @@ public class StrutFitButtonHelper {
                             StrutFitGlobalState globalState = StrutFitGlobalState.getInstance();
                             if(_visibilityData != null) {
                                 globalState.setButtonTexts(_context, _visibilityData);
+                                globalState.setTheme(_visibilityData);
                             }
 
                             isKids = _visibilityData != null ? _visibilityData.getIsKids() : false;
@@ -126,9 +127,9 @@ public class StrutFitButtonHelper {
                             if(buttonIsVisible) {
                                 _sfButtonView.setText(buttonText);
                                 if(isInitializing) {
+                                    _sfButtonView.updateButtonDesign();
                                     _buttonVisibleCallback.accept(true);
                                 }
-
                             }
                     }
                         catch(Exception e) {

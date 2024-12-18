@@ -6,6 +6,8 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,9 +21,11 @@ import strutfit.button.enums.PostMessageType;
 import strutfit.button.enums.ProductType;
 import strutfit.button.enums.SizeUnit;
 import strutfit.button.models.PostMessageInitialAppInfoDto;
+import strutfit.button.models.PostMessageUpdateThemeDto;
 import strutfit.button.models.PostMessageUserBodyMeasurementCodeDataDto;
 import strutfit.button.models.PostMessageUserFootMeasurementCodeDataDto;
 import strutfit.button.models.PostMessageUserIdDataDto;
+import strutfit.button.state.StrutFitGlobalState;
 import strutfit.button.ui.StrutFitButtonWebview;
 
 public class StrutFitJavaScriptInterface {
@@ -102,6 +106,16 @@ public class StrutFitJavaScriptInterface {
                         input.inApp = true;
 
                         _sfWebView.sendInitialAppInfo(input);
+
+                        StrutFitGlobalState globalState = StrutFitGlobalState.getInstance();
+                        PostMessageUpdateThemeDto updateThemeInput = new PostMessageUpdateThemeDto();
+                        updateThemeInput.strutfitMessageType = PostMessageType.UpdateTheme.getValue();
+
+                        JsonParser jsonParser = new JsonParser();
+                        updateThemeInput.theme = jsonParser.parse(globalState.getThemeJson());
+
+                        _sfWebView.sendTheme(updateThemeInput);
+
                         _initialAppInfoSent = true;
                         ((Activity) _context).runOnUiThread(new Runnable() {
                             @Override
