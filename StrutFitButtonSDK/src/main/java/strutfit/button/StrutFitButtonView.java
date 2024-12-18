@@ -74,8 +74,6 @@ public class StrutFitButtonView extends LinearLayout {
                 } catch(Exception ignored) {
                 }
             }
-
-
         }
     }
 
