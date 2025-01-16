@@ -6,7 +6,6 @@ import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import org.json.JSONException;
@@ -20,6 +19,7 @@ import strutfit.button.enums.OnlineScanInstructionsType;
 import strutfit.button.enums.PostMessageType;
 import strutfit.button.enums.ProductType;
 import strutfit.button.enums.SizeUnit;
+import strutfit.button.models.ButtonVisibilityResult;
 import strutfit.button.models.PostMessageInitialAppInfoDto;
 import strutfit.button.models.PostMessageUpdateThemeDto;
 import strutfit.button.models.PostMessageUserBodyMeasurementCodeDataDto;
@@ -41,17 +41,15 @@ public class StrutFitJavaScriptInterface {
     private SizeUnit _sizeUnit;
 
     private String _apparelSizeUnit;
-    private ProductType _productType;
-    private Boolean _isKids;
-    private OnlineScanInstructionsType _onlineScanInstructionsType;
+
+    private ButtonVisibilityResult _visibilityData;
 
     private Boolean _initialAppInfoSent = false;
 
 
     public StrutFitJavaScriptInterface(StrutFitButtonHelper sfButtonHelper, StrutFitButtonWebview sfWebView, Context context,
                                        int organizationId, String productCode, SizeUnit sizeUnit,
-                                       String apparelSizeUnit, ProductType productType,
-                                       Boolean isKids, OnlineScanInstructionsType onlineScanInstructionsType) {
+                                       String apparelSizeUnit, ButtonVisibilityResult visibilityData) {
         _sfButtonHelper = sfButtonHelper;
         _sfWebView = sfWebView;
         _context = context;
@@ -59,9 +57,7 @@ public class StrutFitJavaScriptInterface {
         _productCode = productCode;
         _sizeUnit = sizeUnit;
         _apparelSizeUnit = apparelSizeUnit;
-        _productType = productType;
-        _isKids = isKids;
-        _onlineScanInstructionsType = onlineScanInstructionsType;
+        _visibilityData = visibilityData;
         TAG = ((Activity) _context).getClass().getSimpleName();
     }
 
@@ -92,17 +88,25 @@ public class StrutFitJavaScriptInterface {
                     break;
                 case IframeReady:
                     if(!_initialAppInfoSent) {
+                        boolean isKids = _visibilityData != null ? _visibilityData.getIsKids() : false;
                         PostMessageInitialAppInfoDto input = new PostMessageInitialAppInfoDto();
                         input.strutfitMessageType = PostMessageType.InitialAppInfo.getValue();
-                        input.productType = _productType.getValue();
-                        input.isKids = _isKids;
+                        input.productType = _visibilityData != null ? _visibilityData.getProductType().getValue() : ProductType.Footwear.getValue();
+                        input.isKids = isKids;
                         input.productId = _productCode;
                         input.organizationUnitId = _organizationId;
                         input.defaultSizeUnit = _sizeUnit != null ? _sizeUnit.getValue() : null;
                         input.defaultApparelSizeUnit = _apparelSizeUnit;
-                        input.onlineScanInstructionsType = _onlineScanInstructionsType.getValue();
+                        input.onlineScanInstructionsType = _visibilityData != null ?
+                                (isKids ?
+                                        _visibilityData.getKidsOnlineScanInstructionsType().getValue() :
+                                        _visibilityData.getAdultsOnlineScanInstructionsType().getValue()) :
+                                OnlineScanInstructionsType.OneFootOnPaper.getValue();
+                        input.brandName = _visibilityData != null ? _visibilityData.getBrandName() : null;
+                        input.hideScanning = _visibilityData != null && !_visibilityData.getScanningEnabled();
                         input.hideSizeGuide = true;
-                        input.hideUsualSize = true;
+                        input.hideUsualSize = _visibilityData == null || !_visibilityData.getUsualSizeEnabled();
+                        input.usualSizeMethods = _visibilityData != null ? _visibilityData.getUsualSizeMethods() : null;
                         input.inApp = true;
 
                         _sfWebView.sendInitialAppInfo(input);
@@ -141,7 +145,8 @@ public class StrutFitJavaScriptInterface {
             PostMessageUserFootMeasurementCodeDataDto postMessage = gson.fromJson(json, PostMessageUserFootMeasurementCodeDataDto.class);
             String currentFootMeasurementCode = StrutFitCommonHelper.getLocalFootMCode(_context);
             if(!Objects.equals(currentFootMeasurementCode, postMessage.footMeasurementCode)){
-                if(_productType == ProductType.Footwear) {
+                ProductType productType = _visibilityData != null ? _visibilityData.getProductType() : ProductType.Footwear;
+                if(productType == ProductType.Footwear) {
                     String bodyMeasurementCode = StrutFitCommonHelper.getLocalBodyMCode(_context);
                     _sfButtonHelper.getSizeAndVisibility(postMessage.footMeasurementCode, bodyMeasurementCode, false);
                 }
@@ -159,7 +164,8 @@ public class StrutFitJavaScriptInterface {
             PostMessageUserBodyMeasurementCodeDataDto postMessage = gson.fromJson(json, PostMessageUserBodyMeasurementCodeDataDto.class);
             String currentBodyMeasurementCode = StrutFitCommonHelper.getLocalFootMCode(_context);
             if(!Objects.equals(currentBodyMeasurementCode, postMessage.bodyMeasurementCode)) {
-                if(_productType == ProductType.Apparel) {
+                ProductType productType = _visibilityData != null ? _visibilityData.getProductType() : ProductType.Footwear;
+                if(productType == ProductType.Apparel) {
                     String footMeasurementCode = StrutFitCommonHelper.getLocalFootMCode(_context);
                     _sfButtonHelper.getSizeAndVisibility(footMeasurementCode, postMessage.bodyMeasurementCode, false);
                 }

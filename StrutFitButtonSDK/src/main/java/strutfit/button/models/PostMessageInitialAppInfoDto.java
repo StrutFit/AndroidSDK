@@ -7,7 +7,7 @@ public class PostMessageInitialAppInfoDto extends PostMessageDto {
 
     public int organizationUnitId;
 
-    public int onlineScanInstructionsType;
+    public Integer onlineScanInstructionsType;
 
     public String productId;
 
@@ -15,9 +15,15 @@ public class PostMessageInitialAppInfoDto extends PostMessageDto {
 
     public String defaultApparelSizeUnit;
 
+    public String brandName;
+
+    public boolean hideScanning;
+
     public boolean hideSizeGuide;
 
     public boolean hideUsualSize;
 
     public boolean inApp;
+
+    public int[] usualSizeMethods;
 }
