@@ -13,7 +13,6 @@ import io.reactivex.rxjava3.observers.DisposableObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import strutfit.button.StrutFitButtonView;
 import strutfit.button.state.StrutFitGlobalState;
-import strutfit.button.enums.OnlineScanInstructionsType;
 import strutfit.button.enums.ProductType;
 import strutfit.button.enums.SizeUnit;
 import strutfit.button.clients.StrutFitClient;
@@ -23,14 +22,10 @@ import strutfit.button.models.ButtonVisibilityAndSizeResult;
 import strutfit.button.models.ButtonVisibilityResult;
 
 public class StrutFitButtonHelper {
-
-    public boolean buttonIsVisible = false;
     public String buttonText;
     public String webViewURL;
 
-    public ProductType productType = ProductType.Footwear;
-    public Boolean isKids = false;
-    public OnlineScanInstructionsType onlineScanInstructionsType = OnlineScanInstructionsType.OneFootOnPaper;
+    public ButtonVisibilityResult visibilityData = null;
 
     public StrutFitButtonView _sfButtonView;
 
@@ -39,6 +34,10 @@ public class StrutFitButtonHelper {
 
     private SizeUnit _sizeUnit;
     private String _apparelSizeUnit;
+
+    private ProductType _productType = ProductType.Footwear;
+    private Boolean _isKids = false;
+    private boolean _buttonIsVisible = false;
 
     private Context _context;
     private CompositeDisposable disposables = new CompositeDisposable();
@@ -80,41 +79,36 @@ public class StrutFitButtonHelper {
                         try {
                             ButtonFootwearSizeResult _footwearSizeData = result != null ? result.getFootwearSizeData() : null;
                             ButtonApparelSizeResult _apparelSizeData = result != null ? result.getApparelSizeData() : null;
-                            ButtonVisibilityResult _visibilityData = result != null ? result.getVisibilityData() : null;
+                            visibilityData = result != null ? result.getVisibilityData() : null;
 
                             StrutFitGlobalState globalState = StrutFitGlobalState.getInstance();
-                            if(_visibilityData != null) {
-                                globalState.setButtonTexts(_context, _visibilityData);
-                                globalState.setTheme(_visibilityData);
+                            if(visibilityData != null) {
+                                globalState.setButtonTexts(_context, visibilityData);
+                                globalState.setTheme(visibilityData);
                             }
 
-                            isKids = _visibilityData != null ? _visibilityData.getIsKids() : false;
-
                             // Set initial rendering parameters
-                            productType = _visibilityData != null ? _visibilityData.getProductType() : ProductType.Footwear;
-                            onlineScanInstructionsType =  _visibilityData != null ?
-                                    (isKids ?
-                                            _visibilityData.getKidsOnlineScanInstructionsType() :
-                                            _visibilityData.getAdultsOnlineScanInstructionsType()) :
-                                    OnlineScanInstructionsType.OneFootOnPaper;
-                            buttonIsVisible = _visibilityData != null ? _visibilityData.getShow() : false;
+                            _isKids = visibilityData != null ? visibilityData.getIsKids() : false;
+                            _productType = visibilityData != null ? visibilityData.getProductType() : ProductType.Footwear;
+                            _buttonIsVisible = visibilityData != null ? visibilityData.getShow() : false;
+
 
                             // When initializing we need to set the webview URL
                             if (isInitializing) {
                                 webViewURL = _context.getResources().getString(R.string.webViewBaseUrl);
                             }
 
-                            String _size = productType == ProductType.Footwear ?
+                            String _size = _productType == ProductType.Footwear ?
                                     (_footwearSizeData != null ? _footwearSizeData.getSize() : null) :
                                     (_apparelSizeData != null ? _apparelSizeData.getSize() : null);
-                            String _sizeUnit = productType == ProductType.Footwear ?
+                            String _sizeUnit = _productType == ProductType.Footwear ?
                                     (_footwearSizeData != null ? SizeUnit.getSizeUnitString(SizeUnit.valueOf(_footwearSizeData.getUnit())) : "") :
                                     "";
                             Boolean _showWidthCategory = _footwearSizeData != null ? _footwearSizeData.getShowWidthCategory() : false;
                             String _widthAbbreviation = _footwearSizeData != null ? _footwearSizeData.getWidthAbbreviation() : "";
                             String _width = (!_showWidthCategory || _widthAbbreviation == null || _widthAbbreviation.isEmpty()) ? "" : _widthAbbreviation;
 
-                            String _buttonText = isKids ? globalState.getPreLoginButtonTextKids(_context) : globalState.getPreLoginButtonTextAdults(_context);
+                            String _buttonText = _isKids ? globalState.getPreLoginButtonTextKids(_context) : globalState.getPreLoginButtonTextAdults(_context);
 
                             if(_footwearSizeData != null) {
                                 _buttonText = globalState.getUnavailableSizeText();
@@ -124,7 +118,7 @@ public class StrutFitButtonHelper {
                             }
                             buttonText = _buttonText;
 
-                            if(buttonIsVisible) {
+                            if(_buttonIsVisible) {
                                 _sfButtonView.setText(buttonText);
                                 if(isInitializing) {
                                     _sfButtonView.updateButtonDesign();

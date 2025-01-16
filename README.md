@@ -1,32 +1,14 @@
 # StrutFit Button Android SDK
 This code should be executed when a user visits the product display page. It will render the StrutFit button.
-
-
-1. Add the jitpack.io url in your root build.gradle at the end of repositories if not already present:
-```java
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
-```
-OR add the jitpack.io url in your project settings.gradle in the repositories section:
-```java
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
-``` 
   
-2. Add the dependency: replace x.x.x with the desired version. Please check the Releases tab to see the latest production release version
+1. Add the dependency: replace x.x.x with the desired version. Please check the Releases tab to see the latest production release version
 ```java
 	dependencies {
-		implementation 'com.github.StrutFit:AndroidSDK:x.x.x'
+		implementation 'fit.strut:strutfit-android-sdk:x.x.x'
 	}
 ```
 
-3. Ensure the following permissions are given to the application if they are not already:  
+2. Ensure the following permissions are given to the application if they are not already:  
 * **Internet:** We are accessing a website  
 * **Camera:** For the in-app camera view to allow users to take photos.
 * **Read Media Images:** Allows the app to access the camera roll for uploading photos
@@ -41,7 +23,7 @@ OR add the jitpack.io url in your project settings.gradle in the repositories se
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
 ```
 
-4. Setting up the StrutFit button UI  
+3. Setting up the StrutFit button UI  
 	In your layout xml you need to use the StrutFitButtonView custom view component
 ```java
     <strutfit.button.StrutFitButtonView
@@ -52,7 +34,7 @@ OR add the jitpack.io url in your project settings.gradle in the repositories se
 
 Layout width can be modified to best suit your app, but it should be fixed. The layout height should be set to wrap_content so that the button will always be able to fit all of the button text (this will change depending on the user's language and the button's state).
 	
-5. Initializing the StrutFit button  
+4. Initializing the StrutFit button  
 	In your Java code you need to initialize the StrutFitButton, passing through the current Activity object and the id of the StrutFitButtonView. This should be done on the product display page, and destroyed and reinitialized when the user navigates to a new product.  
 
 You will also need the following properties:  
@@ -73,7 +55,7 @@ String apparelSizeUnit = "US"; // dynamic - can be null or left out if not neede
 // Initialize the StrutFitButton
 new StrutFitButton(activity, buttonId, organizationId, productCode, sizeUnit, apparelSizeUnit);
 ```
-6. Testing
+5. Testing
 Your organization will need to have configured some data in StrutFit (https://dashboard.strut.fit) in order for you to test the button.\
 They will need to have added at least a test product to StrutFit and linked it up to a size chart. They can then tell you the product code they have used for that product.\
 You will also need to provide your application's package name to your StrutFit executive so it can be whitelisted in your StrutFit workspace settings.\

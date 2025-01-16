@@ -39,12 +39,9 @@ public class ButtonVisibilityResult {
     @SerializedName("ShowProductImage")
     @Expose
     private Boolean showProductImage;
-    @SerializedName("HideDefaultSizeUnit")
+    @SerializedName("HideSizeUnit")
     @Expose
-    private Boolean hideDefaultSizeUnit;
-    @SerializedName("HideOnDesktop")
-    @Expose
-    private Boolean hideOnDesktop;
+    private Boolean hideSizeUnit;
     @SerializedName("ShowWidthUnavailableText")
     @Expose
     private Boolean showWidthUnavailableText;
@@ -60,140 +57,102 @@ public class ButtonVisibilityResult {
     @SerializedName("ThemeData")
     @Expose
     private String themeData;
+    @SerializedName("BrandName")
+    @Expose
+    private String brandName;
+    @SerializedName("IsScanningEnabled")
+    @Expose
+    private Boolean isScanningEnabled;
+    @SerializedName("IsSizeGuideEnabled")
+    @Expose
+    private Boolean isSizeGuideEnabled;
+    @SerializedName("IsUsualSizeEnabled")
+    @Expose
+    private Boolean isUsualSizeEnabled;
+    @SerializedName("UsualSizeMethods")
+    @Expose
+    private int[] usualSizeMethods;
+
 
     public Boolean getShow() {
         return show;
-    }
-
-    public void setShow(Boolean show) {
-        this.show = show;
     }
 
     public ProductType getProductType() {
         return ProductType.valueOf(productType);
     }
 
-    public void setProductType(int productType) {
-        this.productType = productType;
-    }
-
     public OnlineScanInstructionsType getAdultsOnlineScanInstructionsType() {
         return OnlineScanInstructionsType.valueOf(adultsOnlineScanInstructionsType);
-    }
-
-    public void setAdultsOnlineScanInstructionsType(int onlineScanInstructionsType) {
-        this.adultsOnlineScanInstructionsType = onlineScanInstructionsType;
     }
 
     public OnlineScanInstructionsType getKidsOnlineScanInstructionsType() {
         return OnlineScanInstructionsType.valueOf(kidsOnlineScanInstructionsType);
     }
 
-    public void setKidsOnlineScanInstructionsType(int onlineScanInstructionsType) {
-        this.kidsOnlineScanInstructionsType = onlineScanInstructionsType;
-    }
-
     public Boolean getIsKids() {
         return isKids;
-    }
-
-    public void setIsKids(Boolean isKids) {
-        this.isKids = isKids;
     }
 
     public String getPreLoginButtonTextAdults() {
         return preLoginButtonTextAdults;
     }
 
-    public void setPreLoginButtonTextAdults(String preLoginButtonTextAdults) {
-        this.preLoginButtonTextAdults = preLoginButtonTextAdults;
-    }
-
     public String getPreLoginButtonTextKids() {
         return preLoginButtonTextKids;
-    }
-
-    public void setPreLoginButtonTextKids(String preLoginButtonTextKids) {
-        this.preLoginButtonTextKids = preLoginButtonTextKids;
     }
 
     public String getPreLoginButtonTextAdultsTranslations() {
         return preLoginButtonTextAdultsTranslations;
     }
 
-    public void setPreLoginButtonTextAdultsTranslations(String preLoginButtonTextAdultsTranslations) {
-        this.preLoginButtonTextAdultsTranslations = preLoginButtonTextAdultsTranslations;
-    }
-
     public String getPreLoginButtonTextKidsTranslations() {
         return preLoginButtonTextKidsTranslations;
-    }
-
-    public void setPreLoginButtonTextKidsTranslations(String preLoginButtonTextKidsTranslations) {
-        this.preLoginButtonTextKidsTranslations = preLoginButtonTextKidsTranslations;
     }
 
     public String getButtonResultTextTranslations() {
         return buttonResultTextTranslations;
     }
 
-    public void setButtonResultTextTranslations(String buttonResultTextTranslations) {
-        this.buttonResultTextTranslations = buttonResultTextTranslations;
-    }
-
     public Boolean getShowProductName() {
         return showProductName;
-    }
-
-    public void setShowProductName(Boolean showProductName) {
-        this.showProductName = showProductName;
     }
 
     public Boolean getShowProductImage() {
         return showProductImage;
     }
 
-    public void setShowProductImage(Boolean showProductImage) {
-        this.showProductImage = showProductImage;
-    }
-
-    public Boolean getHideDefaultSizeUnit() {
-        return hideDefaultSizeUnit;
-    }
-
-    public void setHideDefaultSizeUnit(Boolean hideDefaultSizeUnit) {
-        this.hideDefaultSizeUnit = hideDefaultSizeUnit;
-    }
-
-    public Boolean getHideOnDesktop() {
-        return hideOnDesktop;
-    }
-
-    public void setHideOnDesktop(Boolean hideOnDesktop) {
-        this.hideOnDesktop = hideOnDesktop;
+    public Boolean getHideSizeUnit() {
+        return hideSizeUnit;
     }
 
     public Boolean getShowWidthUnavailableText() {
         return showWidthUnavailableText;
     }
 
-    public void setShowWidthUnavailableText(Boolean showWidthUnavailableText) {
-        this.showWidthUnavailableText = showWidthUnavailableText;
-    }
-
     public Object getChartSpecificResultScreenText() {
         return chartSpecificResultScreenText;
     }
 
-    public void setChartSpecificResultScreenText(Object chartSpecificResultScreenText) {
-        this.chartSpecificResultScreenText = chartSpecificResultScreenText;
-    }
-
     public String getThemeData() { return themeData; }
 
-    public void setThemeData(String themeData) {
-        this.themeData = themeData;
+    public String getBrandName() {
+        return brandName;
     }
 
+    public Boolean getScanningEnabled() {
+        return isScanningEnabled;
+    }
 
+    public Boolean getSizeGuideEnabled() {
+        return isSizeGuideEnabled;
+    }
+
+    public Boolean getUsualSizeEnabled() {
+        return isUsualSizeEnabled;
+    }
+
+    public int[] getUsualSizeMethods() {
+        return usualSizeMethods;
+    }
 }

@@ -101,8 +101,7 @@ public class StrutFitButton {
                                         new StrutFitJavaScriptInterface(
                                                 _sfButtonHelper, _sfWebView, _context,
                                                 _organizationId, _productCode, _sizeUnit, _apparelSizeUnit,
-                                                _sfButtonHelper.productType, _sfButtonHelper.isKids,
-                                                _sfButtonHelper.onlineScanInstructionsType
+                                                _sfButtonHelper.visibilityData
                                         )
                                 );
                             }
