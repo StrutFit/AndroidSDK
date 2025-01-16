@@ -39,9 +39,9 @@ public class ButtonVisibilityResult {
     @SerializedName("ShowProductImage")
     @Expose
     private Boolean showProductImage;
-    @SerializedName("HideDefaultSizeUnit")
+    @SerializedName("HideSizeUnit")
     @Expose
-    private Boolean hideDefaultSizeUnit;
+    private Boolean hideSizeUnit;
     @SerializedName("HideOnDesktop")
     @Expose
     private Boolean hideOnDesktop;
@@ -157,12 +157,12 @@ public class ButtonVisibilityResult {
         this.showProductImage = showProductImage;
     }
 
-    public Boolean getHideDefaultSizeUnit() {
-        return hideDefaultSizeUnit;
+    public Boolean getHideSizeUnit() {
+        return hideSizeUnit;
     }
 
-    public void setHideDefaultSizeUnit(Boolean hideDefaultSizeUnit) {
-        this.hideDefaultSizeUnit = hideDefaultSizeUnit;
+    public void setHideSizeUnit(Boolean hideSizeUnit) {
+        this.hideSizeUnit = hideSizeUnit;
     }
 
     public Boolean getHideOnDesktop() {

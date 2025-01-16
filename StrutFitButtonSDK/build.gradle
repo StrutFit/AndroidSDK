@@ -63,7 +63,7 @@ mavenPublishing {
     configure(new AndroidSingleVariantLibrary("release", true, true))
 
     // You must increase this version and run the following command to release to maven-central:
-    //  .gradlew publishAndReleaseToMavenCentral --no-configuration-cache
+    //  ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
     coordinates("fit.strut", "strutfit-android-sdk", "8.0.0")
 
     pom {
