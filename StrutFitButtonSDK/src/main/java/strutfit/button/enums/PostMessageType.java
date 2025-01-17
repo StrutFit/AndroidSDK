@@ -13,7 +13,7 @@ public enum PostMessageType {
     IframeReady(6),
     ABTestInfo(7),
     ReplicaButtonProductLoad(8),
-    SizeGuideButtonClick(9),
+    SizeGuideOpened(9),
     DeviceMotion(10),
     DeviceOrientation(11),
     UserAcceptedCookies(12),

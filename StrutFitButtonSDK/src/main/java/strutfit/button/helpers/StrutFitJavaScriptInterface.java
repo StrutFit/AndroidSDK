@@ -104,7 +104,7 @@ public class StrutFitJavaScriptInterface {
                                 OnlineScanInstructionsType.OneFootOnPaper.getValue();
                         input.brandName = _visibilityData != null ? _visibilityData.getBrandName() : null;
                         input.hideScanning = _visibilityData != null && !_visibilityData.getScanningEnabled();
-                        input.hideSizeGuide = true;
+                        input.hideSizeGuide = _visibilityData != null && !_visibilityData.getSizeGuideEnabled();
                         input.hideUsualSize = _visibilityData == null || !_visibilityData.getUsualSizeEnabled();
                         input.usualSizeMethods = _visibilityData != null ? _visibilityData.getUsualSizeMethods() : null;
                         input.inApp = true;
