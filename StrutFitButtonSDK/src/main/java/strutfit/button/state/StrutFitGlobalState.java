@@ -80,11 +80,11 @@ public class StrutFitGlobalState {
                     .findFirst()              // Get the first match
                     .orElse(null);
             if(translation != null) {
-                return translation.text.replace("@size", size).replace("@unit", sizeUnit).replace("@width", width);
+                return translation.text.replace("@size", size).replace("@unit", sizeUnit).replace("@width", width).replace("  ", " ");
             }
         }
 
-        return context.getString(R.string.YourStrutfitSize, size, sizeUnit, width);
+        return context.getString(R.string.YourStrutfitSize, size, sizeUnit, width).replace("  ", " ");
     }
 
     public String getUnavailableSizeText() {
