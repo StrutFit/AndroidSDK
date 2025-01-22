@@ -39,8 +39,9 @@ public class StrutFitJavaScriptInterface {
     private int _organizationId;
     private String _productCode;
     private SizeUnit _sizeUnit;
-
     private String _apparelSizeUnit;
+    private String _productName;
+    private String _productImageURL;
 
     private ButtonVisibilityResult _visibilityData;
 
@@ -49,7 +50,8 @@ public class StrutFitJavaScriptInterface {
 
     public StrutFitJavaScriptInterface(StrutFitButtonHelper sfButtonHelper, StrutFitButtonWebview sfWebView, Context context,
                                        int organizationId, String productCode, SizeUnit sizeUnit,
-                                       String apparelSizeUnit, ButtonVisibilityResult visibilityData) {
+                                       String apparelSizeUnit, String productName, String productImageURL,
+                                       ButtonVisibilityResult visibilityData) {
         _sfButtonHelper = sfButtonHelper;
         _sfWebView = sfWebView;
         _context = context;
@@ -57,6 +59,8 @@ public class StrutFitJavaScriptInterface {
         _productCode = productCode;
         _sizeUnit = sizeUnit;
         _apparelSizeUnit = apparelSizeUnit;
+        _productName = productName;
+        _productImageURL = productImageURL;
         _visibilityData = visibilityData;
         TAG = ((Activity) _context).getClass().getSimpleName();
     }
@@ -94,6 +98,16 @@ public class StrutFitJavaScriptInterface {
                         input.productType = _visibilityData != null ? _visibilityData.getProductType().getValue() : ProductType.Footwear.getValue();
                         input.isKids = isKids;
                         input.productId = _productCode;
+                        input.productName = _productName != null && !_productName.trim().isEmpty() ?
+                                _productName :
+                                _visibilityData != null && _visibilityData.getUseStrutFitProductNameAsFallback() ?
+                                        _visibilityData.getProductName() :
+                                        "";
+                        input.productImageURL =  _productImageURL != null && !_productImageURL.trim().isEmpty() ?
+                                _productImageURL :
+                                _visibilityData != null ?
+                                        _visibilityData.getProductImageURL() :
+                                        "";
                         input.organizationUnitId = _organizationId;
                         input.defaultSizeUnit = _sizeUnit != null ? _sizeUnit.getValue() : null;
                         input.defaultApparelSizeUnit = _apparelSizeUnit;
@@ -104,7 +118,7 @@ public class StrutFitJavaScriptInterface {
                                 OnlineScanInstructionsType.OneFootOnPaper.getValue();
                         input.brandName = _visibilityData != null ? _visibilityData.getBrandName() : null;
                         input.hideScanning = _visibilityData != null && !_visibilityData.getScanningEnabled();
-                        input.hideSizeGuide = true;
+                        input.hideSizeGuide = _visibilityData != null && !_visibilityData.getSizeGuideEnabled();
                         input.hideUsualSize = _visibilityData == null || !_visibilityData.getUsualSizeEnabled();
                         input.usualSizeMethods = _visibilityData != null ? _visibilityData.getUsualSizeMethods() : null;
                         input.inApp = true;
@@ -112,13 +126,15 @@ public class StrutFitJavaScriptInterface {
                         _sfWebView.sendInitialAppInfo(input);
 
                         StrutFitGlobalState globalState = StrutFitGlobalState.getInstance();
-                        PostMessageUpdateThemeDto updateThemeInput = new PostMessageUpdateThemeDto();
-                        updateThemeInput.strutfitMessageType = PostMessageType.UpdateTheme.getValue();
+                        if(globalState.getUseCustomTheme()) {
+                            PostMessageUpdateThemeDto updateThemeInput = new PostMessageUpdateThemeDto();
+                            updateThemeInput.strutfitMessageType = PostMessageType.UpdateTheme.getValue();
 
-                        JsonParser jsonParser = new JsonParser();
-                        updateThemeInput.theme = jsonParser.parse(globalState.getThemeJson());
+                            JsonParser jsonParser = new JsonParser();
+                            updateThemeInput.theme = jsonParser.parse(globalState.getThemeJson());
 
-                        _sfWebView.sendTheme(updateThemeInput);
+                            _sfWebView.sendTheme(updateThemeInput);
+                        }
 
                         _initialAppInfoSent = true;
                         ((Activity) _context).runOnUiThread(new Runnable() {

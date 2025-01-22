@@ -28,6 +28,8 @@ public class StrutFitGlobalState {
 
     private ButtonTheme buttonTheme;
 
+    private Boolean useCustomTheme;
+
     private StrutFitGlobalState() {}
 
     public static synchronized StrutFitGlobalState getInstance() {
@@ -78,11 +80,11 @@ public class StrutFitGlobalState {
                     .findFirst()              // Get the first match
                     .orElse(null);
             if(translation != null) {
-                return translation.text.replace("@size", size).replace("@unit", sizeUnit).replace("@width", width);
+                return translation.text.replace("@size", size).replace("@unit", sizeUnit).replace("@width", width).replace("  ", " ");
             }
         }
 
-        return context.getString(R.string.YourStrutfitSize, size, sizeUnit, width);
+        return context.getString(R.string.YourStrutfitSize, size, sizeUnit, width).replace("  ", " ");
     }
 
     public String getUnavailableSizeText() {
@@ -93,6 +95,10 @@ public class StrutFitGlobalState {
 
     public ButtonTheme getButtonTheme() {
         return buttonTheme;
+    }
+
+    public Boolean getUseCustomTheme() {
+        return useCustomTheme;
     }
 
     public void setButtonTexts(Context context, ButtonVisibilityResult visibilityResult) {
@@ -106,6 +112,7 @@ public class StrutFitGlobalState {
 
     public void setTheme(ButtonVisibilityResult visibilityResult) {
         themeJson = visibilityResult.getThemeData();
+        useCustomTheme = visibilityResult.getUseCustomTheme();
 
         // JSON to Object using Gson
         Gson gson = new Gson();

@@ -11,6 +11,10 @@ public class PostMessageInitialAppInfoDto extends PostMessageDto {
 
     public String productId;
 
+    public String productName;
+
+    public String productImageURL;
+
     public Integer defaultSizeUnit;
 
     public String defaultApparelSizeUnit;

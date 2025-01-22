@@ -77,9 +77,13 @@ public class StrutFitButtonHelper {
 
                     @Override public void onNext(ButtonVisibilityAndSizeResult result) {
                         try {
-                            ButtonFootwearSizeResult _footwearSizeData = result != null ? result.getFootwearSizeData() : null;
-                            ButtonApparelSizeResult _apparelSizeData = result != null ? result.getApparelSizeData() : null;
-                            visibilityData = result != null ? result.getVisibilityData() : null;
+                            if (result == null) {
+                                return;
+                            }
+
+                            ButtonFootwearSizeResult _footwearSizeData = result.getFootwearSizeData();
+                            ButtonApparelSizeResult _apparelSizeData = result.getApparelSizeData();
+                            visibilityData = result.getVisibilityData();
 
                             StrutFitGlobalState globalState = StrutFitGlobalState.getInstance();
                             if(visibilityData != null) {
@@ -92,6 +96,7 @@ public class StrutFitButtonHelper {
                             _productType = visibilityData != null ? visibilityData.getProductType() : ProductType.Footwear;
                             _buttonIsVisible = visibilityData != null ? visibilityData.getShow() : false;
 
+                            boolean _hideSizeUnit = visibilityData != null ? visibilityData.getHideSizeUnit() : false;
 
                             // When initializing we need to set the webview URL
                             if (isInitializing) {
@@ -102,9 +107,9 @@ public class StrutFitButtonHelper {
                                     (_footwearSizeData != null ? _footwearSizeData.getSize() : null) :
                                     (_apparelSizeData != null ? _apparelSizeData.getSize() : null);
                             String _sizeUnit = _productType == ProductType.Footwear ?
-                                    (_footwearSizeData != null ? SizeUnit.getSizeUnitString(SizeUnit.valueOf(_footwearSizeData.getUnit())) : "") :
+                                    (_footwearSizeData != null && !_hideSizeUnit ? SizeUnit.getSizeUnitString(SizeUnit.valueOf(_footwearSizeData.getUnit())) : "") :
                                     "";
-                            Boolean _showWidthCategory = _footwearSizeData != null ? _footwearSizeData.getShowWidthCategory() : false;
+                            boolean _showWidthCategory = _footwearSizeData != null ? _footwearSizeData.getShowWidthCategory() : false;
                             String _widthAbbreviation = _footwearSizeData != null ? _footwearSizeData.getWidthAbbreviation() : "";
                             String _width = (!_showWidthCategory || _widthAbbreviation == null || _widthAbbreviation.isEmpty()) ? "" : _widthAbbreviation;
 

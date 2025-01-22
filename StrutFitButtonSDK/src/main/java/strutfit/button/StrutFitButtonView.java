@@ -47,6 +47,10 @@ public class StrutFitButtonView extends LinearLayout {
     public void updateButtonDesign() {
         StrutFitGlobalState globalState = StrutFitGlobalState.getInstance();
 
+        if(!globalState.getUseCustomTheme()) {
+            return;
+        }
+
         ButtonTheme buttonTheme = globalState.getButtonTheme();
         if(buttonTheme != null) {
             if(buttonTheme.Colors.SFButtonText != null && !buttonTheme.Colors.SFButtonText.isEmpty()) {

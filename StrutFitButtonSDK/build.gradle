@@ -64,7 +64,7 @@ mavenPublishing {
 
     // You must increase this version and run the following command to release to maven-central:
     //  ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
-    coordinates("fit.strut", "strutfit-android-sdk", "8.1.0")
+    coordinates("fit.strut", "strutfit-android-sdk", "8.2.0")
 
     pom {
         name.set("StrutFit Android SDK")

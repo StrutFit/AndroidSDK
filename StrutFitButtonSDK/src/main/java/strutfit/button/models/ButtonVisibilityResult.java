@@ -18,12 +18,6 @@ public class ButtonVisibilityResult {
     @SerializedName("IsKids")
     @Expose
     private Boolean isKids;
-    @SerializedName("PreLoginButtonTextAdults")
-    @Expose
-    private String preLoginButtonTextAdults;
-    @SerializedName("PreLoginButtonTextKids")
-    @Expose
-    private String preLoginButtonTextKids;
     @SerializedName("PreLoginButtonTextAdultsTranslations")
     @Expose
     private String preLoginButtonTextAdultsTranslations;
@@ -33,30 +27,30 @@ public class ButtonVisibilityResult {
     @SerializedName("ButtonResultTextTranslations")
     @Expose
     private String buttonResultTextTranslations;
-    @SerializedName("ShowProductName")
-    @Expose
-    private Boolean showProductName;
-    @SerializedName("ShowProductImage")
-    @Expose
-    private Boolean showProductImage;
     @SerializedName("HideSizeUnit")
     @Expose
     private Boolean hideSizeUnit;
-    @SerializedName("ShowWidthUnavailableText")
-    @Expose
-    private Boolean showWidthUnavailableText;
-    @SerializedName("ChartSpecificResultScreenText")
-    @Expose
-    private Object chartSpecificResultScreenText;
     @SerializedName("AdultsOnlineScanInstructionsType")
     @Expose
     private int adultsOnlineScanInstructionsType;
     @SerializedName("KidsOnlineScanInstructionsType")
     @Expose
     private int kidsOnlineScanInstructionsType;
+    @SerializedName("ProductName")
+    @Expose
+    private String productName;
+    @SerializedName("ProductImageURL")
+    @Expose
+    private String productImageURL;
+    @SerializedName("UseStrutFitProductNameAsFallback")
+    @Expose
+    private Boolean useStrutFitProductNameAsFallback;
     @SerializedName("ThemeData")
     @Expose
     private String themeData;
+    @SerializedName("UseCustomTheme")
+    @Expose
+    private Boolean useCustomTheme;
     @SerializedName("BrandName")
     @Expose
     private String brandName;
@@ -72,7 +66,6 @@ public class ButtonVisibilityResult {
     @SerializedName("UsualSizeMethods")
     @Expose
     private int[] usualSizeMethods;
-
 
     public Boolean getShow() {
         return show;
@@ -94,14 +87,6 @@ public class ButtonVisibilityResult {
         return isKids;
     }
 
-    public String getPreLoginButtonTextAdults() {
-        return preLoginButtonTextAdults;
-    }
-
-    public String getPreLoginButtonTextKids() {
-        return preLoginButtonTextKids;
-    }
-
     public String getPreLoginButtonTextAdultsTranslations() {
         return preLoginButtonTextAdultsTranslations;
     }
@@ -114,27 +99,27 @@ public class ButtonVisibilityResult {
         return buttonResultTextTranslations;
     }
 
-    public Boolean getShowProductName() {
-        return showProductName;
-    }
-
-    public Boolean getShowProductImage() {
-        return showProductImage;
-    }
-
     public Boolean getHideSizeUnit() {
         return hideSizeUnit;
     }
 
-    public Boolean getShowWidthUnavailableText() {
-        return showWidthUnavailableText;
+    public String getProductName() {
+        return productName;
     }
 
-    public Object getChartSpecificResultScreenText() {
-        return chartSpecificResultScreenText;
+    public String getProductImageURL() {
+        return productImageURL;
+    }
+
+    public Boolean getUseStrutFitProductNameAsFallback() {
+        return useStrutFitProductNameAsFallback;
     }
 
     public String getThemeData() { return themeData; }
+
+    public Boolean getUseCustomTheme() {
+        return useCustomTheme;
+    }
 
     public String getBrandName() {
         return brandName;

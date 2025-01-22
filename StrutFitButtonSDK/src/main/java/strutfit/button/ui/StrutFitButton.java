@@ -34,26 +34,39 @@ public class StrutFitButton {
     public String _productCode;
     public SizeUnit _sizeUnit;
     public String _apparelSizeUnit;
+    public String _productName;
+    public String _productImageURL;
 
     // SF Properties
     private StrutFitButtonHelper _sfButtonHelper;
     private StrutFitButtonWebview _sfWebView;
 
     public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String productCode) {
-        this(activity, buttonViewId, organizationId, productCode, null, null);
+        this(activity, buttonViewId, organizationId, productCode, null, null, null, null);
     }
 
     public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String productCode, String sizeUnit) {
-        this(activity, buttonViewId, organizationId, productCode, sizeUnit, null);
+        this(activity, buttonViewId, organizationId, productCode, sizeUnit, null, null, null);
     }
 
     public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String productCode,
                           String sizeUnit, String apparelSizeUnit) {
+        this(activity, buttonViewId, organizationId, productCode, sizeUnit, apparelSizeUnit, null, null);
+    }
+
+    public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String productCode,
+                          String sizeUnit, String apparelSizeUnit, String productName) {
+        this(activity, buttonViewId, organizationId, productCode, sizeUnit, apparelSizeUnit, productName, null);
+    }
+    public StrutFitButton(Activity activity, int buttonViewId, int organizationId, String productCode,
+                          String sizeUnit, String apparelSizeUnit,  String productName, String productImageURL) {
         _context = activity;
         _organizationId = organizationId;
         _productCode = productCode;
         _sizeUnit = SizeUnit.getSizeUnitFromString(sizeUnit);
         _apparelSizeUnit = apparelSizeUnit;
+        _productName = productName;
+        _productImageURL = productImageURL;
 
         StrutFitButtonView button = activity.findViewById(buttonViewId);
         button.setVisibility(View.GONE);
@@ -101,6 +114,7 @@ public class StrutFitButton {
                                         new StrutFitJavaScriptInterface(
                                                 _sfButtonHelper, _sfWebView, _context,
                                                 _organizationId, _productCode, _sizeUnit, _apparelSizeUnit,
+                                                _productName, _productImageURL,
                                                 _sfButtonHelper.visibilityData
                                         )
                                 );
