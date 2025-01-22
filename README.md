@@ -42,7 +42,9 @@ You will also need the following properties:
 * **productCode** - string value of the unique identifier of the product that is being viewed. This should a variable that changes depending on the product being viewed.
 * **sizeUnit** - optional string, but can be used when you sell the same product in different regions and want to display a different size unit to the user.\
 When not supplied, there is internal logic to determine which size unit to display based on previous configuration in the StrutFit system.
-* **apparelSizeUnit** - optional string, same as sizeUnit but specific to apparel products. 
+* **apparelSizeUnit** - optional string, same as sizeUnit but specific to apparel products.
+* **productName** - optional string, for you to override the product name if you don't want to use the name in the StrutFit database
+* **productImageURL** - optional string, for you to override the product image URL if you don't want to use the image URL in the StrutFit database
 
 ```java
 Activity activity = this;
@@ -51,9 +53,11 @@ int organizationId = 1 // constant - value will be supplied to you
 String productCode = ""Test Product 1" // dynamic
 String sizeUnit = "US"; // dynamic - can be null or left out if not needed
 String apparelSizeUnit = "US"; // dynamic - can be null or left out if not needed
+String productName = "Test Product"; // dynamic - can be null or left out if not needed
+String productImageURL = "https://example.com/image.jpg"; // dynamic - can be null or left out if not needed
 
 // Initialize the StrutFitButton
-new StrutFitButton(activity, buttonId, organizationId, productCode, sizeUnit, apparelSizeUnit);
+new StrutFitButton(activity, buttonId, organizationId, productCode, sizeUnit, apparelSizeUnit, productName, productImageURL);
 ```
 5. Testing
 Your organization will need to have configured some data in StrutFit (https://dashboard.strut.fit) in order for you to test the button.\
