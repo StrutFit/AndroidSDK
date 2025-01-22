@@ -23,7 +23,8 @@ public enum PostMessageType {
     ReprocessSize(16),
     ReplicaButtonData(17),
     InitialAppInfo(18),
-    LanguageChange(19);
+    LanguageChange(19),
+    IsIframeReady(20);
 
     private int value;
     private static Map map = new HashMap<>();
